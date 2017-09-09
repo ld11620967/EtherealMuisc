@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_search_music"
+            android:icon="@drawable/ic_search_music"
+            android:title="扫描音乐" />
+        <item
+            android:id="@+id/nav_time_stop"
+            android:icon="@drawable/ic_time_stop"
+            android:title="定时停止" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="关于" />
+    </group>
+
+
+</menu>
