@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
         viewpager.addOnPageChangeListener(this)
         clickListener()
+        startService(Intent(this,PlayService::class.java))
     }
 
     private fun initView() {
@@ -65,13 +66,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun play() {
-//        PlayService().playPause()
-        Log.i("111111","111111")
+
+        PlayService().start()
     }
 
     private operator fun next() {
 //        PlayService().next()
-        Log.i("222222","222222")
     }
 
     private fun showPlayingFragment() {
