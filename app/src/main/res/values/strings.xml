@@ -8,4 +8,6 @@
 
     <string name="local_music">我的音乐</string>
     <string name="online_music">在线音乐</string>
+
+    <string name="song_title">空灵音乐</string>
 </resources>

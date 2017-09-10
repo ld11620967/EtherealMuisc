@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.nilin.etherealmuisc.fragment.LocalFragment">
 
-    <Button
-        android:id="@+id/button"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="111111" />
+        android:text="11111" />
 
 </FrameLayout>

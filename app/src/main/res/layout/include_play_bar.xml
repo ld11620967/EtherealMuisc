@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_play_bar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/play_bar_height"
-    >
+    android:layout_height="@dimen/play_bar_height">
     <!--android:background="@drawable/play_bar_bg_selector"-->
     <LinearLayout
+        android:id="@+id/play_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
@@ -20,8 +20,7 @@
             android:layout_height="45dp"
             android:contentDescription="@null"
             android:scaleType="fitXY"
-        android:src="@drawable/default_cover"
-        />
+            android:src="@drawable/default_cover" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-            android:textColor="@color/grey"
+                android:textColor="@color/grey"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -56,16 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-        android:src="@drawable/play_bar_btn_play_pause_selector"
-        />
+            android:src="@drawable/play_bar_btn_play_pause_selector" />
 
         <ImageView
             android:id="@+id/iv_play_bar_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-        android:src="@drawable/ic_play_bar_btn_next"
-        />
+            android:src="@drawable/ic_play_bar_btn_next" />
     </LinearLayout>
 
     <ProgressBar
@@ -74,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="bottom"
-    android:progressDrawable="@drawable/progress_bar_style"
-    />
+        android:progressDrawable="@drawable/progress_bar_style" />
 
 </FrameLayout>
