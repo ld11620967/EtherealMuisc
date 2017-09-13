@@ -1,15 +1,12 @@
 package com.nilin.etherealmuisc.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
-import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.activity_play.*
 
 
-class PlayActivity : AppCompatActivity() {
+class PlayActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +19,25 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun play() {
-        PlayService().start()
+        playService!!.start()
 
     }
     private fun pause() {
 //        PlayService().pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindPlayService()//解绑服务
     }
 }

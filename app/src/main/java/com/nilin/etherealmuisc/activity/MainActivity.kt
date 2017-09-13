@@ -3,14 +3,12 @@ package com.nilin.etherealmuisc.activity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.nilin.etherealmuisc.adapter.FragmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_music_include.*
 import android.content.Intent
 import android.support.v4.view.ViewPager
-import android.util.Log
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
@@ -19,7 +17,7 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun play() {
 
-        PlayService().start()
+        playService!!.start()
     }
 
     private operator fun next() {
@@ -119,5 +117,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindPlayService()//解绑服务
     }
 }
