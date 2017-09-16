@@ -19,7 +19,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:contentDescription="@null"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/default_cover" />
 
         <LinearLayout
@@ -52,17 +52,17 @@
 
         <ImageView
             android:id="@+id/iv_play_bar_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/play_bar_btn_play_pause_selector" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/play_bar_btn_play_pause_selector"
+            android:contentDescription="@null" />
 
         <ImageView
             android:id="@+id/iv_play_bar_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_play_bar_btn_next" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_play_bar_btn_next"
+            android:contentDescription="@null" />
     </LinearLayout>
 
     <ProgressBar

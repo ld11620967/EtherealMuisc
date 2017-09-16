@@ -105,30 +105,29 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/ib_play_stop"
+                android:id="@+id/ib_play_previous"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/player_stop" />
+                android:src="@drawable/previous_song" />
 
             <ImageButton
-                android:id="@+id/ib_play_start"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/player_start" />
+                android:id="@+id/ib_play_contorl"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/player_start"
+                android:scaleType="centerInside" />
 
             <ImageButton
-                android:id="@+id/ib_play_pause"
+                android:id="@+id/ib_play_next"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/player_pause" />
+                android:src="@drawable/next_song" />
         </LinearLayout>
 
     </LinearLayout>

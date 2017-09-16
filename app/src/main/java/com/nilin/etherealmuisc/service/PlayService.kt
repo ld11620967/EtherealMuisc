@@ -46,7 +46,7 @@ class PlayService() : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        start()
+//        start()
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -60,18 +60,18 @@ class PlayService() : Service() {
     }
 
     //默认开始播放的方法
-    fun start() {
+    fun play() {
 //        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态
         mp!!.start()
-        Log.i("22222", "22222")
+
 //        }
     }
 
-//    fun pause() {
-////        if (mp.isPlaying) {
-//        mp!!.pause()
-////        }
-//    }
+    fun pause() {
+//        if (mp!!.isPlaying) {
+        mp!!.pause()
+//        }
+    }
 //
 //    fun stop() {
 //        mp!!.stop()
@@ -84,14 +84,14 @@ class PlayService() : Service() {
 //
 //    }
 //
-//    //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
-//    val isPlaying: Boolean
-//        get() {
-//            if (mp != null) {
-//                return mp!!.isPlaying
-//            }
-//            return false
-//        }
+    //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
+    val isPlaying: Boolean
+        get() {
+            if (mp != null) {
+                return mp!!.isPlaying
+            }
+            return false
+        }
 //
 //    //获取当前的进度值
 //    //mp,并且,为播放状态

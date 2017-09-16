@@ -26,6 +26,8 @@
             android:name=".service.PlayService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".activity.ScanMusicActivity"></activity>
     </application>
 
 </manifest>

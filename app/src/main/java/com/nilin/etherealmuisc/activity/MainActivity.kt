@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_music_include.*
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.widget.Toast
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
@@ -26,7 +27,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         nav_view.setNavigationItemSelectedListener(this)
         viewpager.addOnPageChangeListener(this)
         clickListener()
-        startService(Intent(this,PlayService::class.java))
+        startService(Intent(this, PlayService::class.java))
     }
 
     private fun initView() {
@@ -58,18 +59,36 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener { startActivity(Intent(this, SearchMusicActivity::class.java)) }
-        fl_play_bar.setOnClickListener { startActivity(Intent(this, PlayActivity::class.java)) }
-        iv_play_bar_play.setOnClickListener { play() }
+        fl_play_bar.setOnClickListener {
+            startActivity(Intent(this, PlayActivity::class.java))
+//            val intent = Intent(this, PlayActivity::class.java)
+//            intent.putExtra("isRefreshing", 1)
+//            startActivity(intent)
+        }
+        iv_play_bar_play.setOnClickListener {
+            if (!playService!!.isPlaying) {
+                playService!!.play()
+                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+            } else {
+                playService!!.pause()
+                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+            }
+        }
         iv_play_bar_next.setOnClickListener { next() }
     }
 
     private fun play() {
-
-        playService!!.start()
+        playService!!.play()
+        if (playService!!.isPlaying) {
+            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+        } else {
+            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+        }
     }
 
     private operator fun next() {
 //        PlayService().next()
+
     }
 
     private fun showPlayingFragment() {
@@ -102,7 +121,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_search_music -> {
-
+                startActivity(Intent(this, ScanMusicActivity::class.java))
             }
             R.id.nav_time_stop -> {
 
@@ -111,7 +130,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             }
             R.id.nav_about -> {
-
+                Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()
             }
         }
 
