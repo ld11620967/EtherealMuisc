@@ -51,4 +51,5 @@ abstract class BaseActivity : AppCompatActivity() {
             isBound = false
         }
     }
+
 }

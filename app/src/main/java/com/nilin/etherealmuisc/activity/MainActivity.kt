@@ -28,6 +28,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         viewpager.addOnPageChangeListener(this)
         clickListener()
         startService(Intent(this, PlayService::class.java))
+
     }
 
     private fun initView() {

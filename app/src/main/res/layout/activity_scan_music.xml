@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.nilin.etherealmuisc.activity.ScanMusicActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/include_app_bar" />
+    <include layout="@layout/include_app_bar" />
 
     <ImageView
         android:id="@+id/iv_scan_music"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/include"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         app:srcCompat="@drawable/background"
         tools:ignore="MissingConstraints" />
 

@@ -58,4 +58,5 @@ class PlayActivity : BaseActivity() {
         super.onDestroy()
         unbindPlayService()//解绑服务
     }
+
 }
