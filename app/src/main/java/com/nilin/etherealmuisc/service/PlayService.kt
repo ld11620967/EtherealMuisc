@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Binder
-import android.util.Log
-import com.nilin.etherealmuisc.R
+import android.os.Environment
 import java.util.concurrent.Executors
 import android.os.IBinder
-import android.os.Parcelable
+import java.io.File
 
 
 /**
@@ -39,7 +38,10 @@ class PlayService() : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        mp = MediaPlayer.create(this, R.raw.music)
+//        val file: File =File(Environment.getExternalStorageDirectory(),"/storage/emulated/0/qqmusic/song/yuying.mp3")
+        val file=File(Environment.getExternalStorageDirectory(),"yuying.mp3")
+        mp!!.setDataSource(file.path)
+        mp!!.prepare()
         mp!!.isLooping = true
 
 //        es!!.execute(updateSteatusRunnable)//更新进度值

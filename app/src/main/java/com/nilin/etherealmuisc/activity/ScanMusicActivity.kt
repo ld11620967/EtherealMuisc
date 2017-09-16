@@ -7,9 +7,6 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.include_app_bar.*
 
 class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
-    override fun onClick(p0: View?) {
-        finish()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,5 +15,9 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
         toolbar.setTitle("扫描音乐")
         toolbar.setNavigationOnClickListener(this);
 
+    }
+
+    override fun onClick(p0: View?) {
+        finish()
     }
 }

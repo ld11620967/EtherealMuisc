@@ -6,59 +6,53 @@
     android:layout_height="match_parent"
     tools:context="com.nilin.etherealmuisc.activity.ScanMusicActivity">
 
-    <include layout="@layout/include_app_bar" />
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:navigationIcon="@drawable/ic_settings"-->
-        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+    <include
+        android:id="@+id/include"
+        layout="@layout/include_app_bar" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/iv_scan_music"
         android:layout_width="wrap_content"
-        android:layout_height="293dp"
-        android:layout_above="@+id/scan_music"
+        android:layout_height="250dp"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="57dp"
+        android:layout_below="@+id/include"
+        android:layout_marginTop="40dp"
         app:srcCompat="@drawable/background"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/scan_music"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/custom_scan_music"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp"
+        android:layout_marginBottom="74dp"
         android:background="@color/colorPrimary"
         android:text="一键全盘扫描"
-        tools:ignore="MissingConstraints"
- />
-
-    <Button
-        android:id="@+id/custom_scan_music"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:text="自定义扫描"
+        android:textColor="@color/white"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/scan_settings"
-        android:layout_width="150dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="扫描设置"
-        tools:ignore="MissingConstraints" />
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/custom_scan_music"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="自定义扫描"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/scan_settings"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="扫描设置"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 </RelativeLayout>
