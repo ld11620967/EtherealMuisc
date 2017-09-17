@@ -21,12 +21,12 @@
 
         <!--<include-->
             <!--android:id="@+id/ll_loading"-->
-            <!--layout="@layout/include_loading"-->
+            rv_musicyourv_musicyout/include_loading"-->
             <!--android:visibility="gone" />-->
 
         <!--<include-->
             <!--android:id="@+id/ll_load_fail"-->
-            <!--layout="@layout/include_load_fail"-->
+            rv_musicyourv_musicyout/include_load_fail"-->
             <!--android:visibility="gone" />-->
     </FrameLayout>
 </LinearLayout>

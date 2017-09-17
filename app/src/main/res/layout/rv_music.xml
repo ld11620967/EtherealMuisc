@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/item_mymusic_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="歌曲名"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+
+    <TextView
+        android:id="@+id/item_mymusic_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_mymusic_song"
+        android:text="歌手"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>
