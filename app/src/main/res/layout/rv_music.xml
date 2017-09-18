@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/item_mymusic_song"
+        android:id="@+id/item_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="歌曲名"
@@ -13,10 +13,10 @@
 
 
     <TextView
-        android:id="@+id/item_mymusic_singer"
+        android:id="@+id/item_singer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/item_mymusic_song"
+        android:layout_below="@+id/item_song"
         android:text="歌手"
         android:textSize="15sp" />
 

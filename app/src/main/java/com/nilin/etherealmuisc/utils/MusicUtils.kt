@@ -18,16 +18,16 @@ object MusicUtils {
         val cursor = context.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.AudioColumns.IS_MUSIC)
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                //////////////////////////////////////////////////////
-                val song = Song()
-                song.song = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
+                val song:Song?= Song()
+                song!!.song = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
                 song.singer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
                 song.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-                song.size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)).toString()
+                song.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
+                song.size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE))
                 if (song.size.toInt() > 1000 * 800) {
                     // 注释部分是切割标题，分离出歌曲名和歌手 （本地媒体库读取的歌曲信息不规范）
-                    if (song.song.contains("-")) {
-                        val str = song.song.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    if (song.song!!.contains("-")) {
+                        val str = song.song!!.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                         song.singer = str[0]
                         song.song = str[1]
                     }
@@ -37,7 +37,6 @@ object MusicUtils {
             // 释放资源
             cursor.close()
         }
-
         return list
     }
 
@@ -51,7 +50,5 @@ object MusicUtils {
         } else {
             (time / 1000 / 60).toString() + ":" + time / 1000 % 60
         }
-
     }
 }
-
