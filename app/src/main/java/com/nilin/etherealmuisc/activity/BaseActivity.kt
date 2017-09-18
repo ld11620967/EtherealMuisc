@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 
 
 /**
- * Created by liangd on 2017/9/13.
- */
+* Created by liangd on 2017/9/13.
+*/
 abstract class BaseActivity : AppCompatActivity() {
 
     protected var playService: PlayService? = null

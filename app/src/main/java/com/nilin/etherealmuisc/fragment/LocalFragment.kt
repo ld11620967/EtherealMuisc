@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.fragment_local.*
 import com.nilin.etherealmuisc.MyApplication
 
 
+/**
+* Created by liangd on 2017/9/19.
+*/
 class LocalFragment : Fragment() {
 
     var context = MyApplication.instance
@@ -27,7 +30,6 @@ class LocalFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         bt_local_music.setOnClickListener { startActivity(Intent(context, LocalMusicActivity::class.java)) }
-
     }
 
 }

@@ -6,9 +6,10 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 
-
+/**
+* Created by liangd on 2017/9/19.
+*/
 class PlayActivity : BaseActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

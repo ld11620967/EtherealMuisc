@@ -1,10 +1,10 @@
-package com.kcode.gankotlin.repository
+package com.nilin.etherealmuisc.model
 
-/**
- * Created by nilin on 2017/9/17.
- */
+
 //data class Song(var song: String, var singer: String, var path: String, var size: String)
-
+/**
+* Created by liangd on 2017/9/19.
+*/
 class Song {
     //歌曲名
     var song: String? = null
@@ -16,4 +16,5 @@ class Song {
     var duration: String? = null
     //歌曲大小
     var size: Long = 0
+
 }

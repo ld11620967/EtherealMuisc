@@ -5,8 +5,8 @@ import android.app.Application
 
 
 /**
- * Created by nilin on 2017/9/16.
- */
+* Created by nilin on 2017/9/16.
+*/
 class MyApplication : Application() {
 
     override fun onCreate() {

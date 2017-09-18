@@ -6,9 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter
 
 
 /**
- * Created by nilin on 2017/9/9.
- */
+* Created by nilin on 2017/9/9.
+*/
 class FragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm){
+
     private val mFragments = ArrayList<Fragment>()
 
     fun addFragment(fragment: Fragment) {

@@ -2,12 +2,11 @@ package com.nilin.etherealmuisc.utils
 
 import android.provider.MediaStore
 import android.content.Context
-import com.kcode.gankotlin.repository.Song
-
+import com.nilin.etherealmuisc.model.Song
 
 /**
- * Created by nilin on 2017/9/17.
- */
+* Created by liangd on 2017/9/19.
+*/
 object MusicUtils {
     /**
      * 扫描系统里面的音频文件，返回一个list集合
@@ -20,6 +19,7 @@ object MusicUtils {
             while (cursor.moveToNext()) {
                 val song:Song?= Song()
                 song!!.song = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
+//                song!!.song = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
                 song.singer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
                 song.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 song.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))

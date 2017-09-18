@@ -18,6 +18,9 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 
 
+/**
+* Created by liangd on 2017/9/19.
+*/
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
