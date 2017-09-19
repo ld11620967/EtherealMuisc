@@ -1,8 +1,8 @@
 package com.nilin.etherealmuisc.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.nilin.etherealmuisc.R
@@ -15,9 +15,9 @@ import com.nilin.etherealmuisc.model.Song
 
 
 /**
- * Created by liangd on 2017/9/19.
- */
-class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
+* Created by liangd on 2017/9/19.
+*/
+class LocalMusicActivity : BaseActivity(), View.OnClickListener {
 
     var adapter: MusicAdapter? = null
 
@@ -36,7 +36,7 @@ class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener {
             adapter, _, position ->
-//                        play(adapter.data[position] as Song)
+                        play(adapter.data[position] as Song)
         }
 
         adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener {
@@ -48,17 +48,31 @@ class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-//    private fun play(song: Song) {
-//        if (!playService!!.isPlaying) {
-//            playService!!.play()
-//        } else {
-//            playService!!.pause()
-//        }
-//    }
-
+    private fun play(song: Song) {
+        if (!playService!!.isPlaying) {
+        playService!!.play(song.path!!)
+        } else {
+            playService!!.pause()
+        }
+    }
 
     override fun onClick(p0: View?) {
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindPlayService()//解绑服务
     }
 
 }

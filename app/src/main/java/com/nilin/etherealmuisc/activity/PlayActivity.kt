@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
-import kotlinx.android.synthetic.main.include_play_bar.*
+
 
 /**
 * Created by liangd on 2017/9/19.
@@ -26,7 +26,7 @@ class PlayActivity : BaseActivity() {
                 playService!!.pause()
                 ib_play_contorl.setBackgroundResource(R.drawable.player_start)
             } else {
-                playService!!.play()
+//                playService!!.play()
                 ib_play_contorl.setBackgroundResource(R.drawable.player_pause)
             }
         }
@@ -36,7 +36,7 @@ class PlayActivity : BaseActivity() {
     private fun play() {
 //        playService!!.play()
         if (!playService!!.isPlaying) {
-            playService!!.play()
+//            playService!!.play()
         } else {
             playService!!.pause()
         }

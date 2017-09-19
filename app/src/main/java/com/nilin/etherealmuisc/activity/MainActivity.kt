@@ -69,26 +69,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //            intent.putExtra("isRefreshing", 1)
 //            startActivity(intent)
         }
-        iv_play_bar_play.setOnClickListener {
-            if (!playService!!.isPlaying) {
-                playService!!.play()
-                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
-            } else {
-                playService!!.pause()
-                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
-            }
-        }
+//        iv_play_bar_play.setOnClickListener {
+//            if (!playService!!.isPlaying) {
+//                playService!!.play()
+//                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+//            } else {
+//                playService!!.pause()
+//                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+//            }
+//        }
         iv_play_bar_next.setOnClickListener { next() }
     }
 
-    private fun play() {
-        playService!!.play()
-        if (playService!!.isPlaying) {
-            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
-        } else {
-            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
-        }
-    }
+//    private fun play() {
+//        playService!!.play()
+//        if (playService!!.isPlaying) {
+//            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+//        } else {
+//            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+//        }
+//    }
 
     private operator fun next() {
 //        PlayService().next()

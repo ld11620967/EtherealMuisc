@@ -38,7 +38,6 @@ object MusicUtils {
             // 释放资源
             cursor.close()
         }
-        Log.i("11111",list[1].path.toString())
         return list
     }
 
