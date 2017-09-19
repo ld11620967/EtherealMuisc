@@ -8,8 +8,8 @@ import android.os.Binder
 import android.os.Environment
 import java.util.concurrent.Executors
 import android.os.IBinder
+import android.util.Log
 import java.io.File
-import java.io.FileInputStream
 
 
 /**
@@ -59,8 +59,7 @@ class PlayService() : Service() {
 
     //默认开始播放的方法
     fun play() {
-//        val file=File(Environment.getExternalStorageDirectory(),"/storage/emulated/0/qqmusic/song/遇萤.mp3")
-        val file=File(Environment.getExternalStorageDirectory(),"yuying.mp3")
+        val file=File(Environment.getExternalStorageDirectory(),"qqmusic/song/yuying.mp3")
         mp!!.setDataSource(file.path)
         mp!!.prepare()
         mp!!.isLooping = true

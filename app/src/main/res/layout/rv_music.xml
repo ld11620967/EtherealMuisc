@@ -9,20 +9,17 @@
         android:id="@+id/item_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="未知"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="16sp" />
-
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/item_singer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         android:layout_below="@+id/item_song"
-        android:text="未知"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
     <ImageView
         android:id="@+id/iv_more"
