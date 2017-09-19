@@ -1,10 +1,8 @@
 package com.nilin.etherealmuisc.activity
 
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.nilin.etherealmuisc.R
@@ -13,7 +11,7 @@ import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.activity_local_music.*
 
 import kotlinx.android.synthetic.main.include_app_bar.*
-import android.widget.Toast
+import com.nilin.etherealmuisc.model.Song
 
 
 /**
@@ -38,7 +36,7 @@ class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener {
             adapter, _, position ->
-            //            start2Detail(adapter.data[position] as Article)
+//                        play(adapter.data[position] as Song)
         }
 
         adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener {
@@ -48,6 +46,15 @@ class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
         })
 
     }
+
+
+//    private fun play(song: Song) {
+//        if (!playService!!.isPlaying) {
+//            playService!!.play()
+//        } else {
+//            playService!!.pause()
+//        }
+//    }
 
 
     override fun onClick(p0: View?) {

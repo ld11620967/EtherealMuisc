@@ -9,6 +9,7 @@ import android.os.Environment
 import java.util.concurrent.Executors
 import android.os.IBinder
 import java.io.File
+import java.io.FileInputStream
 
 
 /**
@@ -38,11 +39,6 @@ class PlayService() : Service() {
 
     override fun onCreate() {
         super.onCreate()
-//        val file: File =File(Environment.getExternalStorageDirectory(),"/storage/emulated/0/qqmusic/song/yuying.mp3")
-        val file=File(Environment.getExternalStorageDirectory(),"yuying.mp3")
-        mp!!.setDataSource(file.path)
-        mp!!.prepare()
-        mp!!.isLooping = true
 
 //        es!!.execute(updateSteatusRunnable)//更新进度值
     }
@@ -63,6 +59,11 @@ class PlayService() : Service() {
 
     //默认开始播放的方法
     fun play() {
+//        val file=File(Environment.getExternalStorageDirectory(),"/storage/emulated/0/qqmusic/song/遇萤.mp3")
+        val file=File(Environment.getExternalStorageDirectory(),"yuying.mp3")
+        mp!!.setDataSource(file.path)
+        mp!!.prepare()
+        mp!!.isLooping = true
 //        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态
         mp!!.start()
 
