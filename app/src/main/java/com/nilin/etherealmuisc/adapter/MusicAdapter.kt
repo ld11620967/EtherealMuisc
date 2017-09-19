@@ -17,6 +17,8 @@ class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Song,
 
         viewHolder!!.setText(R.id.item_song, song!!.song)
         viewHolder.setText(R.id.item_singer, song.singer)
+        viewHolder.setImageResource(R.id.iv_more,R.drawable.ic_more)
+                .addOnClickListener(R.id.iv_more)
 
     }
 

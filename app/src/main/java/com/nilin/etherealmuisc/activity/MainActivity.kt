@@ -63,7 +63,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener { startActivity(Intent(this, SearchMusicActivity::class.java)) }
-        fl_play_bar.setOnClickListener {
+        music_play_bar.setOnClickListener {
             startActivity(Intent(this, PlayActivity::class.java))
 //            val intent = Intent(this, PlayActivity::class.java)
 //            intent.putExtra("isRefreshing", 1)

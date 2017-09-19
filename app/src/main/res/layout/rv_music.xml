@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
@@ -9,17 +10,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="未知"
-        android:textColor="@color/black_50p"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 
     <TextView
         android:id="@+id/item_singer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
         android:layout_below="@+id/item_song"
         android:text="未知"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/iv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        app:srcCompat="@drawable/ic_more" />
 
 </RelativeLayout>

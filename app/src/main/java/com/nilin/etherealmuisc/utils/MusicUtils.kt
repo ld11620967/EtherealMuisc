@@ -2,6 +2,7 @@ package com.nilin.etherealmuisc.utils
 
 import android.provider.MediaStore
 import android.content.Context
+import android.util.Log
 import com.nilin.etherealmuisc.model.Song
 
 /**
@@ -37,6 +38,7 @@ object MusicUtils {
             // 释放资源
             cursor.close()
         }
+        Log.i("11111",list[1].path.toString())
         return list
     }
 

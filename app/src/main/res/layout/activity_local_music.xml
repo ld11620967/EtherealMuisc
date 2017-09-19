@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nilin.etherealmuisc.activity.LocalMusicActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/include_app_bar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_local_music"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:paddingBottom="1dp"
+        android:layout_weight="100"/>
+
+    <include
+        layout="@layout/include_play_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
 </LinearLayout>

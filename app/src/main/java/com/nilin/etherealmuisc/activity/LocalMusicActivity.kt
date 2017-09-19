@@ -1,19 +1,24 @@
 package com.nilin.etherealmuisc.activity
 
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.activity_local_music.*
 
 import kotlinx.android.synthetic.main.include_app_bar.*
+import android.widget.Toast
+
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     var adapter: MusicAdapter? = null
@@ -26,11 +31,24 @@ class LocalMusicActivity : AppCompatActivity(), View.OnClickListener {
         toolbar.setNavigationOnClickListener(this)
 
         rv_local_music.layoutManager = LinearLayoutManager(this)
-        adapter = MusicAdapter(this,R.layout.rv_music)
+        adapter = MusicAdapter(this, R.layout.rv_music)
         rv_local_music.addItemDecoration(ItemDecoration(
                 this, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_local_music.adapter = adapter
+
+        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener {
+            adapter, _, position ->
+            //            start2Detail(adapter.data[position] as Article)
+        }
+
+        adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener {
+            adapter, view, position ->
+
+            false
+        })
+
     }
+
 
     override fun onClick(p0: View?) {
         finish()
