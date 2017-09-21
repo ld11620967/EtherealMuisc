@@ -60,9 +60,7 @@ class PlayService() : Service() {
     fun play(path:String) {
 //        val file=File(Environment.getExternalStorageDirectory(),"qqmusic/song/yuying.mp3")
 //        mp!!.setDataSource(file.path)
-        Log.i("33333","123123")
         mp!!.setDataSource(path)
-        Log.i("4444","123123")
         mp!!.prepare()
         mp!!.isLooping = true
 //        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态

@@ -64,7 +64,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener { startActivity(Intent(this, SearchMusicActivity::class.java)) }
         music_play_bar.setOnClickListener {
+
             startActivity(Intent(this, PlayActivity::class.java))
+
+
 //            val intent = Intent(this, PlayActivity::class.java)
 //            intent.putExtra("isRefreshing", 1)
 //            startActivity(intent)
@@ -79,7 +82,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //            }
 //        }
         iv_play_bar_next.setOnClickListener { next() }
+
     }
+
+
+//    private fun doFragmentReceive(context: Context, intent: Intent) {
+//        val action = intent.action
+//        if (action == FragmentReceiver.ACTION_OPENLOCALMUSICFRAGMENT) {
+//            //打开本地音乐
+//            mFragmentListener.openFragment(LocalMusicFragment())
+//        }
+//        else if (action == FragmentReceiver.ACTION_OPENLIKEMUSICFRAGMENT) {
+//            //打开喜欢
+//            mFragmentListener.openFragment(LikeMusicFragment())
+//        } else if (action == FragmentReceiver.ACTION_OPENRECENTMUSICFRAGMENT) {
+//            //打开最近
+//            mFragmentListener.openFragment(RecentMusicFragment())
+//        }
+//    }
+
 
 //    private fun play() {
 //        playService!!.play()
