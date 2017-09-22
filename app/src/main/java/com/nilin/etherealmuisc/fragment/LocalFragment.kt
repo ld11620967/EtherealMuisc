@@ -38,11 +38,9 @@ class LocalFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
 
-//            val transaction: FragmentTransaction =fragmentManager.beginTransaction()
-//            transaction.replace(R.id.fragment,LocalMusicFragment())
-//            transaction.commit()
-        }
 //        bt_local_music.setOnClickListener { startActivity(Intent(context, LocalMusicActivity::class.java)) }
+        }
+
     }
 
 }
