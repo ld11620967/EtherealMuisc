@@ -39,7 +39,7 @@ class LocalMusicFragment() : BaseFragment(), View.OnClickListener {
         rv_local_music.layoutManager = LinearLayoutManager(context)
         adapter = MusicAdapter(context!!, R.layout.rv_music)
         rv_local_music.addItemDecoration(ItemDecoration(
-                context!!, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
+                context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_local_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener {
@@ -48,7 +48,7 @@ class LocalMusicFragment() : BaseFragment(), View.OnClickListener {
         }
 
         adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener {
-            adapter, view, position ->
+            adapter, _, position ->
 
             false
         })

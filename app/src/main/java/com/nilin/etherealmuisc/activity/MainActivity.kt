@@ -6,7 +6,6 @@ import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import com.nilin.etherealmuisc.adapter.FragmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_music_include.*
 import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.util.Log
@@ -62,7 +61,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     fun clickListener() {
         iv_menu.setOnClickListener {
             Log.i("11111111", "12312312312312312312321313")
-            drawer_layout.openDrawer(GravityCompat.START) }
+            drawer_layout.openDrawer(GravityCompat.START)
+        }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener {

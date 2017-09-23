@@ -2,6 +2,7 @@ package com.nilin.etherealmuisc.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,15 +29,13 @@ class LocalFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         bt_local_music.setOnClickListener {
+            Log.i("1111111","2222222")
             activity.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, LocalMusicFragment(), null)
                     .addToBackStack(null)
                     .commit()
-
-//        bt_local_music.setOnClickListener { startActivity(Intent(context, LocalMusicActivity::class.java)) }
         }
-
     }
 
 }
