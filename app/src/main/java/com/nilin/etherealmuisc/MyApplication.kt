@@ -1,12 +1,13 @@
 package com.nilin.etherealmuisc
 
 import android.app.Application
+import android.view.View
 
 
 /**
 * Created by nilin on 2017/9/16.
 */
-class MyApplication : Application() {
+class MyApplication : Application(){
 
     override fun onCreate() {
         super.onCreate()

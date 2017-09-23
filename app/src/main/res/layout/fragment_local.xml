@@ -10,6 +10,6 @@
         android:layout_height="70dp"
         android:background="@color/colorAccent"
         android:layout_alignParentBottom="true"
-        android:text="本地音乐" />
+        android:text="@string/local_music" />
 
 </RelativeLayout>

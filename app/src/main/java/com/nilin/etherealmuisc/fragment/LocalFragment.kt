@@ -1,9 +1,7 @@
 package com.nilin.etherealmuisc.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,6 @@ import android.view.ViewGroup
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.fragment_local.*
 import com.nilin.etherealmuisc.MyApplication
-import com.nilin.etherealmuisc.activity.LocalMusicActivity
 
 
 /**
@@ -19,7 +16,7 @@ import com.nilin.etherealmuisc.activity.LocalMusicActivity
 */
 class LocalFragment : Fragment() {
 
-    var context = MyApplication.instance
+    val context = MyApplication.instance
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,7 +28,6 @@ class LocalFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         bt_local_music.setOnClickListener {
-
             activity.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, LocalMusicFragment(), null)

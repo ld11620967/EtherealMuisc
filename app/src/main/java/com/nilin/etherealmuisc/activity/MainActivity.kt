@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_music_include.*
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.widget.Toast
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
@@ -19,8 +20,8 @@ import kotlinx.android.synthetic.main.include_play_bar.*
 
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,14 +60,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun clickListener() {
-        iv_menu.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
+        iv_menu.setOnClickListener {
+            Log.i("11111111", "12312312312312312312321313")
+            drawer_layout.openDrawer(GravityCompat.START) }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
-        iv_search.setOnClickListener { startActivity(Intent(this, SearchMusicActivity::class.java)) }
+        iv_search.setOnClickListener {
+            startActivity(Intent(this, SearchMusicActivity::class.java))
+            Log.i("11111111", "12312312312312312312321313")
+        }
         music_play_bar.setOnClickListener {
 
             startActivity(Intent(this, PlayActivity::class.java))
-
 
 //            val intent = Intent(this, PlayActivity::class.java)
 //            intent.putExtra("isRefreshing", 1)
@@ -82,7 +87,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //            }
 //        }
         iv_play_bar_next.setOnClickListener { next() }
-
     }
 
 
@@ -116,25 +120,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    private fun showPlayingFragment() {
-        startActivity(Intent(this, SearchMusicActivity::class.java))
-
-//        if (isPlayFragmentShow) {
-//            return
-//        }
-//
-//        val ft = supportFragmentManager.beginTransaction()
-//        ft.setCustomAnimations(R.anim.fragment_slide_up, 0)
-//        if (mPlayFragment == null) {
-//            mPlayFragment = PlayFragment()
-//            ft.replace(android.R.id.content, mPlayFragment)
-//        } else {
-//            ft.show(mPlayFragment)
-//        }
-//        ft.commitAllowingStateLoss()
-//        isPlayFragmentShow = true
-    }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -158,7 +143,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
