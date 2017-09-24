@@ -1,5 +1,7 @@
 package com.nilin.etherealmuisc.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -7,12 +9,13 @@ import android.view.MenuItem
 import com.nilin.etherealmuisc.adapter.FragmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
+import android.content.IntentFilter
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.widget.Toast
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
+import com.nilin.etherealmuisc.receiver.MusicBroadcastReceiver
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
@@ -23,6 +26,7 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
+    var musicReceiver:MusicBroadcastReceiver?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +35,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         viewpager.addOnPageChangeListener(this)
         clickListener()
         startService(Intent(this, PlayService::class.java))
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.nilin.etherealmusic.play")
+        musicReceiver= MusicBroadcastReceiver()
+        registerReceiver(musicReceiver,intentFilter)
 
     }
 
@@ -60,19 +69,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     fun clickListener() {
         iv_menu.setOnClickListener {
-            Log.i("11111111", "12312312312312312312321313")
             drawer_layout.openDrawer(GravityCompat.START)
         }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener {
             startActivity(Intent(this, SearchMusicActivity::class.java))
-            Log.i("11111111", "12312312312312312312321313")
         }
         music_play_bar.setOnClickListener {
-
             startActivity(Intent(this, PlayActivity::class.java))
-
 //            val intent = Intent(this, PlayActivity::class.java)
 //            intent.putExtra("isRefreshing", 1)
 //            startActivity(intent)
@@ -120,6 +125,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
+    /**
+     * 广播监听
+     */
+//    private val mAudioReceiverListener = object : AudioBroadcastReceiver.AudioReceiverListener() {
+//        fun onReceive(context: Context, intent: Intent) {
+//            doAudioReceive(context, intent)
+//        }
+//    }
+
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -161,4 +175,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onDestroy()
         unbindPlayService()//解绑服务
     }
+
+
+    class MusicBroadcastReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            Toast.makeText(context, "222222222222", Toast.LENGTH_LONG).show()
+        }
+    }
+
 }

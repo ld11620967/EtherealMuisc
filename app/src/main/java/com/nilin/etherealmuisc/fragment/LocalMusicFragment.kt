@@ -1,15 +1,14 @@
 package com.nilin.etherealmuisc.fragment
 
+import android.content.BroadcastReceiver
+import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.nilin.etherealmuisc.MyApplication
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 import com.nilin.etherealmuisc.model.Song
 
 
-class LocalMusicFragment() : BaseFragment(), View.OnClickListener {
+class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
     var adapter: MusicAdapter? = null
 
@@ -42,13 +41,13 @@ class LocalMusicFragment() : BaseFragment(), View.OnClickListener {
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_local_music.adapter = adapter
 
-        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener {
-            adapter, _, position ->
-                        play(adapter.data[position] as Song)
+        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+            play(adapter.data[position] as Song)
+            val intent = Intent("com.nilin.etherealmusic.play")
+            context.sendBroadcast(intent)
         }
 
-        adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener {
-            adapter, _, position ->
+        adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener { adapter, _, position ->
 
             false
         })

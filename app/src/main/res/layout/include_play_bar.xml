@@ -32,14 +32,13 @@
 
             <TextView
                 android:id="@+id/tv_play_bar_title"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="无音乐"
                 android:textSize="@dimen/text_size_common" />
-            <!--style="@style/AppTheme.Text"-->
+
             <TextView
                 android:id="@+id/tv_play_bar_artist"
                 android:layout_width="wrap_content"
@@ -65,12 +64,5 @@
             android:contentDescription="@null" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/pb_play_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_gravity="bottom"
-        android:progressDrawable="@drawable/progress_bar_style" />
 
 </FrameLayout>

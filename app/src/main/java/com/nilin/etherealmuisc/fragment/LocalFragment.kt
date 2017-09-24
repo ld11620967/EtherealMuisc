@@ -29,7 +29,6 @@ class LocalFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         bt_local_music.setOnClickListener {
-            Log.i("1111111","2222222")
             activity.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, LocalMusicFragment(), null)
