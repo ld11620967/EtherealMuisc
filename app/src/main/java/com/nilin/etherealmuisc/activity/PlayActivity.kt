@@ -21,15 +21,15 @@ class PlayActivity : BaseActivity() {
 //            iv_play_bar_play.setBackgroundResource(R.drawable.player_start)
 //        }
         iv_play_back.setOnClickListener { finish() }
-        ib_play_contorl.setOnClickListener {
-            if (playService!!.isPlaying) {
-                playService!!.pause()
-                ib_play_contorl.setBackgroundResource(R.drawable.player_start)
-            } else {
+//        ib_play_contorl.setOnClickListener {
+//            if (playService!!.isPlaying) {
+//                playService!!.pause()
+//                ib_play_contorl.setBackgroundResource(R.drawable.player_start)
+//            } else {
 //                playService!!.play()
-                ib_play_contorl.setBackgroundResource(R.drawable.player_pause)
-            }
-        }
+//                ib_play_contorl.setBackgroundResource(R.drawable.player_pause)
+//            }
+//        }
 
     }
 

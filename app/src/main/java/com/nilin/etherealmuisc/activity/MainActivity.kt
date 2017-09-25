@@ -180,19 +180,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unbindPlayService()//解绑服务
     }
 
-    fun changeF2(song: String,songer: String) {
+    fun changeF2(song: String, songer: String, play: Boolean) {
         tv_play_bar_title.text = song
         tv_play_bar_artist.text = songer
-        iv_play_bar_play.isSelected=true
+        if (play) {
+            iv_play_bar_play.isSelected = true
+        } else {
+            iv_play_bar_play.isSelected = false
+        }
+
     }
 
     class MusicBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val song=intent.getStringExtra("song")
-            val songer=intent.getStringExtra("songer")
-            val play=intent.getStringExtra("play")
-            (context as MainActivity).changeF2(song,songer)
+            val song = intent.getStringExtra("song")
+            val songer = intent.getStringExtra("songer")
+            val play = intent.getBooleanExtra("play",false)
+            (context as MainActivity).changeF2(song, songer, play)
         }
 
     }

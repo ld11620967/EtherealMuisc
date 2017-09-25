@@ -37,13 +37,14 @@ class PlayService() : Service() {
     }
 
     override fun onCreate() {
+
         super.onCreate()
 
 //        es!!.execute(updateSteatusRunnable)//更新进度值
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        start()
+
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -57,16 +58,19 @@ class PlayService() : Service() {
     }
 
     //默认开始播放的方法
-    fun play(path:String) {
-//        val file=File(Environment.getExternalStorageDirectory(),"qqmusic/song/yuying.mp3")
-//        mp!!.setDataSource(file.path)
+    fun prepare(path:String) {
+        mp!!.reset()
         mp!!.setDataSource(path)
         mp!!.prepare()
         mp!!.isLooping = true
 //        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态
-        mp!!.start()
+//        mp!!.start()
 
 //        }
+    }
+
+    fun start() {
+        mp!!.start()
     }
 
     fun pause() {
