@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.nilin.etherealmuisc.R.id.tv_play_bar_title
 
 
 class MusicBroadcastReceiver : BroadcastReceiver() {

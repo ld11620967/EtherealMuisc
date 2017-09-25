@@ -1,5 +1,7 @@
 package com.nilin.etherealmuisc.activity
 
+import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Bundle
@@ -12,10 +14,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.support.v4.view.ViewPager
 import android.widget.Toast
+import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
-import com.nilin.etherealmuisc.receiver.MusicBroadcastReceiver
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
@@ -26,7 +28,10 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
-    var musicReceiver:MusicBroadcastReceiver?=null
+    var musicReceiver: MusicBroadcastReceiver? = null
+    val activity: Activity? = null
+    val context = MyApplication.instance
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,8 +43,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
-        musicReceiver= MusicBroadcastReceiver()
-        registerReceiver(musicReceiver,intentFilter)
+        musicReceiver = MusicBroadcastReceiver()
+        registerReceiver(musicReceiver, intentFilter)
 
     }
 
@@ -176,12 +181,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unbindPlayService()//解绑服务
     }
 
+    fun changeF2(text: String) {
+        tv_play_bar_title.text = text
+    }
 
     class MusicBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
             Toast.makeText(context, "222222222222", Toast.LENGTH_LONG).show()
+//            (getActivity() as MainActivity).changeF2("哈哈")
+//            (context as MainActivity).changeF2("哈哈")
         }
-    }
 
+    }
 }
