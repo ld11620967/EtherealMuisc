@@ -45,7 +45,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         intentFilter.addAction("com.nilin.etherealmusic.play")
         musicReceiver = MusicBroadcastReceiver()
         registerReceiver(musicReceiver, intentFilter)
-
     }
 
     private fun initView() {
@@ -181,16 +180,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unbindPlayService()//解绑服务
     }
 
-    fun changeF2(text: String) {
-        tv_play_bar_title.text = text
+    fun changeF2(song: String,songer: String) {
+        tv_play_bar_title.text = song
+        tv_play_bar_artist.text = songer
+        iv_play_bar_play.isSelected=true
     }
 
     class MusicBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            Toast.makeText(context, "222222222222", Toast.LENGTH_LONG).show()
-//            (getActivity() as MainActivity).changeF2("哈哈")
-//            (context as MainActivity).changeF2("哈哈")
+            val song=intent.getStringExtra("song")
+            val songer=intent.getStringExtra("songer")
+            val play=intent.getStringExtra("play")
+            (context as MainActivity).changeF2(song,songer)
         }
 
     }

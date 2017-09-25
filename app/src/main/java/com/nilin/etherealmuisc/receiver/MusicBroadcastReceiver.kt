@@ -10,7 +10,7 @@ import com.nilin.etherealmuisc.R.id.tv_play_bar_title
 class MusicBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Toast.makeText(context, "111111111111111", Toast.LENGTH_LONG).show()
+//        Toast.makeText(context, "111111111111111", Toast.LENGTH_LONG).show()
 
     }
 

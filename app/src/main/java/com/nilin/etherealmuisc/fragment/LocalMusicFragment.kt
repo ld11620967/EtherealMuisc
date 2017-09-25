@@ -16,6 +16,7 @@ import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
 import com.nilin.etherealmuisc.model.Song
+import kotlinx.android.synthetic.main.include_play_bar.*
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
@@ -42,8 +43,13 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         rv_local_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
-            play(adapter.data[position] as Song)
+            val song=adapter.data[position] as Song
+            play(song)
             val intent = Intent("com.nilin.etherealmusic.play")
+            intent.putExtra("song", song.song)
+            intent.putExtra("songer", song.singer)
+            intent.putExtra("play", "ture")
+
             context.sendBroadcast(intent)
         }
 
@@ -59,6 +65,10 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         } else {
             playService!!.pause()
         }
+    }
+
+    fun change(song: Song) {
+
     }
 
     override fun onClick(p0: View?) {
