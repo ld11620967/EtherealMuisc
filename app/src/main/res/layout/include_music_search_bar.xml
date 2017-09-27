@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:minHeight="?attr/actionBarSize"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:layout_weight="1"
+            android:src="@drawable/ic_back" />
+
+        <EditText
+            android:id="@+id/tv_local_music"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="歌曲名、歌手名"
+            android:textColor="@drawable/music_tab_bar_text_color_selector"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/tv_online_music"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -17,7 +17,9 @@ import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
+import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
+import com.nilin.etherealmuisc.fragment.SearchMusicFragment
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
@@ -29,7 +31,6 @@ import kotlinx.android.synthetic.main.include_play_bar.*
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     var musicReceiver: MusicBroadcastReceiver? = null
-    val activity: Activity? = null
     val context = MyApplication.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +79,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener {
-            startActivity(Intent(this, SearchMusicActivity::class.java))
+           supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment, SearchMusicFragment(), null)
+                    .addToBackStack(null)
+                    .commit()
+//            startActivity(Intent(this, SearchMusicActivity::class.java))
         }
         music_play_bar.setOnClickListener {
             startActivity(Intent(this, PlayActivity::class.java))

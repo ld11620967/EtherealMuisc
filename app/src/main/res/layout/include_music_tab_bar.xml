@@ -47,5 +47,5 @@
         android:layout_gravity="end"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_menu_search" />
+        android:src="@drawable/ic_search" />
 </FrameLayout>

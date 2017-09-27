@@ -11,13 +11,12 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/item_singer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="5dp"
         android:layout_below="@+id/item_song"
         android:textSize="13sp" />
 
