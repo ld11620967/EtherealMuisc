@@ -19,7 +19,7 @@ class PlayService() : Service() {
 
     var mp: MediaPlayer? = MediaPlayer()
 
-    val context: Context=this
+    val context: Context = this
 
 //    private var musicUpdatrListener: MusicUpdatrListener? = null
 
@@ -58,7 +58,7 @@ class PlayService() : Service() {
     }
 
     //默认开始播放的方法
-    fun prepare(path:String) {
+    fun prepare(path: String) {
         mp!!.reset()
         mp!!.setDataSource(path)
         mp!!.prepare()
@@ -78,7 +78,8 @@ class PlayService() : Service() {
         mp!!.pause()
 //        }
     }
-//
+
+    //
 //    fun stop() {
 //        mp!!.stop()
 //        try {

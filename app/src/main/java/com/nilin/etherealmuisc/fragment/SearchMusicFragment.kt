@@ -34,7 +34,7 @@ class SearchMusicFragment : BaseFragment(){
 
         tv_local_music.requestFocus()
         showInputMethod()
-        
+
         iv_back.setOnClickListener {
             hideInputMethod()
             getFragmentManager().popBackStack() }
@@ -74,9 +74,7 @@ class SearchMusicFragment : BaseFragment(){
 
     private fun showInputMethod() {
         //自动弹出键盘
-
         inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
-
     }
 
     private fun hideInputMethod() {

@@ -32,6 +32,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     var musicReceiver: MusicBroadcastReceiver? = null
     val context = MyApplication.instance
+    val playActivity: PlayActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,28 +80,33 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         iv_search.setOnClickListener {
-           supportFragmentManager
+            supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, SearchMusicFragment(), null)
                     .addToBackStack(null)
                     .commit()
-//            startActivity(Intent(this, SearchMusicActivity::class.java))
         }
         music_play_bar.setOnClickListener {
+            //            if (playService!!.isPlaying) {
+//                playActivity!!.player_pause()
+//            } else {
+//                playActivity!!.player_start()
+//            }
+
             startActivity(Intent(this, PlayActivity::class.java))
 //            val intent = Intent(this, PlayActivity::class.java)
 //            intent.putExtra("isRefreshing", 1)
 //            startActivity(intent)
         }
-//        iv_play_bar_play.setOnClickListener {
-//            if (!playService!!.isPlaying) {
-//                playService!!.play()
-//                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
-//            } else {
-//                playService!!.pause()
-//                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
-//            }
-//        }
+        iv_play_bar_play.setOnClickListener {
+            if (!playService!!.isPlaying) {
+                playService!!.start()
+                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+            } else {
+                playService!!.pause()
+                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+            }
+        }
         iv_play_bar_next.setOnClickListener { next() }
     }
 
@@ -138,7 +144,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     /**
      * 广播监听
      */
-//    private val mAudioReceiverListener = object : AudioBroadcastReceiver.AudioReceiverListener() {
+    //    private val mAudioReceiverListener = object : AudioBroadcastReceiver.AudioReceiverListener() {
 //        fun onReceive(context: Context, intent: Intent) {
 //            doAudioReceive(context, intent)
 //        }
@@ -202,7 +208,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         override fun onReceive(context: Context, intent: Intent) {
             val song = intent.getStringExtra("song")
             val songer = intent.getStringExtra("songer")
-            val play = intent.getBooleanExtra("play",false)
+            val play = intent.getBooleanExtra("play", false)
             (context as MainActivity).changeF2(song, songer, play)
         }
 
