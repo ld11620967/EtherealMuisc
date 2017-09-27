@@ -32,7 +32,9 @@ class SearchMusicFragment : BaseFragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        tv_local_music.requestFocus()
         showInputMethod()
+        
         iv_back.setOnClickListener {
             hideInputMethod()
             getFragmentManager().popBackStack() }
