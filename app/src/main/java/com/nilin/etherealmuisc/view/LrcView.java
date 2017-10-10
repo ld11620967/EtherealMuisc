@@ -43,7 +43,7 @@ public class LrcView extends View implements ILrcView{
 	private int mDisplayMode = DISPLAY_MODE_NORMAL;
 	private LrcViewListener mLrcViewListener;
 	
-	private String mLoadingLrcTip = "Downloading lrc...";
+	private String mLoadingLrcTip = "暂无歌词";
 	
 	private Paint mPaint;
 	
