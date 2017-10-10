@@ -111,7 +111,7 @@
                 android:layout_height="65dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
-                android:background="@drawable/player_start"
+                android:background="@drawable/play_btn_play_pause_selector"
                 android:scaleType="centerInside" />
 
             <ImageButton
