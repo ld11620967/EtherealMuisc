@@ -32,7 +32,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     var musicReceiver: MusicBroadcastReceiver? = null
     val context = MyApplication.instance
-    val playActivity: PlayActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

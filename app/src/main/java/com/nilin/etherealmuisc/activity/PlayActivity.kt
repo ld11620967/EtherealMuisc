@@ -3,6 +3,7 @@ package com.nilin.etherealmuisc.activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -12,6 +13,8 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.widget.SeekBar
+import com.nilin.etherealmuisc.MyApplication
+import com.nilin.etherealmuisc.service.PlayService
 import com.nilin.etherealmuisc.utils.MediaUtils
 
 
@@ -20,10 +23,21 @@ import com.nilin.etherealmuisc.utils.MediaUtils
  */
 class PlayActivity : BaseActivity() {
 
+//    var musicReceiver: MusicBroadcastReceiver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play)
+
+//        val intentFilter = IntentFilter()
+//        intentFilter.addAction("com.nilin.etherealmusic.play")
+//        musicReceiver = MusicBroadcastReceiver()
+//        registerReceiver(musicReceiver, intentFilter)
+
+
+
+        onChangeImpl();
 
         iv_play_back.setOnClickListener { finish() }
 
@@ -98,6 +112,30 @@ class PlayActivity : BaseActivity() {
         }
     }
 
+    private fun onChangeImpl( ){
+//        if (music == null) {
+//            return
+//        }
+
+//        tvTitle.setText(music!!.getTitle())
+//        tvArtist.setText(music!!.getArtist())
+//        sbProgress.setProgress(playService!!.getCurrentPosition() as Int)
+//        sbProgress.setSecondaryProgress(0)
+//        sbProgress.setMax(music!!.getDuration() as Int)
+//        mLastProgress = 0
+//        tvCurrentTime.setText(R.string.play_time_start)
+//        tvTotalTime.setText(formatTime(music!!.getDuration()))
+//        setCoverAndBg(music)
+//        setLrc(music)
+//        if (playService!!.isPlaying) {
+//            ib_play_contorl.isSelected = true
+////            mAlbumCoverView.start()
+//        } else {
+//            ib_play_contorl.isSelected = false
+////            mAlbumCoverView.pause()
+//        }
+    }
+
 //    fun changeF1(song: String, songer: String, play: Boolean) {
 ////            tv_play_bar_title.text = song
 ////            tv_play_bar_artist.text = songer
@@ -108,7 +146,7 @@ class PlayActivity : BaseActivity() {
 //        }
 //
 //    }
-
+//
 //    class MusicBroadcastReceiver : BroadcastReceiver() {
 //
 //        override fun onReceive(context: Context, intent: Intent) {
