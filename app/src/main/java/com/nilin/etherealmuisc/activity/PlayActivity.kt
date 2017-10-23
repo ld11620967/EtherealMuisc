@@ -13,6 +13,7 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.widget.SeekBar
+import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.service.PlayService
 import com.nilin.etherealmuisc.utils.MediaUtils
@@ -23,19 +24,16 @@ import com.nilin.etherealmuisc.utils.MediaUtils
  */
 class PlayActivity : BaseActivity() {
 
-//    var musicReceiver: MusicBroadcastReceiver? = null
+//    var musicReceiver: MainActivity.MusicBroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play)
 
-//        val intentFilter = IntentFilter()
-//        intentFilter.addAction("com.nilin.etherealmusic.play")
-//        musicReceiver = MusicBroadcastReceiver()
-//        registerReceiver(musicReceiver, intentFilter)
-
-
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.nilin.etherealmusic.play")
+        registerReceiver(broadcastReceiver, intentFilter)
 
         onChangeImpl();
 
@@ -136,27 +134,32 @@ class PlayActivity : BaseActivity() {
 //        }
     }
 
-//    fun changeF1(song: String, songer: String, play: Boolean) {
-////            tv_play_bar_title.text = song
-////            tv_play_bar_artist.text = songer
-//        if (play) {
-//            ib_play_contorl.isSelected = true
-//        } else {
-//            ib_play_contorl.isSelected = false
-//        }
-//
-//    }
-//
-//    class MusicBroadcastReceiver : BroadcastReceiver() {
-//
-//        override fun onReceive(context: Context, intent: Intent) {
-//            val song = intent.getStringExtra("song")
-//            val songer = intent.getStringExtra("songer")
-//            val play = intent.getBooleanExtra("play", false)
-//            (context as PlayActivity).changeF1(song, songer, play)
-//        }
-//
-//    }
+    fun changeF2(song: String, songer: String, play: Boolean) {
+        tv_play_bar_title.text = song
+        tv_play_bar_artist.text = songer
+        if (play) {
+            ib_play_contorl.isSelected = true
+        } else {
+            ib_play_contorl.isSelected = false
+        }
+
+    }
+
+    var broadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            Toast.makeText(context, "2222222222222", Toast.LENGTH_LONG).show()
+            val song = intent.getStringExtra("song")
+            val songer = intent.getStringExtra("songer")
+            val play = intent.getBooleanExtra("play", false)
+//            (context as MainActivity).changeF2(song, songer, play)
+            if (play) {
+                ib_play_contorl.isSelected = true
+            } else {
+                ib_play_contorl.isSelected = false
+            }
+        }
+    }
 
     override fun onResume() {
         super.onResume()

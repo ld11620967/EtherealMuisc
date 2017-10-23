@@ -32,9 +32,9 @@
             android:name=".receiver.MusicBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
-            <!--<intent-filter>-->
-                <!--<action android:name="com.nilin.etherealmusic.play" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="com.nilin.etherealmusic.play" />
+            </intent-filter>
         </receiver>
     </application>
 

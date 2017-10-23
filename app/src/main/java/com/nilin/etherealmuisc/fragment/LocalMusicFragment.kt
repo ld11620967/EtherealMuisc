@@ -46,9 +46,9 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             val intent = Intent("com.nilin.etherealmusic.play")
             intent.putExtra("song", song.song)
             intent.putExtra("songer", song.singer)
-            playService!!.start()
             intent.putExtra("play", true)
             context.sendBroadcast(intent)
+            playService!!.start()
         }
 
         adapter!!.setOnItemChildClickListener(BaseQuickAdapter.OnItemChildClickListener { adapter, _, position ->

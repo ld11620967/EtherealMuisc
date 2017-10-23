@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
-    var musicReceiver: MusicBroadcastReceiver? = null
     val context = MyApplication.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +43,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
-        musicReceiver = MusicBroadcastReceiver()
-        registerReceiver(musicReceiver, intentFilter)
+        registerReceiver(broadcastReceiver, intentFilter)
     }
 
     private fun initView() {
@@ -140,15 +138,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    /**
-     * 广播监听
-     */
-    //    private val mAudioReceiverListener = object : AudioBroadcastReceiver.AudioReceiverListener() {
-//        fun onReceive(context: Context, intent: Intent) {
-//            doAudioReceive(context, intent)
-//        }
-//    }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -199,17 +188,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else {
             iv_play_bar_play.isSelected = false
         }
-
     }
 
-    class MusicBroadcastReceiver : BroadcastReceiver() {
+    var broadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
+            Toast.makeText(context, "111111111111111", Toast.LENGTH_LONG).show()
             val song = intent.getStringExtra("song")
             val songer = intent.getStringExtra("songer")
             val play = intent.getBooleanExtra("play", false)
             (context as MainActivity).changeF2(song, songer, play)
         }
-
     }
+
 }
