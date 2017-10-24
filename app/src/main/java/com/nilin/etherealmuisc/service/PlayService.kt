@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
+import java.io.IOException
 
 
 /**
@@ -66,22 +67,22 @@ class PlayService() : Service() {
     }
 
     fun pause() {
-//        if (mp!!.isPlaying) {
-        mp!!.pause()
-//        }
+        if (mp!!.isPlaying) {
+            mp.pause()
+        }
     }
 
-//    fun stop() {
-//        mp!!.stop()
-//        try {
-//            mp!!.prepare()
-//            seekTo(0)
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//    }
-//
+    fun stop() {
+        mp!!.stop()
+        try {
+            mp.prepare()
+            seekTo(0)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
     //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
     val isPlaying: Boolean
         get() {

@@ -5,7 +5,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
@@ -19,7 +19,7 @@ import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 /**
  * Created by liangd on 2017/9/19.
  */
-class PlayActivity : BaseActivity() {
+class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
@@ -35,28 +35,52 @@ class PlayActivity : BaseActivity() {
 
         //显示歌词
         val lrc = getFromAssets("lyric.lrc")
-        Log.i("2222222222222", lrc)
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
 
-        myHandler = MyHandler(this);
+        myHandler = MyHandler(this)
 
-        iv_play_back.setOnClickListener { finish() }
+        ib_play_previous.setOnClickListener(this)
+        ib_play_contorl.setOnClickListener(this)
+        ib_play_next.setOnClickListener(this)
+        iv_play_back.setOnClickListener(this)
     }
 
-    fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
             playService!!.seekTo(progress)
         }
     }
 
-    fun onStartTrackingTouch(seekBar: SeekBar) {
+    override fun onStartTrackingTouch(seekBar: SeekBar) {
 
     }
 
-    fun onStopTrackingTouch(seekBar: SeekBar) {
+    override fun onStopTrackingTouch(seekBar: SeekBar) {
 
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.ib_play_previous -> {
+
+            }
+            R.id.ib_play_contorl -> {
+                if (playService!!.isPlaying) {
+                    playService!!.pause()
+                    ib_play_contorl.isSelected = false
+                } else {
+                    playService!!.start()
+                    ib_play_contorl.isSelected = true
+                }
+            }
+            R.id.ib_play_next -> {
+
+            }
+            R.id.iv_play_back -> finish()
+        }
     }
 
     internal class MyHandler(private val playActivity: PlayActivity?) : Handler() {
@@ -103,9 +127,9 @@ class PlayActivity : BaseActivity() {
         try {
             val inputReader = InputStreamReader(resources.assets.open(fileName))
             val bufReader = BufferedReader(inputReader)
-            var line =bufReader.readLine()
+            var line = bufReader.readLine()
             var Result = ""
-            while (line!= null) {
+            while (line != null) {
                 Result += line + "\r\n"
                 line = bufReader.readLine()
             }

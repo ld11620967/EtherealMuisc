@@ -32,12 +32,12 @@ public class LrcView extends View implements ILrcView{
 	private int mNormalRowColor = Color.WHITE;
 	private int mSeekLineColor = Color.CYAN;
 	private int mSeekLineTextColor = Color.CYAN;
-	private int mSeekLineTextSize = 40;
+	private int mSeekLineTextSize = 20;
 	private int mMinSeekLineTextSize = 30;
 	private int mMaxSeekLineTextSize = 50;
 	private int mLrcFontSize = 50; 	// font size of lrc
-	private int mMinLrcFontSize = 30;
-	private int mMaxLrcFontSize = 70;
+	private int mMinLrcFontSize = 10;
+	private int mMaxLrcFontSize = 40;
 	private int mPaddingY = 43;	  // padding of each row
 	private int mSeekLinePaddingX = 0; // Seek line padding x
 	private int mDisplayMode = DISPLAY_MODE_NORMAL;
