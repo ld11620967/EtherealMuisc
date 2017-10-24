@@ -9,14 +9,13 @@ import java.util.concurrent.Executors
 import android.os.IBinder
 
 
-
 /**
  * Created by nilin on 2017/9/10.
  */
 class PlayService() : Service() {
 
-    var mp: MediaPlayer? = MediaPlayer()
-    val musicUpdatrListener: MusicUpdatrListener? = null
+    val mp: MediaPlayer? = MediaPlayer()
+    private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
 
     //创建一个单实例的线程,用于更新音乐信息
@@ -34,6 +33,7 @@ class PlayService() : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        es.execute(updateSteatusRunnable);//更新进度值
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -53,9 +53,9 @@ class PlayService() : Service() {
     //默认开始播放的方法
     fun prepare(path: String) {
         mp!!.reset()
-        mp!!.setDataSource(path)
-        mp!!.prepare()
-        mp!!.isLooping = true
+        mp.setDataSource(path)
+        mp.prepare()
+        mp.isLooping = true
 //        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态
 //        mp!!.start()
 
@@ -88,7 +88,7 @@ class PlayService() : Service() {
     val isPlaying: Boolean
         get() {
             if (mp != null) {
-                return mp!!.isPlaying
+                return mp.isPlaying
             }
             return false
         }
@@ -97,8 +97,8 @@ class PlayService() : Service() {
     //mp,并且,为播放状态
     val currentProgress: Int
         get() {
-            if (mp != null && mp!!.isPlaying) {
-                return mp!!.currentPosition
+            if (mp != null && mp.isPlaying) {
+                return mp.currentPosition
             }
             return 0
         }
@@ -124,9 +124,9 @@ class PlayService() : Service() {
     {
         //不断更新进度值
         while (true) {
-            //音乐更新监听不为空,并且,媒体播放不为空,并且媒体播放为播放状态
-            if (musicUpdatrListener != null && mp != null && mp!!.isPlaying) {
-                musicUpdatrListener.onPublish(currentProgress)//获取当前的进度值
+            //音乐更新监听不为空,并且媒体播放不为空,并且媒体播放为播放状态
+            if (musicUpdatrListener != null && mp != null && mp.isPlaying) {
+                musicUpdatrListener!!.onPublish(currentProgress)//获取当前的进度值
             }
             try {
                 Thread.sleep(500)//500毫秒更新一次
@@ -141,13 +141,12 @@ class PlayService() : Service() {
         //音乐更新监听器
         fun onPublish(progress: Int) //发表进度事件(更新进度条)
         fun onChange()
-
         //声明MusicUpdatrListener后,添加set方法
     }
 
     //set方法
     fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
-//        this.musicUpdatrListener = musicUpdatrListener
+        this.musicUpdatrListener = musicUpdatrListener
     }
 
 }

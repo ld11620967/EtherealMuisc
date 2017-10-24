@@ -8,11 +8,8 @@ import android.os.Message
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
-import kotlinx.android.synthetic.main.include_play_bar.*
 import android.widget.SeekBar
-import com.nilin.etherealmuisc.model.Song
 import com.nilin.etherealmuisc.utils.MediaUtils
-import com.nilin.etherealmuisc.utils.MusicUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
@@ -22,6 +19,9 @@ import com.nilin.etherealmuisc.view.DefaultLrcBuilder
  * Created by liangd on 2017/9/19.
  */
 class PlayActivity : BaseActivity() {
+
+    //Handler用于更新已经播放时间
+    private var myHandler: MyHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,26 +33,15 @@ class PlayActivity : BaseActivity() {
         intentFilter.addAction("com.nilin.etherealmusic.play")
 
         //显示歌词
-//        val lrcView = (findViewById<View>(R.id.lrcView) as LrcView)
         val lrc = getFromAssets("lyric.lrc")
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
 
+        myHandler = MyHandler(this);
+
         iv_play_back.setOnClickListener { finish() }
     }
-
-    fun player_start() {
-        iv_play_bar_play.setBackgroundResource(R.drawable.player_start)
-    }
-
-    fun player_pause() {
-        iv_play_bar_play.setBackgroundResource(R.drawable.player_pause)
-    }
-
-
-    //Handler用于更新已经播放时间
-    private val myHandler: MyHandler? = null
 
     fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
@@ -75,8 +64,8 @@ class PlayActivity : BaseActivity() {
             if (playActivity != null) {
                 when (msg.what) {
                     UPDATE_TIME//更新时间(已经播放时间)
-                    -> playActivity.MusicStatus.setText(MediaUtils.formatTime(msg.obj as Long))
-                    UPDATE_LRC -> playActivity.lrcView.seekLrcToTime(msg.obj as Long)
+                    -> playActivity.MusicStatus.setText(MediaUtils.formatTime(msg.obj.toString().toLong()))
+                    UPDATE_LRC -> playActivity.lrcView.seekLrcToTime(msg.obj.toString().toLong())
                     else -> {
                     }
                 }
@@ -87,7 +76,7 @@ class PlayActivity : BaseActivity() {
     override fun publish(progress: Int) {
         myHandler!!.obtainMessage(UPDATE_TIME, progress).sendToTarget()
         MusicSeekBar.setProgress(progress)
-        myHandler.obtainMessage(UPDATE_LRC, progress).sendToTarget()
+        myHandler!!.obtainMessage(UPDATE_LRC, progress).sendToTarget()
     }
 
     override fun change() {
@@ -95,7 +84,7 @@ class PlayActivity : BaseActivity() {
         MusicSeekBar.setMax(playService!!.duration)//设置进度条最大值为MP3总时间
 
         val pref = getSharedPreferences("title", Context.MODE_PRIVATE)
-        val title = pref.getString("title", "")
+        val title = pref.getString("title", "空灵音乐")
         tv_music_title.setText(title)
 
         if (playService!!.isPlaying) {

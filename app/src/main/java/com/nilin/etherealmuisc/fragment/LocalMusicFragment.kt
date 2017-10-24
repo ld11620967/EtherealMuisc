@@ -25,9 +25,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         return inflater!!.inflate(R.layout.fragment_local_music, container, false)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

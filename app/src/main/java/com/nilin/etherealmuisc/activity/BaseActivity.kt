@@ -26,6 +26,7 @@ abstract class BaseActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val playBinder = service as PlayService.PlayBinder
             playService = playBinder.service
+            playService!!.setMusicUpdatrListener(musicUpdatrListener);
             musicUpdatrListener.onChange();
         }
 
