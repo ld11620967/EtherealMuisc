@@ -5,11 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Binder
-import android.os.Environment
 import java.util.concurrent.Executors
 import android.os.IBinder
-import android.util.Log
-import java.io.File
+
 
 
 /**
@@ -18,10 +16,8 @@ import java.io.File
 class PlayService() : Service() {
 
     var mp: MediaPlayer? = MediaPlayer()
-
+    val musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
-
-//    private var musicUpdatrListener: MusicUpdatrListener? = null
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -96,21 +92,21 @@ class PlayService() : Service() {
             }
             return false
         }
-//
-//    //获取当前的进度值
-//    //mp,并且,为播放状态
-//    val currentProgress: Int
-//        get() {
-//            if (mp != null && mp!!.isPlaying) {
-//                return mp!!.currentPosition
-//            }
-//            return 0
-//        }
-//
-//    //getDuration 获取文件的持续时间
-//    val duration: Int
-//        get() = mp!!.duration
-//
+
+    //获取当前的进度值
+    //mp,并且,为播放状态
+    val currentProgress: Int
+        get() {
+            if (mp != null && mp!!.isPlaying) {
+                return mp!!.currentPosition
+            }
+            return 0
+        }
+
+    //getDuration 获取文件的持续时间
+    val duration: Int
+        get() = mp!!.duration
+
     //seekTo 寻找指定的时间位置
     fun seekTo(msec: Int) {
         mp!!.seekTo(msec)
@@ -124,38 +120,34 @@ class PlayService() : Service() {
      * 方法就可以实现多线程了,但是这个run()方法不能自己调用,必须由系统来调用,否则就和别的方法没有什么区别了.
      * 好处:数据共享
      */
-    //    internal var updateSteatusRunnable: Runnable = java.lang.Runnable //更新状态
-//
-//    {
-//        //不断更新进度值
-//        while (true) {
-//            //音乐更新监听不为空,并且,媒体播放不为空,并且媒体播放为播放状态
-//            if (musicUpdatrListener != null && mp != null && mp!!.isPlaying) {
-//                musicUpdatrListener!!.onPublish(currentProgress)//获取当前的进度值
-//            }
-//            try {
-//                Thread.sleep(500)//500毫秒更新一次
-//            } catch (e: InterruptedException) {
-//                e.printStackTrace()
-//            }
-//
-//        }
-//    }
+    internal var updateSteatusRunnable: Runnable = Runnable() //更新状态
+    {
+        //不断更新进度值
+        while (true) {
+            //音乐更新监听不为空,并且,媒体播放不为空,并且媒体播放为播放状态
+            if (musicUpdatrListener != null && mp != null && mp!!.isPlaying) {
+                musicUpdatrListener.onPublish(currentProgress)//获取当前的进度值
+            }
+            try {
+                Thread.sleep(500)//500毫秒更新一次
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+        }
+    }
 
-//    //更新状态的接口(PlayService的内部接口),并在BaseActivity中实现
-//    interface MusicUpdatrListener {
-//        //音乐更新监听器
-//        fun onPublish(progress: Int) //发表进度事件(更新进度条)
-//
-//        fun onChange()
-//
-//        //声明MusicUpdatrListener后,添加set方法
-//    }
-//
-//    //set方法
-//    fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
+    //更新状态的接口(PlayService的内部接口),并在BaseActivity中实现
+    interface MusicUpdatrListener {
+        //音乐更新监听器
+        fun onPublish(progress: Int) //发表进度事件(更新进度条)
+        fun onChange()
+
+        //声明MusicUpdatrListener后,添加set方法
+    }
+
+    //set方法
+    fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
 //        this.musicUpdatrListener = musicUpdatrListener
-//    }
-
+    }
 
 }

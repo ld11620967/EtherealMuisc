@@ -1,22 +1,21 @@
 package com.nilin.etherealmuisc.activity
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.widget.SeekBar
-import android.widget.Toast
-import com.nilin.etherealmuisc.MyApplication
-import com.nilin.etherealmuisc.service.PlayService
+import com.nilin.etherealmuisc.model.Song
 import com.nilin.etherealmuisc.utils.MediaUtils
+import com.nilin.etherealmuisc.utils.MusicUtils
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 
 
 /**
@@ -24,47 +23,23 @@ import com.nilin.etherealmuisc.utils.MediaUtils
  */
 class PlayActivity : BaseActivity() {
 
-//    var musicReceiver: MainActivity.MusicBroadcastReceiver? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_play)
 
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
-        registerReceiver(broadcastReceiver, intentFilter)
 
-        onChangeImpl();
+        //显示歌词
+//        val lrcView = (findViewById<View>(R.id.lrcView) as LrcView)
+        val lrc = getFromAssets("lyric.lrc")
+        val builder = DefaultLrcBuilder()
+        val rows = builder.getLrcRows(lrc)
+        lrcView.setLrc(rows)
 
         iv_play_back.setOnClickListener { finish() }
-
-        ib_play_contorl.setOnClickListener {
-            if (playService!!.isPlaying) {
-                playService!!.pause()
-                ib_play_contorl.isSelected = false
-            } else {
-                playService!!.start()
-                ib_play_contorl.isSelected = true
-            }
-        }
-
-
-//            if (playService == null) {
-//            Log.i("3333333333333333","null")
-//            return
-//        }else
-//            if(playService!!.isPlaying) {
-//            Log.i("2222222222222","stop")
-//                ib_play_contorl.setBackgroundResource(R.drawable.player_pause)
-//        } else {
-//            Log.i("111111111111","start")
-//                ib_play_contorl.setBackgroundResource(R.drawable.player_start)
-//        }
-
-
-
-
     }
 
     fun player_start() {
@@ -74,7 +49,6 @@ class PlayActivity : BaseActivity() {
     fun player_pause() {
         iv_play_bar_play.setBackgroundResource(R.drawable.player_pause)
     }
-
 
 
     //Handler用于更新已经播放时间
@@ -102,7 +76,7 @@ class PlayActivity : BaseActivity() {
                 when (msg.what) {
                     UPDATE_TIME//更新时间(已经播放时间)
                     -> playActivity.MusicStatus.setText(MediaUtils.formatTime(msg.obj as Long))
-//                    UPDATE_LRC -> playActivity.lrcView.seekLrcToTime(msg.obj as Int)
+                    UPDATE_LRC -> playActivity.lrcView.seekLrcToTime(msg.obj as Long)
                     else -> {
                     }
                 }
@@ -110,55 +84,47 @@ class PlayActivity : BaseActivity() {
         }
     }
 
-    private fun onChangeImpl( ){
-//        if (music == null) {
-//            return
-//        }
-
-//        tvTitle.setText(music!!.getTitle())
-//        tvArtist.setText(music!!.getArtist())
-//        sbProgress.setProgress(playService!!.getCurrentPosition() as Int)
-//        sbProgress.setSecondaryProgress(0)
-//        sbProgress.setMax(music!!.getDuration() as Int)
-//        mLastProgress = 0
-//        tvCurrentTime.setText(R.string.play_time_start)
-//        tvTotalTime.setText(formatTime(music!!.getDuration()))
-//        setCoverAndBg(music)
-//        setLrc(music)
-//        if (playService!!.isPlaying) {
-//            ib_play_contorl.isSelected = true
-////            mAlbumCoverView.start()
-//        } else {
-//            ib_play_contorl.isSelected = false
-////            mAlbumCoverView.pause()
-//        }
+    override fun publish(progress: Int) {
+        myHandler!!.obtainMessage(UPDATE_TIME, progress).sendToTarget()
+        MusicSeekBar.setProgress(progress)
+        myHandler.obtainMessage(UPDATE_LRC, progress).sendToTarget()
     }
 
-    fun changeF2(song: String, songer: String, play: Boolean) {
-        tv_play_bar_title.text = song
-        tv_play_bar_artist.text = songer
-        if (play) {
+    override fun change() {
+        MusicTime.setText(MediaUtils.formatTime(playService!!.duration.toLong()))//设置结束时
+        MusicSeekBar.setMax(playService!!.duration)//设置进度条最大值为MP3总时间
+
+        val pref = getSharedPreferences("title", Context.MODE_PRIVATE)
+        val title = pref.getString("title", "")
+        tv_music_title.setText(title)
+
+        if (playService!!.isPlaying) {
             ib_play_contorl.isSelected = true
         } else {
             ib_play_contorl.isSelected = false
         }
-
     }
 
-    var broadcastReceiver = object : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            Toast.makeText(context, "2222222222222", Toast.LENGTH_LONG).show()
-            val song = intent.getStringExtra("song")
-            val songer = intent.getStringExtra("songer")
-            val play = intent.getBooleanExtra("play", false)
-//            (context as MainActivity).changeF2(song, songer, play)
-            if (play) {
-                ib_play_contorl.isSelected = true
-            } else {
-                ib_play_contorl.isSelected = false
+    /**
+     * 歌词显示
+     */
+    fun getFromAssets(fileName: String): String {
+        try {
+            val inputReader = InputStreamReader(resources.assets.open(fileName))
+            val bufReader = BufferedReader(inputReader)
+            var line = ""
+            var Result = ""
+            while (bufReader.readLine() != null) {
+                line = bufReader.readLine()
+                if (line.trim { it <= ' ' } == "")
+                    continue
+                Result += line + "\r\n"
             }
+            return Result
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+        return ""
     }
 
     override fun onResume() {

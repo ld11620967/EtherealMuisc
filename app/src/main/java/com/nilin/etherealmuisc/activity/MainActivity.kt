@@ -29,6 +29,13 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  * Created by liangd on 2017/9/19.
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+    override fun publish(progress: Int) {
+
+    }
+
+    override fun change() {
+
+    }
 
     val context = MyApplication.instance
 
@@ -193,7 +200,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     var broadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            Toast.makeText(context, "111111111111111", Toast.LENGTH_LONG).show()
             val song = intent.getStringExtra("song")
             val songer = intent.getStringExtra("songer")
             val play = intent.getBooleanExtra("play", false)

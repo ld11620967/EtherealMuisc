@@ -8,7 +8,6 @@ import android.os.IBinder
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.nilin.etherealmuisc.MyApplication
 
 
 /**
@@ -20,7 +19,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private var isBound = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
     }
 
@@ -28,6 +26,7 @@ abstract class BaseActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val playBinder = service as PlayService.PlayBinder
             playService = playBinder.service
+            musicUpdatrListener.onChange();
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -35,6 +34,24 @@ abstract class BaseActivity : AppCompatActivity() {
             isBound = false
         }
     }
+
+    //实现MusicUpdatrListener的相关方法,把PlayService.MusicUpdatrListener的具体内容,
+    // 延迟到子类来具体实现(把具体的操作步骤在子类中实现)
+    private val musicUpdatrListener = object : PlayService.MusicUpdatrListener {
+        override fun onPublish(progress: Int) {
+            publish(progress)
+        }
+
+        //初始化，回调PlayAcitvity中的change(),用于PlayAcitvity中change()数据初始化。
+        override fun onChange() {
+            change()
+        }
+    }
+
+    //抽象类(子类来具体实现,用于更新UI)
+    abstract fun publish(progress: Int)
+
+    abstract fun change()
 
     //绑定服务
     fun bindPlayService() {

@@ -16,8 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:paddingTop="50dp"
             android:paddingStart="30dp"
+            android:paddingTop="50dp"
             android:src="@drawable/button_back" />
 
         <TextView
@@ -42,8 +42,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="25dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:orientation="vertical">
 
@@ -53,18 +53,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/MusicStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="00:00"
                 android:textColor="@android:color/white"
-                android:text="00:00" />
+                android:textStyle="bold" />
 
             <SeekBar
                 android:id="@+id/MusicSeekBar"
@@ -81,20 +81,20 @@
                 android:id="@+id/MusicTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@android:color/white"
                 android:layout_marginRight="10dp"
-                android:text="00:12" />
+                android:layout_marginTop="5dp"
+                android:text="00:12"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_play_controller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <ImageButton

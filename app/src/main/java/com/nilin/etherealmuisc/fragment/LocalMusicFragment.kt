@@ -1,5 +1,6 @@
 package com.nilin.etherealmuisc.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.nilin.etherealmuisc.MyApplication
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
@@ -43,6 +45,11 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Song
             playService!!.prepare(song.path!!)
+
+            val editor = MyApplication.instance!!.getSharedPreferences("title", Context.MODE_PRIVATE).edit()
+            editor.putString("title", song.song)
+            editor.apply()
+
             val intent = Intent("com.nilin.etherealmusic.play")
             intent.putExtra("song", song.song)
             intent.putExtra("songer", song.singer)
