@@ -21,7 +21,6 @@ class PlayService() : Service() {
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
 
-
     inner class PlayBinder : Binder() {
         val service: PlayService
             get() = this@PlayService
@@ -72,7 +71,6 @@ class PlayService() : Service() {
 //        }
     }
 
-    //
 //    fun stop() {
 //        mp!!.stop()
 //        try {
@@ -94,7 +92,6 @@ class PlayService() : Service() {
         }
 
     //获取当前的进度值
-    //mp,并且,为播放状态
     val currentProgress: Int
         get() {
             if (mp != null && mp.isPlaying) {
@@ -140,6 +137,7 @@ class PlayService() : Service() {
     interface MusicUpdatrListener {
         //音乐更新监听器
         fun onPublish(progress: Int) //发表进度事件(更新进度条)
+
         fun onChange()
         //声明MusicUpdatrListener后,添加set方法
     }

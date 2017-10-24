@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
@@ -34,6 +35,7 @@ class PlayActivity : BaseActivity() {
 
         //显示歌词
         val lrc = getFromAssets("lyric.lrc")
+        Log.i("2222222222222", lrc)
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
@@ -101,15 +103,14 @@ class PlayActivity : BaseActivity() {
         try {
             val inputReader = InputStreamReader(resources.assets.open(fileName))
             val bufReader = BufferedReader(inputReader)
-            var line = ""
+            var line =bufReader.readLine()
             var Result = ""
-            while (bufReader.readLine() != null) {
-                line = bufReader.readLine()
-                if (line.trim { it <= ' ' } == "")
-                    continue
+            while (line!= null) {
                 Result += line + "\r\n"
+                line = bufReader.readLine()
             }
             return Result
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

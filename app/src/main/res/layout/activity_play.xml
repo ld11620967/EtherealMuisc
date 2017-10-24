@@ -59,7 +59,7 @@
                 android:id="@+id/MusicStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="00:00"
                 android:textColor="@android:color/white"
@@ -80,9 +80,9 @@
                 android:id="@+id/MusicTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
-                android:text="00:12"
+                android:text="00:00"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -110,8 +110,7 @@
                 android:layout_height="65dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
-                android:background="@drawable/play_btn_play_pause_selector"
-                android:scaleType="centerInside" />
+                android:background="@drawable/play_btn_play_pause_selector" />
 
             <ImageButton
                 android:id="@+id/ib_play_next"
