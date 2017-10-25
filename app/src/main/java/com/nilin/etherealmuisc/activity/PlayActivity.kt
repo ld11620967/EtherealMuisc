@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
@@ -45,6 +46,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         ib_play_contorl.setOnClickListener(this)
         ib_play_next.setOnClickListener(this)
         iv_play_back.setOnClickListener(this)
+        MusicSeekBar.setOnSeekBarChangeListener(this)
     }
 
 
