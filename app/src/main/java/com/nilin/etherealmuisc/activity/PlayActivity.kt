@@ -5,7 +5,6 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
@@ -113,7 +112,11 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
         val pref = getSharedPreferences("title", Context.MODE_PRIVATE)
         val title = pref.getString("title", "空灵音乐")
-        tv_music_title.setText(title)
+        if (title.length > 8) {
+            tv_music_title.setText(title.substring(0,8))
+        } else {
+            tv_music_title.setText(title)
+        }
 
         if (playService!!.isPlaying) {
             ib_play_contorl.isSelected = true
