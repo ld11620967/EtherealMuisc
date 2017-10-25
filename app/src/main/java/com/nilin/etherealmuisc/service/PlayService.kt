@@ -1,13 +1,18 @@
 package com.nilin.etherealmuisc.service
 
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
-import java.io.IOException
+import com.nilin.etherealmuisc.MyApplication
+import com.nilin.etherealmuisc.activity.MainActivity
+import com.nilin.etherealmuisc.greendao.MusicDao
+import junit.runner.Version.id
 
 
 /**
@@ -18,6 +23,7 @@ class PlayService() : Service() {
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
+    var position:Int?=null
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -34,6 +40,10 @@ class PlayService() : Service() {
     override fun onCreate() {
         super.onCreate()
         es.execute(updateSteatusRunnable);//更新进度值
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.nilin.etherealmusic.play")
+        registerReceiver(broadcastReceiver, intentFilter)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -56,10 +66,6 @@ class PlayService() : Service() {
         mp.setDataSource(path)
         mp.prepare()
         mp.isLooping = true
-//        if (mp != null && !mp!!.isPlaying) {//判断当前歌曲不等于空,并且没有在播放的状态
-//        mp!!.start()
-
-//        }
     }
 
     fun start() {
@@ -72,15 +78,16 @@ class PlayService() : Service() {
         }
     }
 
-    fun stop() {
-        mp!!.stop()
-        try {
-            mp.prepare()
-            seekTo(0)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+    fun previous() {
+//        prepare(path: String)
+        mp!!.start()
+    }
 
+    fun next() {
+//        var num=position + 1
+//        MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id).list();
+//        prepare(path: String)
+//        mp!!.start()
     }
 
     //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
@@ -148,4 +155,10 @@ class PlayService() : Service() {
         this.musicUpdatrListener = musicUpdatrListener
     }
 
+    var broadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            position = intent.getIntExtra("position",0)
+        }
+    }
 }

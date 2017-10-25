@@ -55,6 +55,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             intent.putExtra("song", song.song)
             intent.putExtra("songer", song.singer)
             intent.putExtra("play", true)
+            intent.putExtra("position", position)
             context.sendBroadcast(intent)
             playService!!.start()
         }

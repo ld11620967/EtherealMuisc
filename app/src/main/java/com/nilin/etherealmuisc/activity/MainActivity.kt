@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
-
     val context = MyApplication.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +75,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         music_play_bar.setOnClickListener {startActivity(Intent(this, PlayActivity::class.java)) }
-        iv_play_bar_next.setOnClickListener { next() }
+        iv_play_bar_next.setOnClickListener { playService!!.next() }
         iv_search.setOnClickListener {
             supportFragmentManager
                     .beginTransaction()

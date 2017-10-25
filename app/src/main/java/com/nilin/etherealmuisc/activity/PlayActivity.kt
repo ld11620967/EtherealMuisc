@@ -66,7 +66,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ib_play_previous -> {
-
+                playService!!.previous()
             }
             R.id.ib_play_contorl -> {
                 if (playService!!.isPlaying) {
@@ -78,7 +78,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                 }
             }
             R.id.ib_play_next -> {
-
+                playService!!.next()
             }
             R.id.iv_play_back -> finish()
         }
