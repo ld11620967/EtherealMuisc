@@ -29,13 +29,7 @@ import kotlinx.android.synthetic.main.include_play_bar.*
  * Created by liangd on 2017/9/19.
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
-    override fun publish(progress: Int) {
 
-    }
-
-    override fun change() {
-
-    }
 
     val context = MyApplication.instance
 
@@ -78,29 +72,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun clickListener() {
-        iv_menu.setOnClickListener {
-            drawer_layout.openDrawer(GravityCompat.START)
-        }
+        iv_menu.setOnClickListener {drawer_layout.openDrawer(GravityCompat.START) }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
+        music_play_bar.setOnClickListener {startActivity(Intent(this, PlayActivity::class.java)) }
+        iv_play_bar_next.setOnClickListener { next() }
         iv_search.setOnClickListener {
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, SearchMusicFragment(), null)
                     .addToBackStack(null)
                     .commit()
-        }
-        music_play_bar.setOnClickListener {
-            //            if (playService!!.isPlaying) {
-//                playActivity!!.player_pause()
-//            } else {
-//                playActivity!!.player_start()
-//            }
-
-            startActivity(Intent(this, PlayActivity::class.java))
-//            val intent = Intent(this, PlayActivity::class.java)
-//            intent.putExtra("isRefreshing", 1)
-//            startActivity(intent)
         }
         iv_play_bar_play.setOnClickListener {
             if (!playService!!.isPlaying) {
@@ -111,38 +93,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
             }
         }
-        iv_play_bar_next.setOnClickListener { next() }
     }
-
-
-//    private fun doFragmentReceive(context: Context, intent: Intent) {
-//        val action = intent.action
-//        if (action == FragmentReceiver.ACTION_OPENLOCALMUSICFRAGMENT) {
-//            //打开本地音乐
-//            mFragmentListener.openFragment(LocalMusicFragment())
-//        }
-//        else if (action == FragmentReceiver.ACTION_OPENLIKEMUSICFRAGMENT) {
-//            //打开喜欢
-//            mFragmentListener.openFragment(LikeMusicFragment())
-//        } else if (action == FragmentReceiver.ACTION_OPENRECENTMUSICFRAGMENT) {
-//            //打开最近
-//            mFragmentListener.openFragment(RecentMusicFragment())
-//        }
-//    }
-
-
-//    private fun play() {
-//        playService!!.play()
-//        if (playService!!.isPlaying) {
-//            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
-//        } else {
-//            iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
-//        }
-//    }
 
     private operator fun next() {
 //        PlayService().next()
-
     }
 
     override fun onBackPressed() {
@@ -172,6 +126,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+    override fun publish(progress: Int) {
+
+    }
+
+    override fun change() {
+
+    }
+
     override fun onResume() {
         super.onResume()
         bindPlayService()//绑定服务
@@ -187,7 +149,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unbindPlayService()//解绑服务
     }
 
-    fun changeF2(song: String, songer: String, play: Boolean) {
+    fun changeF1(song: String, songer: String, play: Boolean) {
         tv_play_bar_title.text = song
         tv_play_bar_artist.text = songer
         if (play) {
@@ -203,7 +165,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val song = intent.getStringExtra("song")
             val songer = intent.getStringExtra("songer")
             val play = intent.getBooleanExtra("play", false)
-            (context as MainActivity).changeF2(song, songer, play)
+            (context as MainActivity).changeF1(song, songer, play)
         }
     }
 

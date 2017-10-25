@@ -36,5 +36,4 @@ class LocalFragment : Fragment() {
                     .commit()
         }
     }
-
 }

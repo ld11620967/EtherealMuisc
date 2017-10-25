@@ -3,6 +3,8 @@ package com.nilin.etherealmuisc.utils
 import android.provider.MediaStore
 import android.content.Context
 import android.util.Log
+import com.nilin.etherealmuisc.Music
+import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.model.Song
 
 /**

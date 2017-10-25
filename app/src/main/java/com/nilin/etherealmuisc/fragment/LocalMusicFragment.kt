@@ -9,14 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
+import com.nilin.etherealmuisc.model.Song
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
-import com.nilin.etherealmuisc.model.Song
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
@@ -39,6 +40,8 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         rv_local_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_local_music.adapter = adapter
+
+
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Song
@@ -82,4 +85,3 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
     }
 
 }
-
