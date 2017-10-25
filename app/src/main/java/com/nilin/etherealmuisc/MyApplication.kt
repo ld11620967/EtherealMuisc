@@ -2,7 +2,6 @@ package com.nilin.etherealmuisc
 
 import android.app.Application
 import com.nilin.etherealmuisc.greendao.DaoMaster
-import com.nilin.etherealmuisc.greendao.DaoSession
 import com.nilin.etherealmuisc.greendao.MusicDao
 
 

@@ -7,6 +7,7 @@ import android.view.View
 import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
+import com.nilin.etherealmuisc.model.Song
 import com.nilin.etherealmuisc.utils.MusicUtils
 import com.nilin.etherealmuisc.utils.MusicUtils.getMusicData
 import kotlinx.android.synthetic.main.activity_scan_music.*
@@ -14,8 +15,8 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +30,11 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun scanMusic() {
-//        for (i in 0 ..getMusicData(this).lastIndex) {
-//            val list = Music(null, getMusicData(this).get(i).song, getMusicData(this).get(i).path)
-//            MyApplication.instance!!.getMusicDao().insertInTx(list)
-//        }
+        MyApplication.instance!!.getMusicDao().deleteAll()
+        for (i in 0..getMusicData(this).size - 1) {
+            val list = Music(i.toLong(), getMusicData(this).get(i).song, getMusicData(this).get(i).path)
+            MyApplication.instance!!.getMusicDao().insertInTx(list)
+        }
     }
 
     override fun onClick(p0: View?) {
