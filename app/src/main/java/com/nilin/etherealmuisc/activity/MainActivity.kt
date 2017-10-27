@@ -95,7 +95,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private operator fun next() {
-//        PlayService().next()
+        PlayService().next()
     }
 
     override fun onBackPressed() {

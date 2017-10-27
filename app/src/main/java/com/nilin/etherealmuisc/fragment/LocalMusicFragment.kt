@@ -49,6 +49,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
             val editor = MyApplication.instance!!.getSharedPreferences("title", Context.MODE_PRIVATE).edit()
             editor.putString("title", song.song)
+            editor.putInt("position", position)
             editor.apply()
 
             val intent = Intent("com.nilin.etherealmusic.play")

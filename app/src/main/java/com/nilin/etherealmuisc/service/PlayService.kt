@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
+import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.activity.MainActivity
 import com.nilin.etherealmuisc.greendao.MusicDao
@@ -24,6 +25,7 @@ class PlayService() : Service() {
     private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
     var position:Int?=null
+//    val num:Int?=null
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -44,6 +46,9 @@ class PlayService() : Service() {
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
         registerReceiver(broadcastReceiver, intentFilter)
+
+        val pref = getSharedPreferences("position", Context.MODE_PRIVATE)
+        position = pref.getInt("position", 0)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -79,15 +84,25 @@ class PlayService() : Service() {
     }
 
     fun previous() {
-//        prepare(path: String)
+        val num=position!!.plus(-1)
+        val path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+        prepare(path.get(0).path)
         mp!!.start()
+        position=num
+//        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+//        editor.putInt("position", num)
+//        editor.apply()
     }
 
     fun next() {
-//        var num=position + 1
-//        MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id).list();
-//        prepare(path: String)
-//        mp!!.start()
+        val num=position!!.plus(1)
+        val path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+        prepare(path.get(0).path)
+        mp!!.start()
+        position=num
+//        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+//        editor.putInt("position", num)
+//        editor.apply()
     }
 
     //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
