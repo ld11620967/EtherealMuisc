@@ -89,16 +89,31 @@ class PlayService() : Service() {
         if (position == 0) {
             num=MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
             path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+
+            Log.i("position",position.toString())
+            Log.i("num",num.toString())
         } else {
             num=position!!.plus(-1)
             path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
+        position=num
+        Log.i("position",position.toString())
         prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
-        position=num
+
 //        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
 //        editor.putInt("position", num)
 //        editor.apply()
+
+
+
+        val intent = Intent("com.nilin.etherealmusic.play")
+        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).music)
+        intent.putExtra("songer", "2222222")
+        intent.putExtra("play", true)
+        sendBroadcast(intent)
+
+
     }
 
     fun next() {
@@ -109,12 +124,14 @@ class PlayService() : Service() {
             num=position!!.plus(1)
             path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
+
         prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
         position=num
 //        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
 //        editor.putInt("position", num)
 //        editor.apply()
+
     }
 
     //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
