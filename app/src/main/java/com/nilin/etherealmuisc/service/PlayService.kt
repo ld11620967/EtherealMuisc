@@ -10,6 +10,7 @@ import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
 import android.util.Log
+import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.activity.MainActivity
 import com.nilin.etherealmuisc.greendao.MusicDao
@@ -25,7 +26,8 @@ class PlayService() : Service() {
     private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
     var position:Int?=null
-//    val num:Int?=null
+    var path:List<Music>?=null
+    var num:Int?=null
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -84,9 +86,14 @@ class PlayService() : Service() {
     }
 
     fun previous() {
-        val num=position!!.plus(-1)
-        val path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
-        prepare(path.get(0).path)
+        if (position == 0) {
+            num=MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
+            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+        } else {
+            num=position!!.plus(-1)
+            path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+        }
+        prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
         position=num
 //        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
@@ -95,9 +102,14 @@ class PlayService() : Service() {
     }
 
     fun next() {
-        val num=position!!.plus(1)
-        val path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
-        prepare(path.get(0).path)
+        if (position!!.plus(1) == MyApplication.instance!!.getMusicDao().queryBuilder().list().size) {
+            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(0)).list()
+            num=0
+        } else {
+            num=position!!.plus(1)
+            path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+        }
+        prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
         position=num
 //        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
