@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 
 import com.nilin.etherealmuisc.R

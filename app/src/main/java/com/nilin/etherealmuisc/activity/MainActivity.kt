@@ -1,7 +1,6 @@
 package com.nilin.etherealmuisc.activity
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Bundle
@@ -12,12 +11,16 @@ import com.nilin.etherealmuisc.adapter.FragmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.PermissionChecker
 import android.support.v4.view.ViewPager
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
+import com.nilin.etherealmuisc.R.id.tv_local_music
+import com.nilin.etherealmuisc.R.id.viewpager
 import com.nilin.etherealmuisc.fragment.LocalFragment
-import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
 import com.nilin.etherealmuisc.fragment.SearchMusicFragment
 import com.nilin.etherealmuisc.service.PlayService
@@ -44,6 +47,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
         registerReceiver(broadcastReceiver, intentFilter)
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            //①checkSelfPermission 检查当前应用的权限
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_DENIED) {
+                //②PERMISSION_DENIED说明没有权限需要手动申请
+//                requestPermissions 请求权限的方法
+                //第一个参数 activity
+                //第二个参数 需要请求的权限的 权限String数组
+                //第三个参数 请求码 用来区分不同的权限请求
+                //需要注意 最后一个参数 requestCode需要>0
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                return
+            }
+        }
     }
 
     private fun initView() {
@@ -71,10 +89,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun clickListener() {
-        iv_menu.setOnClickListener {drawer_layout.openDrawer(GravityCompat.START) }
+        iv_menu.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
         tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
-        music_play_bar.setOnClickListener {startActivity(Intent(this, PlayActivity::class.java)) }
+        music_play_bar.setOnClickListener { startActivity(Intent(this, PlayActivity::class.java)) }
         iv_play_bar_next.setOnClickListener { playService!!.next() }
         iv_search.setOnClickListener {
             supportFragmentManager
@@ -168,4 +186,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        //③用户操作授权之后 会走这个回调方法 onRequestPermissionsResult
+        if (grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
+
+        } else {
+            Toast.makeText(this, "没有权限,无法获取音乐信息", Toast.LENGTH_LONG).show()
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 }
+
