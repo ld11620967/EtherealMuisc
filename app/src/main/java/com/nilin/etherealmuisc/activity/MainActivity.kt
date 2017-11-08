@@ -18,8 +18,6 @@ import android.support.v4.view.ViewPager
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
-import com.nilin.etherealmuisc.R.id.tv_local_music
-import com.nilin.etherealmuisc.R.id.viewpager
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.OnlineFragment
 import com.nilin.etherealmuisc.fragment.SearchMusicFragment
@@ -49,11 +47,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         registerReceiver(broadcastReceiver, intentFilter)
 
         if (Build.VERSION.SDK_INT >= 23) {
-            //①checkSelfPermission 检查当前应用的权限
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_DENIED) {
-                //②PERMISSION_DENIED说明没有权限需要手动申请
-//                requestPermissions 请求权限的方法
+                //requestPermissions 请求权限的方法
                 //第一个参数 activity
                 //第二个参数 需要请求的权限的 权限String数组
                 //第三个参数 请求码 用来区分不同的权限请求
@@ -187,7 +183,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        //③用户操作授权之后 会走这个回调方法 onRequestPermissionsResult
         if (grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
 
         } else {

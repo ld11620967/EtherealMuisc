@@ -9,12 +9,9 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
-import android.util.Log
 import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
-import com.nilin.etherealmuisc.activity.MainActivity
 import com.nilin.etherealmuisc.greendao.MusicDao
-import junit.runner.Version.id
 
 
 /**
@@ -45,12 +42,12 @@ class PlayService() : Service() {
         super.onCreate()
         es.execute(updateSteatusRunnable);//更新进度值
 
+        val pref = getSharedPreferences("position", Context.MODE_PRIVATE)
+        position = pref.getInt("position", 0)
+
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
         registerReceiver(broadcastReceiver, intentFilter)
-
-        val pref = getSharedPreferences("position", Context.MODE_PRIVATE)
-        position = pref.getInt("position", 0)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -89,31 +86,23 @@ class PlayService() : Service() {
         if (position == 0) {
             num=MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
             path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
-
-            Log.i("position",position.toString())
-            Log.i("num",num.toString())
         } else {
             num=position!!.plus(-1)
             path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
-        position=num
-        Log.i("position",position.toString())
         prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
+        position=num
 
-//        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
-//        editor.putInt("position", num)
-//        editor.apply()
+        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+        editor.putInt("position", position!!)
+        editor.apply()
 
-
-
-        val intent = Intent("com.nilin.etherealmusic.play")
-        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).music)
-        intent.putExtra("songer", "2222222")
-        intent.putExtra("play", true)
-        sendBroadcast(intent)
-
-
+//        val intent = Intent("com.nilin.etherealmusic.play")
+//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).music)
+//        intent.putExtra("songer", "2222222")
+//        intent.putExtra("play", true)
+//        sendBroadcast(intent)
     }
 
     fun next() {
@@ -128,10 +117,10 @@ class PlayService() : Service() {
         prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
         position=num
-//        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
-//        editor.putInt("position", num)
-//        editor.apply()
 
+        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+        editor.putInt("position", position!!)
+        editor.apply()
     }
 
     //获取当前是否为播放状态,提供给MyMusicListFragment的播放暂停按钮点击事件判断状态时调用
