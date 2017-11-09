@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.nilin.etherealmuisc.activity.ScanMusicActivity">
 
-    <include layout="@layout/include_app_bar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/include_app_bar" />
 
-    <ImageView
-        android:id="@+id/iv_scan_music"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="80dp"
-        app:srcCompat="@drawable/background"
-        tools:ignore="MissingConstraints" />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_scan_music"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/include"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="50dp"-->
+    <!--app:srcCompat="@drawable/scan_music"-->
+    <!--tools:ignore="MissingConstraints" />-->
+
+    <com.nilin.etherealmuisc.view.ShaderView
+        android:id="@+id/sv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
 
     <Button
         android:id="@+id/scan_music"

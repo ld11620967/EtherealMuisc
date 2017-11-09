@@ -12,6 +12,10 @@ import com.nilin.etherealmuisc.utils.MusicUtils
 import com.nilin.etherealmuisc.utils.MusicUtils.getMusicData
 import kotlinx.android.synthetic.main.activity_scan_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
+import android.animation.ValueAnimator
+import android.view.animation.LinearInterpolator
+import android.animation.ObjectAnimator
+import com.nilin.etherealmuisc.view.ShaderView
 
 
 /**
@@ -30,6 +34,33 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun scanMusic() {
+
+        val degrees = ObjectAnimator.ofInt(sv, "degrees", 0, 360)
+        degrees.interpolator = LinearInterpolator()
+        degrees.duration = 1000
+        degrees.repeatCount = ValueAnimator.INFINITE
+        degrees.start()
+        /* new Thread(new Runnable() {
+          @Override
+          public void run() {
+            while (degrees <= 360) {
+              degrees += 1;
+              mShaderView.setDegrees(degrees);
+
+              try {
+                Thread.sleep(30);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            }
+
+
+          }
+        }).start();
+
+        degrees = 0;
+        mShaderView.setDegrees(degrees);*/
+
         MyApplication.instance!!.getMusicDao().deleteAll()
         for (i in 0..getMusicData(this).size - 1) {
             val list = Music(i.toLong(), getMusicData(this).get(i).song, getMusicData(this).get(i).singer, getMusicData(this).get(i).path)

@@ -133,7 +133,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.setIcon(R.drawable.time_stop)
                 builder.setTitle("定时停止播放")
                 val color = arrayOf("不开启", "10分钟", "20分钟", "30分钟", "45分钟", "60分钟", "90分钟")
-                builder.setItems(color, DialogInterface.OnClickListener { dialog, which ->
+                builder.setItems(color, DialogInterface.OnClickListener { _, which ->
                     when (which) {
                         0 -> {
                             editor.putInt("time_stop", 0)
@@ -201,11 +201,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onPause() {
         super.onPause()
         unbindPlayService()//解绑服务
+//        unregisterReceiver(broadcastReceiver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unbindPlayService()//解绑服务
+//        unregisterReceiver(broadcastReceiver)
     }
 
     fun changeF1(song: String, singer: String, play: Boolean) {
