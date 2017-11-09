@@ -24,6 +24,8 @@ import com.nilin.etherealmuisc.fragment.SearchMusicFragment
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
+import android.content.DialogInterface
+import android.support.v7.app.AlertDialog
 
 
 /**
@@ -121,12 +123,56 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val editor = getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
         when (item.itemId) {
             R.id.nav_search_music -> {
                 startActivity(Intent(this, ScanMusicActivity::class.java))
             }
             R.id.nav_time_stop -> {
-
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setIcon(R.drawable.time_stop)
+                builder.setTitle("定时停止播放")
+                val color = arrayOf("不开启", "10分钟", "20分钟", "30分钟", "45分钟", "60分钟", "90分钟")
+                builder.setItems(color, DialogInterface.OnClickListener { dialog, which ->
+                    when (which) {
+                        0 -> {
+                            editor.putInt("time_stop", 0)
+                            editor.commit()
+                            recreate()
+                        }
+                        1 -> {
+                            editor.putInt("time_stop", 1)
+                            editor.commit()
+                            recreate()
+                        }
+                        2 -> {
+                            editor.putInt("time_stop", 2)
+                            editor.commit()
+                            recreate()
+                        }
+                        3 -> {
+                            editor.putInt("time_stop", 3)
+                            editor.commit()
+                            recreate()
+                        }
+                        4 -> {
+                            editor.putInt("time_stop", 4)
+                            editor.commit()
+                            recreate()
+                        }
+                        5 -> {
+                            editor.putInt("time_stop", 5)
+                            editor.commit()
+                            recreate()
+                        }
+                        6 -> {
+                            editor.putInt("time_stop", 6)
+                            editor.commit()
+                            recreate()
+                        }
+                    }
+                })
+                builder.show()
             }
             R.id.nav_settings -> {
 

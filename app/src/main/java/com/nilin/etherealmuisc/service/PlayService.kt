@@ -42,7 +42,7 @@ class PlayService() : Service() {
         super.onCreate()
         es.execute(updateSteatusRunnable);//更新进度值
 
-        val pref = getSharedPreferences("position", Context.MODE_PRIVATE)
+        val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         position = pref.getInt("position", 0)
 
         val intentFilter = IntentFilter()
@@ -100,7 +100,7 @@ class PlayService() : Service() {
         intent.putExtra("play", true)
         sendBroadcast(intent)
 
-        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+        val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
         editor.apply()
     }
@@ -124,7 +124,7 @@ class PlayService() : Service() {
         intent.putExtra("play", true)
         sendBroadcast(intent)
 
-        val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
+        val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
         editor.apply()
     }

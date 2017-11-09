@@ -110,7 +110,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         MusicTime.setText(MediaUtils.formatTime(playService!!.duration.toLong()))//设置结束时
         MusicSeekBar.setMax(playService!!.duration)//设置进度条最大值为MP3总时间
 
-        val pref = getSharedPreferences("title", Context.MODE_PRIVATE)
+        val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         val title = pref.getString("song", "空灵音乐")
         if (title.length > 8) {
             tv_music_title.setText(title.substring(0,8))
