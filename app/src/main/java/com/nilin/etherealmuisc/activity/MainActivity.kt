@@ -162,9 +162,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unbindPlayService()//解绑服务
     }
 
-    fun changeF1(song: String, songer: String, play: Boolean) {
+    fun changeF1(song: String, singer: String, play: Boolean) {
         tv_play_bar_title.text = song
-        tv_play_bar_artist.text = songer
+        tv_play_bar_artist.text = singer
         if (play) {
             iv_play_bar_play.isSelected = true
         } else {
@@ -176,9 +176,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         override fun onReceive(context: Context, intent: Intent) {
             val song = intent.getStringExtra("song")
-            val songer = intent.getStringExtra("songer")
+            val singer = intent.getStringExtra("singer")
             val play = intent.getBooleanExtra("play", false)
-            (context as MainActivity).changeF1(song, songer, play)
+            (context as MainActivity).changeF1(song, singer, play)
         }
     }
 

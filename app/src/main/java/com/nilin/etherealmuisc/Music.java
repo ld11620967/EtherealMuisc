@@ -9,17 +9,22 @@ import org.greenrobot.greendao.annotation.Index;
 /**
  * Created by liangd on 2017/10/25.
  */
+/**
+ * Created by liangd on 2017/10/25.
+ */
 @Entity
 public class Music {
     @Id(autoincrement = true)
     private Long id;
     @Index(unique = true) // 唯一性
-    private String music;
+    private String song;
+    private String singer;
     private String path;
-    @Generated(hash = 889838720)
-    public Music(Long id, String music, String path) {
+    @Generated(hash = 570329522)
+    public Music(Long id, String song, String singer, String path) {
         this.id = id;
-        this.music = music;
+        this.song = song;
+        this.singer = singer;
         this.path = path;
     }
     @Generated(hash = 1263212761)
@@ -31,11 +36,17 @@ public class Music {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getMusic() {
-        return this.music;
+    public String getSong() {
+        return this.song;
     }
-    public void setMusic(String music) {
-        this.music = music;
+    public void setSong(String song) {
+        this.song = song;
+    }
+    public String getSinger() {
+        return this.singer;
+    }
+    public void setSinger(String singer) {
+        this.singer = singer;
     }
     public String getPath() {
         return this.path;
@@ -43,5 +54,6 @@ public class Music {
     public void setPath(String path) {
         this.path = path;
     }
+
 
 }

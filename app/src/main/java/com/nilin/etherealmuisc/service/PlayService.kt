@@ -94,15 +94,16 @@ class PlayService() : Service() {
         mp!!.start()
         position=num
 
+
+//        val intent = Intent("com.nilin.etherealmusic.play")
+//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
+//        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+//        intent.putExtra("play", true)
+//        sendBroadcast(intent)
+
         val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
         editor.apply()
-
-//        val intent = Intent("com.nilin.etherealmusic.play")
-//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).music)
-//        intent.putExtra("songer", "2222222")
-//        intent.putExtra("play", true)
-//        sendBroadcast(intent)
     }
 
     fun next() {
@@ -117,6 +118,13 @@ class PlayService() : Service() {
         prepare((path as MutableList<Music>?)!!.get(0).path)
         mp!!.start()
         position=num
+
+
+//        val intent = Intent("com.nilin.etherealmusic.play")
+//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
+//        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+//        intent.putExtra("play", true)
+//        sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)

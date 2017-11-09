@@ -32,7 +32,7 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
     fun scanMusic() {
         MyApplication.instance!!.getMusicDao().deleteAll()
         for (i in 0..getMusicData(this).size - 1) {
-            val list = Music(i.toLong(), getMusicData(this).get(i).song, getMusicData(this).get(i).path)
+            val list = Music(i.toLong(), getMusicData(this).get(i).song, getMusicData(this).get(i).singer, getMusicData(this).get(i).path)
             MyApplication.instance!!.getMusicDao().insertInTx(list)
         }
     }

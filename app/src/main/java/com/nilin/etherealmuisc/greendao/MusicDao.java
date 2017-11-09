@@ -25,8 +25,9 @@ public class MusicDao extends AbstractDao<Music, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Music = new Property(1, String.class, "music", false, "MUSIC");
-        public final static Property Path = new Property(2, String.class, "path", false, "PATH");
+        public final static Property Song = new Property(1, String.class, "song", false, "SONG");
+        public final static Property Singer = new Property(2, String.class, "singer", false, "SINGER");
+        public final static Property Path = new Property(3, String.class, "path", false, "PATH");
     }
 
 
@@ -43,11 +44,12 @@ public class MusicDao extends AbstractDao<Music, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MUSIC\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"MUSIC\" TEXT," + // 1: music
-                "\"PATH\" TEXT);"); // 2: path
+                "\"SONG\" TEXT," + // 1: song
+                "\"SINGER\" TEXT," + // 2: singer
+                "\"PATH\" TEXT);"); // 3: path
         // Add Indexes
-        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_MUSIC_MUSIC ON \"MUSIC\"" +
-                " (\"MUSIC\" ASC);");
+        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_MUSIC_SONG ON \"MUSIC\"" +
+                " (\"SONG\" ASC);");
     }
 
     /** Drops the underlying database table. */
@@ -65,14 +67,19 @@ public class MusicDao extends AbstractDao<Music, Long> {
             stmt.bindLong(1, id);
         }
  
-        String music = entity.getMusic();
-        if (music != null) {
-            stmt.bindString(2, music);
+        String song = entity.getSong();
+        if (song != null) {
+            stmt.bindString(2, song);
+        }
+ 
+        String singer = entity.getSinger();
+        if (singer != null) {
+            stmt.bindString(3, singer);
         }
  
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(3, path);
+            stmt.bindString(4, path);
         }
     }
 
@@ -85,14 +92,19 @@ public class MusicDao extends AbstractDao<Music, Long> {
             stmt.bindLong(1, id);
         }
  
-        String music = entity.getMusic();
-        if (music != null) {
-            stmt.bindString(2, music);
+        String song = entity.getSong();
+        if (song != null) {
+            stmt.bindString(2, song);
+        }
+ 
+        String singer = entity.getSinger();
+        if (singer != null) {
+            stmt.bindString(3, singer);
         }
  
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(3, path);
+            stmt.bindString(4, path);
         }
     }
 
@@ -105,8 +117,9 @@ public class MusicDao extends AbstractDao<Music, Long> {
     public Music readEntity(Cursor cursor, int offset) {
         Music entity = new Music( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // music
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // path
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // song
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // singer
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // path
         );
         return entity;
     }
@@ -114,8 +127,9 @@ public class MusicDao extends AbstractDao<Music, Long> {
     @Override
     public void readEntity(Cursor cursor, Music entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setMusic(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPath(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setSong(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setSinger(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPath(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override
