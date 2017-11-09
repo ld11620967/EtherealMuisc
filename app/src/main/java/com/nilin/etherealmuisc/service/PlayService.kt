@@ -94,12 +94,11 @@ class PlayService() : Service() {
         mp!!.start()
         position=num
 
-
-//        val intent = Intent("com.nilin.etherealmusic.play")
-//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
-//        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-//        intent.putExtra("play", true)
-//        sendBroadcast(intent)
+        val intent = Intent("com.nilin.etherealmusic.play")
+        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
+        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+        intent.putExtra("play", true)
+        sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
@@ -119,12 +118,11 @@ class PlayService() : Service() {
         mp!!.start()
         position=num
 
-
-//        val intent = Intent("com.nilin.etherealmusic.play")
-//        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
-//        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-//        intent.putExtra("play", true)
-//        sendBroadcast(intent)
+        val intent = Intent("com.nilin.etherealmusic.play")
+        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
+        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+        intent.putExtra("play", true)
+        sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("position", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
@@ -199,7 +197,7 @@ class PlayService() : Service() {
     var broadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            position = intent.getIntExtra("position",0)
+            position = intent.getIntExtra("position",position!!)
         }
     }
 }

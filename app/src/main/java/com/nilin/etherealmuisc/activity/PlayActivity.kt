@@ -1,6 +1,7 @@
 package com.nilin.etherealmuisc.activity
 
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
+import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.utils.MediaUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -30,14 +32,12 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_play)
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction("com.nilin.etherealmusic.play")
-
         //显示歌词
         val lrc = getFromAssets("lyric.lrc")
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
+
 
         myHandler = MyHandler(this)
 
