@@ -139,36 +139,49 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                             editor.putInt("time_stop", 0)
                             editor.commit()
                             recreate()
+                            Toast.makeText(this,"已取消定时停止播放",Toast.LENGTH_SHORT).show()
                         }
                         1 -> {
                             editor.putInt("time_stop", 1)
                             editor.commit()
                             recreate()
+                            TimeStop(10)
+                            Toast.makeText(this,"10分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         2 -> {
                             editor.putInt("time_stop", 2)
                             editor.commit()
                             recreate()
+                            TimeStop(20)
+                            Toast.makeText(this,"20分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         3 -> {
                             editor.putInt("time_stop", 3)
                             editor.commit()
                             recreate()
+                            TimeStop(30)
+                            Toast.makeText(this,"30分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         4 -> {
                             editor.putInt("time_stop", 4)
                             editor.commit()
                             recreate()
+                            TimeStop(45)
+                            Toast.makeText(this,"45分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         5 -> {
                             editor.putInt("time_stop", 5)
                             editor.commit()
                             recreate()
+                            TimeStop(60)
+                            Toast.makeText(this,"60分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         6 -> {
                             editor.putInt("time_stop", 6)
                             editor.commit()
                             recreate()
+                            TimeStop(90)
+                            Toast.makeText(this,"90分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                     }
                 })
@@ -239,5 +252,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    fun TimeStop(time:Long) {
+        val time1=time*60
+           Thread(Runnable {
+            var degrees = 0
+               if (degrees <= time1) {
+                   degrees += 1
+                   try {
+                       Thread.sleep(1000)
+                   } catch (e: InterruptedException) {
+                       e.printStackTrace()
+                   }
+               } else {
+                   playService!!.pause()
+               }
+        }).start()
+    }
 }
 
