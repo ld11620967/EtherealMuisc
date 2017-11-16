@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
+import android.util.Log
 
 
 /**
@@ -123,7 +124,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val editor = getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
         when (item.itemId) {
             R.id.nav_search_music -> {
                 startActivity(Intent(this, ScanMusicActivity::class.java))
@@ -136,52 +136,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.setItems(color, DialogInterface.OnClickListener { _, which ->
                     when (which) {
                         0 -> {
-                            editor.putInt("time_stop", 0)
-                            editor.commit()
-                            recreate()
-                            Toast.makeText(this,"已取消定时停止播放",Toast.LENGTH_SHORT).show()
+                            TimeStop(0)
                         }
                         1 -> {
-                            editor.putInt("time_stop", 1)
-                            editor.commit()
-                            recreate()
                             TimeStop(10)
-                            Toast.makeText(this,"10分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         2 -> {
-                            editor.putInt("time_stop", 2)
-                            editor.commit()
-                            recreate()
                             TimeStop(20)
-                            Toast.makeText(this,"20分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         3 -> {
-                            editor.putInt("time_stop", 3)
-                            editor.commit()
-                            recreate()
                             TimeStop(30)
-                            Toast.makeText(this,"30分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         4 -> {
-                            editor.putInt("time_stop", 4)
-                            editor.commit()
-                            recreate()
                             TimeStop(45)
-                            Toast.makeText(this,"45分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         5 -> {
-                            editor.putInt("time_stop", 5)
-                            editor.commit()
-                            recreate()
                             TimeStop(60)
-                            Toast.makeText(this,"60分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                         6 -> {
-                            editor.putInt("time_stop", 6)
-                            editor.commit()
-                            recreate()
                             TimeStop(90)
-                            Toast.makeText(this,"90分钟后停止播放",Toast.LENGTH_SHORT).show()
                         }
                     }
                 })
@@ -214,13 +187,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onPause() {
         super.onPause()
         unbindPlayService()//解绑服务
-//        unregisterReceiver(broadcastReceiver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unbindPlayService()//解绑服务
-//        unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(broadcastReceiver)
     }
 
     fun changeF1(song: String, singer: String, play: Boolean) {
@@ -252,21 +224,33 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun TimeStop(time:Long) {
-        val time1=time*60
-           Thread(Runnable {
-            var degrees = 0
-               if (degrees <= time1) {
-                   degrees += 1
-                   try {
-                       Thread.sleep(1000)
-                   } catch (e: InterruptedException) {
-                       e.printStackTrace()
-                   }
-               } else {
-                   playService!!.pause()
-               }
-        }).start()
+    fun TimeStop(time: Long) {
+        var stop = false
+        if (time.toInt() == 0) {
+            stop = true
+            Toast.makeText(this, "已取消定时停止播放", Toast.LENGTH_SHORT).show()
+        } else {
+            val time1 = time * 0.6
+            Thread(Runnable {
+                var degrees = 0
+                while (degrees <= time1) {
+                    degrees += 1
+                    Log.i("111111111111",degrees.toString())
+                    try {
+                        Thread.sleep(1000)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+                if (stop == true) {
+
+                } else {
+                    playService!!.pause()
+                }
+
+            }).start()
+            Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
+        }
     }
 }
 
