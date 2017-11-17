@@ -27,6 +27,11 @@ import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -35,6 +40,7 @@ import android.util.Log
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     val context = MyApplication.instance
+    var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -225,31 +231,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun TimeStop(time: Long) {
-        var stop = false
-        if (time.toInt() == 0) {
-            stop = true
-            Toast.makeText(this, "已取消定时停止播放", Toast.LENGTH_SHORT).show()
-        } else {
-            val time1 = time * 0.6
-            Thread(Runnable {
-                var degrees = 0
-                while (degrees <= time1) {
-                    degrees += 1
-                    Log.i("111111111111",degrees.toString())
-                    try {
-                        Thread.sleep(1000)
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    }
-                }
-                if (stop == true) {
-
-                } else {
-                    playService!!.pause()
-                }
-
-            }).start()
+        if (time.toInt() == 0 && job == null) {
+            Toast.makeText(this, "停止播放功能未开启", Toast.LENGTH_SHORT).show()
+        } else if (time.toInt() != 0) {
+            val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
+            job = launch(CommonPool) {
+
+                delay(time1, TimeUnit.MILLISECONDS)
+                playService!!.pause()
+            }
+        } else {
+            job!!.cancel()
+            Toast.makeText(this, "已取消定时停止播放", Toast.LENGTH_SHORT).show()
         }
     }
 }

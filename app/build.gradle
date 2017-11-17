@@ -44,8 +44,8 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31'
     compile 'org.greenrobot:greendao:3.2.2'
     compile "org.jetbrains.anko:anko-commons:0.10.2"
-
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.17'
 }
