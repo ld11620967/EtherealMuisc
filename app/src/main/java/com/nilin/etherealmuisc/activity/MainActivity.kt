@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
+        intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
         registerReceiver(broadcastReceiver, intentFilter)
 
         if (Build.VERSION.SDK_INT >= 23) {
@@ -119,6 +120,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private operator fun next() {
         PlayService().next()
+        iv_play_bar_play.isSelected = true
     }
 
     override fun onBackPressed() {
@@ -201,23 +203,35 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unregisterReceiver(broadcastReceiver)
     }
 
-    fun changeF1(song: String, singer: String, play: Boolean) {
+    fun changeF1(song: String, singer: String) {
         tv_play_bar_title.text = song
         tv_play_bar_artist.text = singer
-        if (play) {
+    }
+
+
+    fun changeF2(isPlaying: Boolean) {
+        if (isPlaying) {
             iv_play_bar_play.isSelected = true
+            Log.i("33333333333333",isPlaying.toString())
         } else {
             iv_play_bar_play.isSelected = false
+            Log.i("444444444444444",isPlaying.toString())
         }
     }
 
     var broadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val song = intent.getStringExtra("song")
-            val singer = intent.getStringExtra("singer")
-            val play = intent.getBooleanExtra("play", false)
-            (context as MainActivity).changeF1(song, singer, play)
+            val action = intent.action
+            if(action.equals("com.nilin.etherealmusic.play")){
+                val song = intent.getStringExtra("song")
+                val singer = intent.getStringExtra("singer")
+                (context as MainActivity).changeF1(song, singer)
+            }
+            if(action.equals("com.nilin.etherealmusic.isPlaying")){
+                val isPlaying = intent.getBooleanExtra("isPlaying",false)
+//                (context as MainActivity).changeF2(isPlaying)
+            }
         }
     }
 
@@ -234,7 +248,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (time.toInt() == 0 && job == null) {
             Toast.makeText(this, "停止播放功能未开启", Toast.LENGTH_SHORT).show()
         } else if (time.toInt() != 0) {
-            val time1 = time * 60000
+            val time1 = time * 500
+//            val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
             job = launch(CommonPool) {
 

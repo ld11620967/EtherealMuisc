@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
+import android.util.Log
 import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.greendao.MusicDao
@@ -45,9 +46,10 @@ class PlayService() : Service() {
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         position = pref.getInt("position", 0)
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction("com.nilin.etherealmusic.play")
-        registerReceiver(broadcastReceiver, intentFilter)
+//        val intentFilter = IntentFilter()
+//        intentFilter.addAction("com.nilin.etherealmusic.play")
+//        intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
+//        registerReceiver(broadcastReceiver, intentFilter)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -74,11 +76,17 @@ class PlayService() : Service() {
 
     fun start() {
         mp!!.start()
+        val playBarintent = Intent("com.nilin.etherealmusic.isPlaying")
+        playBarintent.putExtra("isPlaying", true)
+        sendBroadcast(playBarintent)
     }
 
     fun pause() {
         if (mp!!.isPlaying) {
             mp.pause()
+            val playBarintent = Intent("com.nilin.etherealmusic.isPlaying")
+            playBarintent.putExtra("isPlaying", false)
+            sendBroadcast(playBarintent)
         }
     }
 
@@ -91,13 +99,13 @@ class PlayService() : Service() {
             path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
         prepare((path as MutableList<Music>?)!!.get(0).path)
-        mp!!.start()
+        start()
         position=num
 
         val intent = Intent("com.nilin.etherealmusic.play")
         intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-        intent.putExtra("play", true)
+//        intent.putExtra("play", true)
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
@@ -115,13 +123,13 @@ class PlayService() : Service() {
         }
 
         prepare((path as MutableList<Music>?)!!.get(0).path)
-        mp!!.start()
+        start()
         position=num
 
         val intent = Intent("com.nilin.etherealmusic.play")
         intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-        intent.putExtra("play", true)
+//        intent.putExtra("play", true)
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
@@ -194,10 +202,10 @@ class PlayService() : Service() {
         this.musicUpdatrListener = musicUpdatrListener
     }
 
-    var broadcastReceiver = object : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            position = intent.getIntExtra("position",position!!)
-        }
-    }
+//    var broadcastReceiver = object : BroadcastReceiver() {
+//
+//        override fun onReceive(context: Context, intent: Intent) {
+//            position = intent.getIntExtra("position",position!!)
+//        }
+//    }
 }
