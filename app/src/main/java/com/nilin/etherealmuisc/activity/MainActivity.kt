@@ -110,10 +110,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         iv_play_bar_play.setOnClickListener {
             if (!playService!!.isPlaying) {
                 playService!!.start()
-                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_pause)
+                iv_play_bar_play.isSelected = true
             } else {
                 playService!!.pause()
-                iv_play_bar_play.setBackgroundResource(R.drawable.ic_play_bar_btn_play)
+                iv_play_bar_play.isSelected = false
             }
         }
     }
@@ -212,10 +212,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     fun changeF2(isPlaying: Boolean) {
         if (isPlaying) {
             iv_play_bar_play.isSelected = true
-            Log.i("33333333333333",isPlaying.toString())
         } else {
             iv_play_bar_play.isSelected = false
-            Log.i("444444444444444",isPlaying.toString())
         }
     }
 
@@ -230,7 +228,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             if(action.equals("com.nilin.etherealmusic.isPlaying")){
                 val isPlaying = intent.getBooleanExtra("isPlaying",false)
-//                (context as MainActivity).changeF2(isPlaying)
+                (context as MainActivity).changeF2(isPlaying)
             }
         }
     }

@@ -23,9 +23,9 @@ class PlayService() : Service() {
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
-    var position:Int?=null
-    var path:List<Music>?=null
-    var num:Int?=null
+    var position: Int? = null
+    var path: List<Music>? = null
+    var num: Int? = null
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -45,11 +45,6 @@ class PlayService() : Service() {
 
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         position = pref.getInt("position", 0)
-
-//        val intentFilter = IntentFilter()
-//        intentFilter.addAction("com.nilin.etherealmusic.play")
-//        intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
-//        registerReceiver(broadcastReceiver, intentFilter)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -92,15 +87,15 @@ class PlayService() : Service() {
 
     fun previous() {
         if (position == 0) {
-            num=MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
+            num = MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
             path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         } else {
-            num=position!!.plus(-1)
-            path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+            num = position!!.plus(-1)
+            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
         prepare((path as MutableList<Music>?)!!.get(0).path)
         start()
-        position=num
+        position = num
 
         val intent = Intent("com.nilin.etherealmusic.play")
         intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
@@ -116,20 +111,19 @@ class PlayService() : Service() {
     fun next() {
         if (position!!.plus(1) == MyApplication.instance!!.getMusicDao().queryBuilder().list().size) {
             path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(0)).list()
-            num=0
+            num = 0
         } else {
-            num=position!!.plus(1)
-            path=MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+            num = position!!.plus(1)
+            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
 
         prepare((path as MutableList<Music>?)!!.get(0).path)
         start()
-        position=num
+        position = num
 
         val intent = Intent("com.nilin.etherealmusic.play")
         intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-//        intent.putExtra("play", true)
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
@@ -201,11 +195,4 @@ class PlayService() : Service() {
     fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
         this.musicUpdatrListener = musicUpdatrListener
     }
-
-//    var broadcastReceiver = object : BroadcastReceiver() {
-//
-//        override fun onReceive(context: Context, intent: Intent) {
-//            position = intent.getIntExtra("position",position!!)
-//        }
-//    }
 }
