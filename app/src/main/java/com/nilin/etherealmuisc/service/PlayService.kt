@@ -100,7 +100,6 @@ class PlayService() : Service() {
         val intent = Intent("com.nilin.etherealmusic.play")
         intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
-//        intent.putExtra("play", true)
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
