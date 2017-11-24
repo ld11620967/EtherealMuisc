@@ -1,14 +1,17 @@
 package com.nilin.etherealmuisc.activity
 
-import android.annotation.SuppressLint
 import android.view.animation.AnimationUtils
 import android.os.Bundle
 import android.view.animation.Animation
 import android.app.Activity
-import android.os.Handler
-import android.os.Message
+import android.content.Intent
+import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_welcome.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -16,38 +19,18 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 */
 class SplashActivity : Activity() {
 
+    val context = MyApplication.instance
     private var imgAnimation: Animation? = null
     private var textAnimation: Animation? = null
-
-    private val mHandler = @SuppressLint("HandlerLeak")
-    object :  Handler() {
-        override fun handleMessage(msg: Message) {
-            goHome()
-        }
-    }
-
-//    private val mHandler = object :  Handler() {
-//        override fun handleMessage(msg: Message) {
-//            goHome()
-//        }
-//    }
-
-    /**
-     * 进入主页
-     */
-    private fun goHome() {
-        intent.setClass(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        //启动服务
-//        startService(Intent(this, PlayService::class.java))
 
-        mHandler.sendEmptyMessageDelayed(GO_HOME, TIME)
+        launch(CommonPool) {
+            delay(1200, TimeUnit.MILLISECONDS)
+            goHome()
+        }
 
         imgAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim)
         textAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
@@ -56,8 +39,10 @@ class SplashActivity : Activity() {
         welcomeText.startAnimation(textAnimation)
     }
 
-    companion object {
-        private val TIME = 1200L
-        private val GO_HOME = 101
+    private fun goHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
+
 }

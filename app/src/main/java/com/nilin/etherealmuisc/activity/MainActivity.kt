@@ -228,7 +228,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //            val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
             job = launch(CommonPool) {
-
                 delay(time1, TimeUnit.MILLISECONDS)
                 playService!!.pause()
             }
@@ -258,8 +257,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            val a = LocalFragment()
-            if (a.isMenuVisible) {
+//            val a = LocalFragment()
+            if (LocalFragment().isVisible) {
                 Log.i("111111111111","1111111111111")
                 super.onBackPressed()
             } else {
