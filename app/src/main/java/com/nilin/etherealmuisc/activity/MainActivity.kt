@@ -35,11 +35,12 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- * Created by liangd on 2017/9/19.
- */
+* Created by liangd on 2017/9/19.
+*/
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     val context = MyApplication.instance
+    private var lastBackPress: Long = 0
     var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,13 +124,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         iv_play_bar_play.isSelected = true
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -187,22 +181,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        bindPlayService()//绑定服务
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unbindPlayService()//解绑服务
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unbindPlayService()//解绑服务
-        unregisterReceiver(broadcastReceiver)
-    }
-
     fun changeF1(song: String, singer: String) {
         tv_play_bar_title.text = song
         tv_play_bar_artist.text = singer
@@ -221,13 +199,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if(action.equals("com.nilin.etherealmusic.play")){
+            if (action.equals("com.nilin.etherealmusic.play")) {
                 val song = intent.getStringExtra("song")
                 val singer = intent.getStringExtra("singer")
                 (context as MainActivity).changeF1(song, singer)
             }
-            if(action.equals("com.nilin.etherealmusic.isPlaying")){
-                val isPlaying = intent.getBooleanExtra("isPlaying",false)
+            if (action.equals("com.nilin.etherealmusic.isPlaying")) {
+                val isPlaying = intent.getBooleanExtra("isPlaying", false)
                 (context as MainActivity).changeF2(isPlaying)
             }
         }
@@ -259,5 +237,45 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             Toast.makeText(this, "已取消定时停止播放", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            val a = LocalFragment()
+            if (a.isMenuVisible) {
+                Log.i("111111111111","1111111111111")
+                super.onBackPressed()
+            } else {
+                val time = System.currentTimeMillis()
+                Log.i("111111111111","2222222222222222")
+                if (time - lastBackPress < 2000) {
+                    System.exit(0)
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                    super.onBackPressed()
+                } else {
+                    lastBackPress = time
+                    Toast.makeText(context, "1111", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 }
 
