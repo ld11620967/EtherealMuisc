@@ -17,8 +17,8 @@ import org.jetbrains.anko.custom.async
 
 
 /**
- * Created by liangd on 2017/9/19.
- */
+* Created by liangd on 2017/9/19.
+*/
 class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     fun scanMusic() {
 
-        var degrees = ObjectAnimator.ofInt(sv, "degrees", 0, 360)
+        val degrees = ObjectAnimator.ofInt(sv, "degrees", 0, 360)
         degrees.interpolator = LinearInterpolator()
         degrees.duration = 1000
         degrees.repeatCount = ValueAnimator.INFINITE

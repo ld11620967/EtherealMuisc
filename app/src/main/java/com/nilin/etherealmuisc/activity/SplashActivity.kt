@@ -4,8 +4,8 @@ import android.view.animation.AnimationUtils
 import android.os.Bundle
 import android.view.animation.Animation
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_welcome.*
 import kotlinx.coroutines.experimental.CommonPool
@@ -19,13 +19,14 @@ import java.util.concurrent.TimeUnit
 */
 class SplashActivity : Activity() {
 
-    val context = MyApplication.instance
     private var imgAnimation: Animation? = null
     private var textAnimation: Animation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+
+        var position = getSharedPreferences("position_pref", Context.MODE_PRIVATE)
 
         launch(CommonPool) {
             delay(1200, TimeUnit.MILLISECONDS)

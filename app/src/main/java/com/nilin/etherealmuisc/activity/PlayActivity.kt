@@ -19,8 +19,8 @@ import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 
 
 /**
- * Created by liangd on 2017/9/19.
- */
+* Created by liangd on 2017/9/19.
+*/
 class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     //Handler用于更新已经播放时间
@@ -38,7 +38,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
 
-
         myHandler = MyHandler(this)
 
         ib_play_previous.setOnClickListener(this)
@@ -47,7 +46,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         iv_play_back.setOnClickListener(this)
         MusicSeekBar.setOnSeekBarChangeListener(this)
     }
-
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (fromUser) {
@@ -118,11 +116,13 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
             tv_music_title.setText(title)
         }
 
-        if (playService!!.isPlaying) {
-            ib_play_contorl.isSelected = true
-        } else {
-            ib_play_contorl.isSelected = false
-        }
+        ib_play_contorl.isSelected = playService!!.isPlaying
+
+//        if (playService!!.isPlaying) {
+//            ib_play_contorl.isSelected = true
+//        } else {
+//            ib_play_contorl.isSelected = false
+//        }
     }
 
     /**

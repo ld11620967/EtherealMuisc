@@ -27,6 +27,8 @@ import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import com.nilin.etherealmuisc.R.layout.fragment_local_music
+import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.delay
@@ -80,9 +82,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onPageScrollStateChanged(state: Int) {
+
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
     }
 
     override fun onPageSelected(position: Int) {
@@ -123,7 +127,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         PlayService().next()
         iv_play_bar_play.isSelected = true
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -186,13 +189,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         tv_play_bar_artist.text = singer
     }
 
-
     fun changeF2(isPlaying: Boolean) {
-        if (isPlaying) {
-            iv_play_bar_play.isSelected = true
-        } else {
-            iv_play_bar_play.isSelected = false
-        }
+        iv_play_bar_play.isSelected = isPlaying
     }
 
     var broadcastReceiver = object : BroadcastReceiver() {
@@ -224,8 +222,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (time.toInt() == 0 && job == null) {
             Toast.makeText(this, "停止播放功能未开启", Toast.LENGTH_SHORT).show()
         } else if (time.toInt() != 0) {
-            val time1 = time * 500
-//            val time1 = time * 60000
+//            val time1 = time * 500
+            val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
             job = launch(CommonPool) {
                 delay(time1, TimeUnit.MILLISECONDS)
@@ -257,8 +255,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-//            val a = LocalFragment()
-            if (LocalFragment().isVisible) {
+            if (LocalMusicFragment().isVisible) {
                 Log.i("111111111111","1111111111111")
                 super.onBackPressed()
             } else {
@@ -270,7 +267,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     super.onBackPressed()
                 } else {
                     lastBackPress = time
-                    Toast.makeText(context, "1111", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "再按一次退出空灵音乐", Toast.LENGTH_SHORT).show()
                 }
             }
         }
