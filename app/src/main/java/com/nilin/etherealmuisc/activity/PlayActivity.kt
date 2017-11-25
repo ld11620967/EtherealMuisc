@@ -7,15 +7,15 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
 import com.nilin.etherealmuisc.utils.MediaUtils
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
+import java.io.*
 
 
 /**
@@ -33,7 +33,14 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         setContentView(R.layout.activity_play)
 
         //显示歌词
-        val lrc = getFromAssets("lyric.lrc")
+        val file = File("storage/emulated/0/倩影随行.lrc")
+        val fis = FileInputStream(file)
+        val size = fis.available()
+        val buffer = ByteArray(size)
+        //  把内存从inputstream内读取到数组上
+        fis.read(buffer)
+        fis.close()
+        val lrc = String(buffer)
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
