@@ -21,15 +21,16 @@
             android:src="@drawable/button_back" />
 
         <TextView
-            android:id="@+id/tv_music_title"
+            android:id="@+id/tv_music_song"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
-            android:paddingTop="40dp"
+            android:paddingTop="42dp"
             android:textColor="@android:color/white"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <com.nilin.etherealmuisc.view.LrcView

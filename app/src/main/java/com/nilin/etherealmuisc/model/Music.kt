@@ -5,7 +5,7 @@ package com.nilin.etherealmuisc.model
 /**
 * Created by liangd on 2017/9/19.
 */
-class Song {
+class Music {
     //歌曲名
     var song: String? = null
     //歌曲

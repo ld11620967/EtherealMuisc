@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
-import com.nilin.etherealmuisc.model.Song
+import com.nilin.etherealmuisc.model.Music
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_music_search_bar.*
@@ -46,7 +46,7 @@ class SearchMusicFragment : BaseFragment(){
         rv_local_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
-            val song = adapter.data[position] as Song
+            val song = adapter.data[position] as Music
             playService!!.prepare(song.path!!)
             val intent = Intent("com.nilin.etherealmusic.play")
             intent.putExtra("song", song.song)

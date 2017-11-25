@@ -13,7 +13,8 @@ import com.nilin.etherealmuisc.MyApplication
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
-import com.nilin.etherealmuisc.model.Song
+//import com.nilin.etherealmuisc.model.Music
+import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
@@ -41,7 +42,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         rv_local_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
-            val song = adapter.data[position] as Song
+            val song = adapter.data[position] as Music
             playService!!.prepare(song.path!!)
 
             val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()

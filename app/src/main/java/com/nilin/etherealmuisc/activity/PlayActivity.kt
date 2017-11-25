@@ -1,5 +1,6 @@
 package com.nilin.etherealmuisc.activity
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -11,7 +12,6 @@ import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
-import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.utils.MediaUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -37,6 +37,10 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         val builder = DefaultLrcBuilder()
         val rows = builder.getLrcRows(lrc)
         lrcView.setLrc(rows)
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.nilin.etherealmusic.play")
+        registerReceiver(broadcastReceiver, intentFilter)
 
         myHandler = MyHandler(this)
 
@@ -110,11 +114,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         val song = pref.getString("song", "空灵音乐")
-        if (song.length > 10) {
-            tv_music_title.setText(song.substring(0,10))
-        } else {
-            tv_music_title.setText(song)
-        }
+        changeF1(song)
 
         ib_play_contorl.isSelected = playService!!.isPlaying
 
@@ -158,12 +158,33 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
         unbindPlayService()//解绑服务
     }
 
     companion object {
         private val UPDATE_TIME = 0x10    //更新播放事件的标记
         private val UPDATE_LRC = 0x20     //更新播放事件的标记
+    }
+
+
+    fun changeF1(song: String) {
+        if (song.length > 10) {
+            tv_music_song.setText(song.substring(0,10))
+        } else {
+            tv_music_song.setText(song)
+        }
+    }
+
+    val broadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action.equals("com.nilin.etherealmusic.play")) {
+                val song = intent.getStringExtra("song")
+                (context as PlayActivity).changeF1(song)
+            }
+        }
     }
 
 }
