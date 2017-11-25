@@ -102,7 +102,7 @@ class PlayService() : Service() {
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
         sendBroadcast(intent)
 
-        val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
+        val editor = MyApplication.instance!!.getSharedPreferences("position_pref", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
         editor.apply()
     }
@@ -125,7 +125,7 @@ class PlayService() : Service() {
         intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
         sendBroadcast(intent)
 
-        val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
+        val editor = MyApplication.instance!!.getSharedPreferences("position_pref", Context.MODE_PRIVATE).edit()
         editor.putInt("position", position!!)
         editor.apply()
     }

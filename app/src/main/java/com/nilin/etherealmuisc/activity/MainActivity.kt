@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.delay
@@ -42,6 +41,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
     var job: Job? = null
+    var path:String?=null
     val searchMusicFragment=SearchMusicFragment()
     val localFragment=LocalFragment()
     val localMusicFragment=localFragment.localMusicFragment
@@ -50,11 +50,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
+    }
+
+    private fun initView() {
+        val adapter = FragmentAdapter(supportFragmentManager)
+        adapter.addFragment(localFragment)
+        adapter.addFragment(OnlineFragment())
+        viewpager.setAdapter(adapter)
+        tv_local_music.setSelected(true)
         nav_view.setNavigationItemSelectedListener(this)
         viewpager.addOnPageChangeListener(this)
         clickListener()
         startService(Intent(this, PlayService::class.java))
-
+        val song=intent.getStringExtra("song")
+        val singer=intent.getStringExtra("singer")
+        path=intent.getStringExtra("path")
+        if (song != null || singer != null || path != null) {
+            changeF1(song, singer)
+        }
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")
         intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
@@ -72,14 +85,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 return
             }
         }
-    }
-
-    private fun initView() {
-        val adapter = FragmentAdapter(supportFragmentManager)
-        adapter.addFragment(localFragment)
-        adapter.addFragment(OnlineFragment())
-        viewpager.setAdapter(adapter)
-        tv_local_music.setSelected(true)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -115,6 +120,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         iv_play_bar_play.setOnClickListener {
             if (!playService!!.isPlaying) {
+                if (path != null) { playService!!.prepare(path!!) }
                 playService!!.start()
                 iv_play_bar_play.isSelected = true
             } else {
@@ -223,7 +229,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (time.toInt() == 0 && job == null) {
             Toast.makeText(this, "停止播放功能未开启", Toast.LENGTH_SHORT).show()
         } else if (time.toInt() != 0) {
-//            val time1 = time * 500
             val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
             job = launch(CommonPool) {

@@ -63,7 +63,6 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 //                }
 //            }
 //        }).start()
-
     }
 
     override fun onClick(p0: View?) {

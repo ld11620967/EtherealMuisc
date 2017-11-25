@@ -6,7 +6,10 @@ import android.view.animation.Animation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.nilin.etherealmuisc.Music
+import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
+import com.nilin.etherealmuisc.greendao.MusicDao
 import kotlinx.android.synthetic.main.activity_welcome.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.delay
@@ -15,10 +18,11 @@ import java.util.concurrent.TimeUnit
 
 
 /**
-* Created by liangd on 2017/11/23.
-*/
+ * Created by liangd on 2017/11/23.
+ */
 class SplashActivity : Activity() {
 
+    var music_info: MutableList<Music>? = null
     private var imgAnimation: Animation? = null
     private var textAnimation: Animation? = null
 
@@ -26,7 +30,12 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        var position = getSharedPreferences("position_pref", Context.MODE_PRIVATE)
+        val position_pref = getSharedPreferences("position_pref", Context.MODE_PRIVATE)
+        val position = position_pref.getInt("position", -1)
+
+        if (position != -1) {
+            music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()
+        }
 
         launch(CommonPool) {
             delay(1200, TimeUnit.MILLISECONDS)
@@ -42,6 +51,11 @@ class SplashActivity : Activity() {
 
     private fun goHome() {
         val intent = Intent(this, MainActivity::class.java)
+        if (music_info !== null) {
+            intent.putExtra("song", music_info!!.get(0).song)
+            intent.putExtra("singer", music_info!!.get(0).singer)
+            intent.putExtra("path", music_info!!.get(0).path)
+        }
         startActivity(intent)
         finish()
     }
