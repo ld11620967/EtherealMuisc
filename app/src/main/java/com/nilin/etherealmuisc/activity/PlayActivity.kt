@@ -109,11 +109,11 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         MusicSeekBar.setMax(playService!!.duration)//设置进度条最大值为MP3总时间
 
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
-        val title = pref.getString("song", "空灵音乐")
-        if (title.length > 8) {
-            tv_music_title.setText(title.substring(0,8))
+        val song = pref.getString("song", "空灵音乐")
+        if (song.length > 10) {
+            tv_music_title.setText(song.substring(0,10))
         } else {
-            tv_music_title.setText(title)
+            tv_music_title.setText(song)
         }
 
         ib_play_contorl.isSelected = playService!!.isPlaying

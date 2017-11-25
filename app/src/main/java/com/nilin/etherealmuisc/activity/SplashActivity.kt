@@ -30,8 +30,8 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        val position_pref = getSharedPreferences("position_pref", Context.MODE_PRIVATE)
-        val position = position_pref.getInt("position", -1)
+        val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+        val position = music_pref.getInt("position", -1)
 
         if (position != -1) {
             music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()

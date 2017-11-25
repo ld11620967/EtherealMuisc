@@ -44,8 +44,8 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             val song = adapter.data[position] as Song
             playService!!.prepare(song.path!!)
 
-            val editor = MyApplication.instance!!.getSharedPreferences("position_pref", Context.MODE_PRIVATE).edit()
-            editor.putString("title", song.song)
+            val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
+            editor.putString("song", song.song)
             editor.putInt("position", position)
             editor.apply()
 
