@@ -27,8 +27,6 @@ import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.util.Log
-import com.nilin.etherealmuisc.R.layout.fragment_local_music
-import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.delay
@@ -44,6 +42,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
     var job: Job? = null
+    val searchMusicFragment=SearchMusicFragment()
+    val localFragment=LocalFragment()
+    val localMusicFragment=localFragment.localMusicFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +76,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun initView() {
         val adapter = FragmentAdapter(supportFragmentManager)
-        adapter.addFragment(LocalFragment())
+        adapter.addFragment(localFragment)
         adapter.addFragment(OnlineFragment())
         viewpager.setAdapter(adapter)
         tv_local_music.setSelected(true)
@@ -108,7 +109,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         iv_search.setOnClickListener {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment, SearchMusicFragment(), null)
+                    .replace(R.id.fragment, searchMusicFragment, null)
                     .addToBackStack(null)
                     .commit()
         }
@@ -255,19 +256,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            if (LocalMusicFragment().isVisible) {
-                Log.i("111111111111","1111111111111")
-                super.onBackPressed()
+            if (localMusicFragment.isVisible||searchMusicFragment.isVisible) {
+            super.onBackPressed()
             } else {
                 val time = System.currentTimeMillis()
-                Log.i("111111111111","2222222222222222")
                 if (time - lastBackPress < 2000) {
                     System.exit(0)
                     android.os.Process.killProcess(android.os.Process.myPid())
                     super.onBackPressed()
                 } else {
                     lastBackPress = time
-                    Toast.makeText(context, "再按一次退出空灵音乐", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "再按一次退出", Toast.LENGTH_SHORT).show()
                 }
             }
         }
