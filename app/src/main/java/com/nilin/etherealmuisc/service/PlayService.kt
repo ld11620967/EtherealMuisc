@@ -196,4 +196,8 @@ class PlayService() : Service() {
     fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
         this.musicUpdatrListener = musicUpdatrListener
     }
+
+    fun getAudioSessionId(): Int {
+        return mp!!.getAudioSessionId()
+    }
 }

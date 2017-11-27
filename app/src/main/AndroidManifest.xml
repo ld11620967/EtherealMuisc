@@ -24,6 +24,7 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.PlayActivity" />
         <activity android:name=".activity.ScanMusicActivity" />
+        <activity android:name=".activity.SettingActivity" />
 
         <service
             android:name=".service.PlayService"

@@ -173,7 +173,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.show()
             }
             R.id.nav_settings -> {
-
+                startActivity(Intent(this, SettingActivity::class.java))
             }
             R.id.nav_about -> {
                 Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()

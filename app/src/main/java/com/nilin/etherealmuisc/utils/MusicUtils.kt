@@ -4,6 +4,13 @@ import android.provider.MediaStore
 import android.content.Context
 import android.util.Log
 import com.nilin.etherealmuisc.model.Music
+import android.media.audiofx.AudioEffect
+import android.content.Intent
+import android.content.pm.PackageManager
+
+
+
+
 
 
 /**
@@ -52,5 +59,13 @@ object MusicUtils {
         } else {
             (time / 1000 / 60).toString() + ":" + time / 1000 % 60
         }
+    }
+
+    fun isAudioControlPanelAvailable(context: Context): Boolean {
+        return isIntentAvailable(context, Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL))
+    }
+
+    private fun isIntentAvailable(context: Context, intent: Intent): Boolean {
+        return context.packageManager.resolveActivity(intent, PackageManager.GET_RESOLVED_FILTER) != null
     }
 }
