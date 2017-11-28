@@ -18,7 +18,7 @@ import com.nilin.etherealmuisc.greendao.MusicDao
 /**
  * Created by nilin on 2017/9/10.
  */
-class PlayService() : Service() {
+class PlayService : Service() {
 
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
@@ -159,6 +159,10 @@ class PlayService() : Service() {
         mp!!.seekTo(msec)
     }
 
+    fun getAudioSessionId(): Int {
+        return mp!!.getAudioSessionId()
+    }
+
     //利用Runnable来实现多线程
     /**
      * Runnable
@@ -197,7 +201,4 @@ class PlayService() : Service() {
         this.musicUpdatrListener = musicUpdatrListener
     }
 
-    fun getAudioSessionId(): Int {
-        return mp!!.getAudioSessionId()
-    }
 }

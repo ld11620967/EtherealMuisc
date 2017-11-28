@@ -33,7 +33,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         setContentView(R.layout.activity_play)
 
         //显示歌词
-        val file = File("storage/emulated/0/倩影随行.lrc")
+        val file = File("storage/emulated/0/遇萤.lrc")
         val fis = FileInputStream(file)
         val size = fis.available()
         val buffer = ByteArray(size)
@@ -73,6 +73,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     }
 
     override fun onClick(v: View?) {
+
         when (v!!.id) {
             R.id.ib_play_previous -> {
                 playService!!.previous()
@@ -135,45 +136,23 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     /**
      * 歌词显示
      */
-    fun getFromAssets(fileName: String): String {
-        try {
-            val inputReader = InputStreamReader(resources.assets.open(fileName))
-            val bufReader = BufferedReader(inputReader)
-            var line = bufReader.readLine()
-            var Result = ""
-            while (line != null) {
-                Result += line + "\r\n"
-                line = bufReader.readLine()
-            }
-            return Result
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return ""
-    }
-
-    override fun onResume() {
-        super.onResume()
-        bindPlayService()//绑定服务
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unbindPlayService()//解绑服务
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(broadcastReceiver)
-        unbindPlayService()//解绑服务
-    }
-
-    companion object {
-        private val UPDATE_TIME = 0x10    //更新播放事件的标记
-        private val UPDATE_LRC = 0x20     //更新播放事件的标记
-    }
-
+//    fun getFromAssets(fileName: String): String {
+//        try {
+//            val inputReader = InputStreamReader(resources.assets.open(fileName))
+//            val bufReader = BufferedReader(inputReader)
+//            var line = bufReader.readLine()
+//            var Result = ""
+//            while (line != null) {
+//                Result += line + "\r\n"
+//                line = bufReader.readLine()
+//            }
+//            return Result
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return ""
+//    }
 
     fun changeF1(song: String) {
         if (song.length > 10) {
@@ -192,6 +171,27 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                 (context as PlayActivity).changeF1(song)
             }
         }
+    }
+
+    companion object {
+        private val UPDATE_TIME = 0x10    //更新播放事件的标记
+        private val UPDATE_LRC = 0x20     //更新播放事件的标记
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
+        unbindPlayService()//解绑服务
     }
 
 }

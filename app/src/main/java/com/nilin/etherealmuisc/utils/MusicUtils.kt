@@ -2,15 +2,10 @@ package com.nilin.etherealmuisc.utils
 
 import android.provider.MediaStore
 import android.content.Context
-import android.util.Log
 import com.nilin.etherealmuisc.model.Music
 import android.media.audiofx.AudioEffect
 import android.content.Intent
 import android.content.pm.PackageManager
-
-
-
-
 
 
 /**

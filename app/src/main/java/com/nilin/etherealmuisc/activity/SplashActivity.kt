@@ -55,6 +55,7 @@ class SplashActivity : Activity() {
             intent.putExtra("song", music_info!!.get(0).song)
             intent.putExtra("singer", music_info!!.get(0).singer)
             intent.putExtra("path", music_info!!.get(0).path)
+            intent.putExtra("firstStart", true)
         }
         startActivity(intent)
         finish()

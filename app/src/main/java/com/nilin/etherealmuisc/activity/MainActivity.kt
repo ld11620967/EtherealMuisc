@@ -34,17 +34,18 @@ import java.util.concurrent.TimeUnit
 
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
     var job: Job? = null
-    var path:String?=null
-    val searchMusicFragment=SearchMusicFragment()
-    val localFragment=LocalFragment()
-    val localMusicFragment=localFragment.localMusicFragment
+    var path: String? = null
+    var firstStart: Boolean? = null
+    val searchMusicFragment = SearchMusicFragment()
+    val localFragment = LocalFragment()
+    val localMusicFragment = localFragment.localMusicFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +63,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         viewpager.addOnPageChangeListener(this)
         clickListener()
         startService(Intent(this, PlayService::class.java))
-        val song=intent.getStringExtra("song")
-        val singer=intent.getStringExtra("singer")
-        path=intent.getStringExtra("path")
+        val song = intent.getStringExtra("song")
+        val singer = intent.getStringExtra("singer")
+        path = intent.getStringExtra("path")
+        firstStart = intent.getBooleanExtra("firstStart",false)
         if (song != null || singer != null || path != null) {
             changeF1(song, singer)
         }
@@ -119,19 +121,27 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     .commit()
         }
         iv_play_bar_play.setOnClickListener {
-            if (!playService!!.isPlaying) {
-                if (path != null) { playService!!.prepare(path!!) }
-                playService!!.start()
-                iv_play_bar_play.isSelected = true
+            if (firstStart!!) {
+                if (path != null) {
+                    playService!!.prepare(path!!)
+                    playService!!.start()
+                    iv_play_bar_play.isSelected = true
+                    firstStart=false
+                }
             } else {
-                playService!!.pause()
-                iv_play_bar_play.isSelected = false
+                if (playService!!.isPlaying) {
+                    playService!!.pause()
+                    iv_play_bar_play.isSelected = false
+                } else {
+                    playService!!.start()
+                    iv_play_bar_play.isSelected = true
+                }
             }
         }
     }
 
     private operator fun next() {
-        PlayService().next()
+        playService!!.next()
         iv_play_bar_play.isSelected = true
     }
 
@@ -241,6 +251,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            if (localMusicFragment.isVisible || searchMusicFragment.isVisible) {
+                super.onBackPressed()
+            } else {
+                val time = System.currentTimeMillis()
+                if (time - lastBackPress < 2000) {
+                    System.exit(0)
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                    super.onBackPressed()
+                } else {
+                    lastBackPress = time
+                    Toast.makeText(context, "再按一次退出", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         bindPlayService()//绑定服务
@@ -255,26 +285,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onDestroy()
         unregisterReceiver(broadcastReceiver)
         unbindPlayService()//解绑服务
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            if (localMusicFragment.isVisible||searchMusicFragment.isVisible) {
-            super.onBackPressed()
-            } else {
-                val time = System.currentTimeMillis()
-                if (time - lastBackPress < 2000) {
-                    System.exit(0)
-                    android.os.Process.killProcess(android.os.Process.myPid())
-                    super.onBackPressed()
-                } else {
-                    lastBackPress = time
-                    Toast.makeText(context, "再按一次退出", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
 }

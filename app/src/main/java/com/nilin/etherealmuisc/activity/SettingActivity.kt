@@ -1,6 +1,5 @@
 package com.nilin.etherealmuisc.activity
 
-import android.app.ProgressDialog
 import android.text.TextUtils
 import android.preference.Preference
 import android.content.ActivityNotFoundException
@@ -9,7 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.nilin.etherealmuisc.service.PlayService
 import android.preference.PreferenceFragment
-import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
@@ -21,7 +20,9 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 /**
  * Created by liangd on 2017/11/27.
  */
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : BaseActivity() {
+
+    val context = MyApplication.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +34,11 @@ class SettingActivity : AppCompatActivity() {
             getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
         }
 
-//        if (!checkServiceAlive()) {
-//            return
-//        }
-
         val settingFragment = SettingFragment()
-        settingFragment.setPlayService(PlayService())
+        settingFragment.setPlayService(playService)
+        if (playService == null) {
+            Log.i("1111111111111", "playService111111111111====================null")
+        }
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.ll_fragment_container, settingFragment)
@@ -47,17 +47,17 @@ class SettingActivity : AppCompatActivity() {
 
     class SettingFragment : PreferenceFragment(), Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
+        val context = MyApplication.instance
         private var mSoundEffect: Preference? = null
         private var mFilterSize: Preference? = null
         private var mFilterTime: Preference? = null
-
         private var mPlayService: PlayService? = null
-        private var mProgressDialog: ProgressDialog? = null
-
-        val context = MyApplication.instance
 
         fun setPlayService(playService: PlayService?) {
             this.mPlayService = playService
+            if (mPlayService == null) {
+                Log.i("1111111111111", "playService22222222222222====================null")
+            }
         }
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,13 +84,15 @@ class SettingActivity : AppCompatActivity() {
         }
 
         private fun startEqualizer() {
-            if (MusicUtils.isAudioControlPanelAvailable(getActivity())) {
+            if (MusicUtils.isAudioControlPanelAvailable(activity)) {
                 val intent = Intent()
                 val packageName = activity.packageName
                 intent.action = AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL
                 intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
                 intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+                Log.i("1111111111111", "111111111111111111111")
                 intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, mPlayService!!.getAudioSessionId())
+                Log.i("1111111111111", mPlayService!!.getAudioSessionId().toString())
                 try {
                     startActivityForResult(intent, 1)
                 } catch (e: ActivityNotFoundException) {
@@ -98,7 +100,7 @@ class SettingActivity : AppCompatActivity() {
                     Toast.makeText(context, "设备不支持", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context,"设备不支持",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "设备不支持", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -161,10 +163,34 @@ class SettingActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() === android.R.id.home) {
+        if (item.itemId === android.R.id.home) {
             finish()
             return true
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun publish(progress: Int) {
+
+    }
+
+    override fun change() {
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bindPlayService()//绑定服务
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindPlayService()//解绑服务
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindPlayService()//解绑服务
+    }
+
 }
