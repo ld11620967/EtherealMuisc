@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.delay
@@ -183,7 +184,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.show()
             }
             R.id.nav_settings -> {
-                startActivity(Intent(this, SettingActivity::class.java))
+                val intent=Intent(this, SettingActivity::class.java)
+                intent.putExtra("AudioSessionId",playService!!.getAudioSessionId())
+                startActivity(intent)
+                Log.i("11111111111playSe.get", playService!!.getAudioSessionId().toString())
             }
             R.id.nav_about -> {
                 Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()

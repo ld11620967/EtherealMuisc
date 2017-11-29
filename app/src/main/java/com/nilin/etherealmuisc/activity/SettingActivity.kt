@@ -6,9 +6,7 @@ import android.content.ActivityNotFoundException
 import android.media.audiofx.AudioEffect
 import android.content.Intent
 import android.os.Bundle
-import com.nilin.etherealmuisc.service.PlayService
 import android.preference.PreferenceFragment
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
@@ -23,6 +21,7 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 class SettingActivity : BaseActivity() {
 
     val context = MyApplication.instance
+    var AudioSessionId:Int?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +33,12 @@ class SettingActivity : BaseActivity() {
             getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
         }
 
+        val intent=intent
+        AudioSessionId=intent.getIntExtra("AudioSessionId",-1)
+
         val settingFragment = SettingFragment()
-        settingFragment.setPlayService(playService)
-        if (playService == null) {
-            Log.i("1111111111111", "playService111111111111====================null")
-        }
+        settingFragment.setAudioSessionId(AudioSessionId)
+
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.ll_fragment_container, settingFragment)
@@ -51,13 +51,10 @@ class SettingActivity : BaseActivity() {
         private var mSoundEffect: Preference? = null
         private var mFilterSize: Preference? = null
         private var mFilterTime: Preference? = null
-        private var mPlayService: PlayService? = null
+        private var AudioSessionId:Int?=null
 
-        fun setPlayService(playService: PlayService?) {
-            this.mPlayService = playService
-            if (mPlayService == null) {
-                Log.i("1111111111111", "playService22222222222222====================null")
-            }
+        fun setAudioSessionId(audioSessionId: Int?) {
+            this.AudioSessionId = audioSessionId
         }
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,9 +87,7 @@ class SettingActivity : BaseActivity() {
                 intent.action = AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL
                 intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
                 intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-                Log.i("1111111111111", "111111111111111111111")
-                intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, mPlayService!!.getAudioSessionId())
-                Log.i("1111111111111", mPlayService!!.getAudioSessionId().toString())
+                intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, AudioSessionId)
                 try {
                     startActivityForResult(intent, 1)
                 } catch (e: ActivityNotFoundException) {
@@ -176,21 +171,6 @@ class SettingActivity : BaseActivity() {
 
     override fun change() {
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        bindPlayService()//绑定服务
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unbindPlayService()//解绑服务
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unbindPlayService()//解绑服务
     }
 
 }
