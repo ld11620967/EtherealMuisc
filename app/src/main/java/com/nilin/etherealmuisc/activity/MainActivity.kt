@@ -187,7 +187,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 val intent=Intent(this, SettingActivity::class.java)
                 intent.putExtra("AudioSessionId",playService!!.getAudioSessionId())
                 startActivity(intent)
-                Log.i("11111111111playSe.get", playService!!.getAudioSessionId().toString())
             }
             R.id.nav_about -> {
                 Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()

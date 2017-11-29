@@ -127,7 +127,7 @@ class SettingActivity : BaseActivity() {
         }
 
 //        private fun onFilterChanged() {
-//            showProgress()
+//
 //            mPlayService!!.stop()
 //            mPlayService!!.updateMusicList(object : EventCallback<Void> {
 //                fun onEvent(aVoid: Void) {
@@ -139,22 +139,7 @@ class SettingActivity : BaseActivity() {
 //                }
 //            })
 //        }
-
-//        private fun showProgress() {
-//            if (mProgressDialog == null) {
-//                mProgressDialog = ProgressDialog(activity)
-//                mProgressDialog!!.setMessage("正在扫描音乐")
-//            }
-//            if (!mProgressDialog!!.isShowing) {
-//                mProgressDialog!!.show()
-//            }
-//        }
 //
-//        private fun cancelProgress() {
-//            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-//                mProgressDialog!!.cancel()
-//            }
-//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
