@@ -43,7 +43,7 @@ class SearchMusicFragment : BaseFragment(){
         adapter = MusicAdapter(context!!, R.layout.rv_music)
         rv_local_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = adapter
+//        rv_local_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music

@@ -12,7 +12,6 @@ import com.nilin.etherealmuisc.R
  * Created by liangd on 2017/9/19.
  */
 class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music, BaseViewHolder>(layoutId, MyApplication.instance!!.getMusicDao().queryBuilder().list()) {
-    //class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music, BaseViewHolder>(layoutId,getMusicData(context)) {
 
     override fun convert(viewHolder: BaseViewHolder?, music: Music?) {
 
@@ -21,4 +20,5 @@ class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music
         viewHolder.setImageResource(R.id.iv_more, R.drawable.ic_more)
                 .addOnClickListener(R.id.iv_more)
     }
+
 }

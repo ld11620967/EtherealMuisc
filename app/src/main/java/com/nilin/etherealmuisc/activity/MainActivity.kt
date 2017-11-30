@@ -140,12 +140,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    private operator fun next() {
-        playService!!.next()
-        iv_play_bar_play.isSelected = true
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.nav_search_music -> {
                 startActivity(Intent(this, ScanMusicActivity::class.java))
