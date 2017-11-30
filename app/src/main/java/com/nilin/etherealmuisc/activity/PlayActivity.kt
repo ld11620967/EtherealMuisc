@@ -19,8 +19,8 @@ import java.io.*
 
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     //Handler用于更新已经播放时间
@@ -156,7 +156,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
     fun changeF1(song: String) {
         if (song.length > 10) {
-            tv_music_song.setText(song.substring(0,10))
+            tv_music_song.setText(song.substring(0, 10))
         } else {
             tv_music_song.setText(song)
         }

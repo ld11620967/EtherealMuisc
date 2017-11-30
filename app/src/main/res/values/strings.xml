@@ -4,16 +4,6 @@
     <string name="online_music">在线音乐</string>
     <string name="song_title">空灵音乐</string>
 
-    <!--<string name="navigation_drawer_open">Open navigation drawer</string>-->
-    <!--<string name="navigation_drawer_close">Close navigation drawer</string>-->
-
-    <!--<string name="action_settings">Settings</string>-->
-
-    <!--<string name="title_activity_local_music">LocalMusicActivity</string>-->
-
-
-
-
     <string name="setting_key_mobile_network_play">mobile_network_play</string>
     <string name="setting_key_mobile_network_download">mobile_network_download</string>
     <string name="setting_key_sound_effect">sound_effect</string>

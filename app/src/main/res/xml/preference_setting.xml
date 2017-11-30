@@ -28,7 +28,7 @@
             android:dialogTitle="最小大小"
             android:entries="@array/filter_size_entries"
             android:entryValues="@array/filter_size_entry_values"
-            android:key="@string/setting_key_filter_size"
+            android:key="filter_size"
             android:summary="不过滤"
             android:title="按大小过滤" />
 
@@ -37,7 +37,7 @@
             android:dialogTitle="最小时长"
             android:entries="@array/filter_time_entries"
             android:entryValues="@array/filter_time_entry_values"
-            android:key="@string/setting_key_filter_time"
+            android:key="filter_time"
             android:summary="不过滤"
             android:title="按时长过滤" />
     </PreferenceCategory>

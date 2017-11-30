@@ -7,6 +7,7 @@ import android.media.audiofx.AudioEffect
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceFragment
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
@@ -67,9 +68,9 @@ class SettingActivity : BaseActivity() {
             mSoundEffect!!.onPreferenceClickListener = this
             mFilterSize!!.onPreferenceChangeListener = this
             mFilterTime!!.onPreferenceChangeListener = this
-//
-//            mFilterSize!!.summary = getSummary(Preferences.getFilterSize(), R.array.filter_size_entries, R.array.filter_size_entry_values)
-//            mFilterTime!!.summary = getSummary(Preferences.getFilterTime(), R.array.filter_time_entries, R.array.filter_time_entry_values)
+
+            mFilterSize!!.summary = getSummary(getFilterSize(), R.array.filter_size_entries, R.array.filter_size_entry_values)
+            mFilterTime!!.summary = getSummary(getFilterTime(), R.array.filter_time_entries, R.array.filter_time_entry_values)
         }
 
         override fun onPreferenceClick(preference: Preference): Boolean {
@@ -101,14 +102,12 @@ class SettingActivity : BaseActivity() {
 
         override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
             if (preference === mFilterSize) {
-//                Preferences.saveFilterSize(newValue as String)
-//                mFilterSize!!.summary = getSummary(Preferences.getFilterSize(), R.array.filter_size_entries, R.array.filter_size_entry_values)
-//                onFilterChanged()
+                saveFilterSize(newValue as String)
+                mFilterSize!!.summary = getSummary(getFilterSize(), R.array.filter_size_entries, R.array.filter_size_entry_values)
                 return true
             } else if (preference === mFilterTime) {
-//                Preferences.saveFilterTime(newValue as String)
-//                mFilterTime!!.summary = getSummary(Preferences.getFilterTime(), R.array.filter_time_entries, R.array.filter_time_entry_values)
-//                onFilterChanged()
+                saveFilterTime(newValue as String)
+                mFilterTime!!.summary = getSummary(getFilterTime(), R.array.filter_time_entries, R.array.filter_time_entry_values)
                 return true
             }
             return false
@@ -126,20 +125,21 @@ class SettingActivity : BaseActivity() {
             return entryArray[0]
         }
 
-//        private fun onFilterChanged() {
-//
-//            mPlayService!!.stop()
-//            mPlayService!!.updateMusicList(object : EventCallback<Void> {
-//                fun onEvent(aVoid: Void) {
-//                    cancelProgress()
-//                    val listener = mPlayService!!.getOnPlayEventListener()
-//                    if (listener != null) {
-//                        listener!!.onChange(mPlayService!!.getPlayingMusic())
-//                    }
-//                }
-//            })
-//        }
-//
+        private fun getFilterSize(): String {
+            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_size", "0")
+        }
+
+        private fun saveFilterSize(value: String) {
+            return PreferenceManager.getDefaultSharedPreferences(context).edit().putString("filter_size", value).apply()
+        }
+
+        private fun getFilterTime(): String {
+            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_time", "0")
+        }
+
+        private fun saveFilterTime(value: String) {
+            return PreferenceManager.getDefaultSharedPreferences(context).edit().putString("filter_time", value).apply()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
