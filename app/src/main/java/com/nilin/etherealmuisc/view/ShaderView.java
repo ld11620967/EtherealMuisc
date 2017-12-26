@@ -27,7 +27,7 @@ public class ShaderView extends View {
      */
     private Paint mSweepPaint;
     /**
-     * 绘制女神bitmap的笔
+     * 绘制背景bitmap的笔
      */
     private Paint mBitmapPaint;
     /**
@@ -35,7 +35,7 @@ public class ShaderView extends View {
      */
     private int mWidth;
     /**
-     * 女神图片
+     * 背景图片
      */
     private Bitmap mBitmap;
     /**
@@ -47,7 +47,7 @@ public class ShaderView extends View {
      */
     Matrix mSweepMatrix = new Matrix();
     /**
-     * 用于控制女神Bitmap的矩阵
+     * 用于控制背景Bitmap的矩阵
      */
     Matrix mBitmapMatrix = new Matrix();
     /**
@@ -119,7 +119,7 @@ public class ShaderView extends View {
         mSweepMatrix.setRotate(degrees, mWidth / 2, mWidth / 2);
         mSweepGradient.setLocalMatrix(mSweepMatrix);
 
-//    5. 使用设置好图片着色器的画笔，画圆，先画出下层的女神图片，在画出上层的扫描图片
+//    5. 使用设置好图片着色器的画笔，画圆，先画出下层的背景图片，在画出上层的扫描图片
         canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2, mBitmapPaint);
         canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2, mSweepPaint);
     }

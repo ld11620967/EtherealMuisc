@@ -33,17 +33,19 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         setContentView(R.layout.activity_play)
 
         //显示歌词
-        val file = File("storage/emulated/0/遇萤.lrc")
-        val fis = FileInputStream(file)
-        val size = fis.available()
-        val buffer = ByteArray(size)
-        //  把内存从inputstream内读取到数组上
-        fis.read(buffer)
-        fis.close()
-        val lrc = String(buffer)
-        val builder = DefaultLrcBuilder()
-        val rows = builder.getLrcRows(lrc)
-        lrcView.setLrc(rows)
+        val file = File("storage/emulated/0/林中鸟.lrc")
+        if (file.exists()) {
+            val fis = FileInputStream(file)
+            val size = fis.available()
+            val buffer = ByteArray(size)
+            //  把内存从inputstream内读取到数组上
+            fis.read(buffer)
+            fis.close()
+            val lrc = String(buffer)
+            val builder = DefaultLrcBuilder()
+            val rows = builder.getLrcRows(lrc)
+            lrcView.setLrc(rows)
+        }
 
         val intentFilter = IntentFilter()
         intentFilter.addAction("com.nilin.etherealmusic.play")

@@ -49,18 +49,6 @@ object MusicUtils {
         return list
     }
 
-    /**
-     * 定义一个方法用来格式化获取到的时间
-     */
-    fun formatTime(time: Int): String {
-        return if (time / 1000 % 60 < 10) {
-            (time / 1000 / 60).toString() + ":0" + time / 1000 % 60
-
-        } else {
-            (time / 1000 / 60).toString() + ":" + time / 1000 % 60
-        }
-    }
-
     fun isAudioControlPanelAvailable(context: Context): Boolean {
         return isIntentAvailable(context, Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL))
     }
