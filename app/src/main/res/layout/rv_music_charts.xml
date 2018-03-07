@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/rank"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/rank_1" />
+
+        <TextView
+            android:id="@+id/rank1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/rank"
+            android:text="1."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/song1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/rank1"
+            android:text="1111111111"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/rank2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rank1"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/rank"
+            android:text="2."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/song2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/song1"
+            android:layout_toEndOf="@+id/rank2"
+            android:text="222222222"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/rank3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rank2"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/rank"
+            android:text="3."
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/song3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/song2"
+            android:layout_toEndOf="@+id/rank3"
+            android:text="33333333"
+            android:textStyle="bold" />
+
+</RelativeLayout>
