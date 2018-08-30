@@ -33,7 +33,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         setContentView(R.layout.activity_play)
 
         //显示歌词
-        val file = File("storage/emulated/0/林中鸟.lrc")
+        val file = File("storage/emulated/0/倩影随行.lrc")
         if (file.exists()) {
             val fis = FileInputStream(file)
             val size = fis.available()

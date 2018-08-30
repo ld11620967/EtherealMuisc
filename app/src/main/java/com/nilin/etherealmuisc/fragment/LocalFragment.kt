@@ -21,6 +21,7 @@ class LocalFragment : Fragment() {
 
     val context = MyApplication.instance
     val localMusicFragment = LocalMusicFragment()
+    val MyFavoriteFragment = MyFavoriteFragment()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,6 +39,16 @@ class LocalFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
         }
+
+        bt_my_favorite.setOnClickListener {
+            activity.supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment, MyFavoriteFragment, null)
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
+
+
 
 }

@@ -20,7 +20,7 @@ import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 
 
-class LocalMusicFragment : BaseFragment(), View.OnClickListener {
+class MyFavoriteFragment : BaseFragment(), View.OnClickListener {
 
     var adapter: MusicAdapter? = null
 
@@ -32,7 +32,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        toolbar.setTitle("本地音乐")
+        toolbar.setTitle("我的最爱")
         toolbar.setNavigationOnClickListener(this)
 
         rv_local_music.layoutManager = LinearLayoutManager(context)

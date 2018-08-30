@@ -3,6 +3,7 @@
     <string name="local_music">本地音乐</string>
     <string name="online_music">在线音乐</string>
     <string name="song_title">空灵音乐</string>
+    <string name="my_favorite">我的最爱</string>
 
     <string name="setting_key_mobile_network_play">mobile_network_play</string>
     <string name="setting_key_mobile_network_download">mobile_network_download</string>
