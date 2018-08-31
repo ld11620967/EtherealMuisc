@@ -98,9 +98,17 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/ib_music_contorl"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/button_loop"
+                android:scaleType="centerInside" />
+
+            <ImageButton
                 android:id="@+id/ib_play_previous"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
                 android:src="@drawable/previous_song" />
@@ -109,17 +117,25 @@
                 android:id="@+id/ib_play_contorl"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/play_btn_play_pause_selector" />
 
             <ImageButton
                 android:id="@+id/ib_play_next"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
                 android:src="@drawable/next_song" />
+
+            <ImageButton
+                android:id="@+id/ib_my_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_my_favorite_selector"
+                android:scaleType="centerInside" />
         </LinearLayout>
 
     </LinearLayout>

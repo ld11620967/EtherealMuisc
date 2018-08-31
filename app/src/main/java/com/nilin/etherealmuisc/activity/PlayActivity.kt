@@ -25,6 +25,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
+    var aa = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +54,13 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
 
         myHandler = MyHandler(this)
 
+        iv_play_back.setOnClickListener(this)
+        ib_music_contorl.setOnClickListener(this)
         ib_play_previous.setOnClickListener(this)
         ib_play_contorl.setOnClickListener(this)
         ib_play_next.setOnClickListener(this)
-        iv_play_back.setOnClickListener(this)
+        ib_my_favorite.setOnClickListener(this)
+
         MusicSeekBar.setOnSeekBarChangeListener(this)
     }
 
@@ -75,8 +79,26 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     }
 
     override fun onClick(v: View?) {
-
         when (v!!.id) {
+            R.id.iv_play_back -> finish()
+            R.id.ib_music_contorl -> {
+
+                if (aa==1) {
+                    aa=2
+                    ib_music_contorl.setBackgroundResource(R.drawable.button_loop)
+
+                } else if (aa==2) {
+                    aa=3
+                    ib_music_contorl.setBackgroundResource(R.drawable.button_loop_one)
+
+                } else if (aa==3) {
+                    aa=1
+                    ib_music_contorl.setBackgroundResource(R.drawable.button_random)
+
+                }
+
+
+            }
             R.id.ib_play_previous -> {
                 playService!!.previous()
             }
@@ -92,8 +114,20 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
             R.id.ib_play_next -> {
                 playService!!.next()
             }
-            R.id.iv_play_back -> finish()
+
+            R.id.ib_my_favorite -> {
+                if (aa==1) {
+                    aa=2
+                    ib_my_favorite.isSelected = true
+
+                } else {
+                    aa=1
+                    ib_my_favorite.isSelected = false
+
+                }
+            }
         }
+
     }
 
     internal class MyHandler(private val playActivity: PlayActivity?) : Handler() {
