@@ -13,6 +13,7 @@ import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
+import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 import java.io.*
@@ -21,7 +22,18 @@ import java.io.*
 /**
  * Created by liangd on 2017/9/19.
  */
-class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener,HeadsetButtonReceiver.onHeadsetListener  {
+    override fun playOrPause() {
+        Log.i("1111111111111","!111111111111")
+    }
+
+    override fun playNext() {
+        Log.i("1111111111111","!111111111111")
+    }
+
+    override fun playPrevious() {
+        Log.i("1111111111111","!111111111111")
+    }
 
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
@@ -62,6 +74,14 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         ib_my_favorite.setOnClickListener(this)
 
         MusicSeekBar.setOnSeekBarChangeListener(this)
+
+
+
+        val intentFilter1 = IntentFilter()
+        intentFilter1.addAction("android.intent.action.MEDIA_BUTTON")
+        registerReceiver(broadcastReceiver1, intentFilter1)
+
+
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -123,7 +143,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                 } else {
                     aa=1
                     ib_my_favorite.isSelected = false
-
                 }
             }
         }
@@ -209,6 +228,17 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         }
     }
 
+
+    val broadcastReceiver1 = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action.equals("android.intent.action.MEDIA_BUTTON")) {
+                Log.i("222222222222222222222","22222222222222222")
+            }
+        }
+    }
+
     companion object {
         private val UPDATE_TIME = 0x10    //更新播放事件的标记
         private val UPDATE_LRC = 0x20     //更新播放事件的标记
@@ -227,6 +257,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(broadcastReceiver1)
         unbindPlayService()//解绑服务
     }
 

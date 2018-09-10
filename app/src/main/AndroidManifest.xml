@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.SplashActivity">
-        <!--<activity android:name=".activity.MainActivity">-->
+            <!--<activity android:name=".activity.MainActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +37,13 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.nilin.etherealmusic.play" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".audio.PlayerService.HeadsetButtonReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
     </application>

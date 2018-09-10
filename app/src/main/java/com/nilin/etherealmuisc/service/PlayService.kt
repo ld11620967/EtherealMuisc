@@ -1,18 +1,16 @@
 package com.nilin.etherealmuisc.service
 
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
-import android.util.Log
 import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.greendao.MusicDao
+
 
 
 /**
@@ -20,12 +18,15 @@ import com.nilin.etherealmuisc.greendao.MusicDao
  */
 class PlayService : Service() {
 
+
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
     val context: Context = this
     var position: Int? = null
     var path: List<Music>? = null
     var num: Int? = null
+
+
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()

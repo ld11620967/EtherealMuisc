@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/music_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,7 +48,6 @@
         android:background="@android:color/transparent"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:id="@+id/SeekBar"
             android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_play_controller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,31 +101,39 @@
                 android:id="@+id/ib_music_contorl"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/button_loop"
                 android:scaleType="centerInside" />
 
             <ImageButton
                 android:id="@+id/ib_play_previous"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/ib_play_contorl"
+                android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
                 android:src="@drawable/previous_song" />
 
             <ImageButton
                 android:id="@+id/ib_play_contorl"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:background="@drawable/play_btn_play_pause_selector" />
 
             <ImageButton
                 android:id="@+id/ib_play_next"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/ib_play_contorl"
+                android:layout_marginLeft="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
                 android:src="@drawable/next_song" />
@@ -134,9 +142,12 @@
                 android:id="@+id/ib_my_favorite"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/btn_my_favorite_selector"
                 android:scaleType="centerInside" />
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
