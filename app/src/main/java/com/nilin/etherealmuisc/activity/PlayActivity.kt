@@ -4,16 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
-import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 import java.io.*
@@ -22,18 +19,7 @@ import java.io.*
 /**
  * Created by liangd on 2017/9/19.
  */
-class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener,HeadsetButtonReceiver.onHeadsetListener  {
-    override fun playOrPause() {
-        Log.i("1111111111111","!111111111111")
-    }
-
-    override fun playNext() {
-        Log.i("1111111111111","!111111111111")
-    }
-
-    override fun playPrevious() {
-        Log.i("1111111111111","!111111111111")
-    }
+class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener{
 
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
@@ -74,14 +60,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         ib_my_favorite.setOnClickListener(this)
 
         MusicSeekBar.setOnSeekBarChangeListener(this)
-
-
-
-        val intentFilter1 = IntentFilter()
-        intentFilter1.addAction("android.intent.action.MEDIA_BUTTON")
-        registerReceiver(broadcastReceiver1, intentFilter1)
-
-
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -101,8 +79,8 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.iv_play_back -> finish()
-            R.id.ib_music_contorl -> {
 
+            R.id.ib_music_contorl -> {
                 if (aa==1) {
                     aa=2
                     ib_music_contorl.setBackgroundResource(R.drawable.button_loop)
@@ -116,12 +94,12 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                     ib_music_contorl.setBackgroundResource(R.drawable.button_random)
 
                 }
-
-
             }
+
             R.id.ib_play_previous -> {
                 playService!!.previous()
             }
+
             R.id.ib_play_contorl -> {
                 if (playService!!.isPlaying) {
                     playService!!.pause()
@@ -131,6 +109,7 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                     ib_play_contorl.isSelected = true
                 }
             }
+
             R.id.ib_play_next -> {
                 playService!!.next()
             }
@@ -146,7 +125,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
                 }
             }
         }
-
     }
 
     internal class MyHandler(private val playActivity: PlayActivity?) : Handler() {
@@ -228,15 +206,8 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
         }
     }
 
-
-    val broadcastReceiver1 = object : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action.equals("android.intent.action.MEDIA_BUTTON")) {
-                Log.i("222222222222222222222","22222222222222222")
-            }
-        }
+    constructor(parcel: Parcel) : this() {
+        aa = parcel.readInt()
     }
 
     companion object {
@@ -257,7 +228,6 @@ class PlayActivity : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChan
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(broadcastReceiver)
-        unregisterReceiver(broadcastReceiver1)
         unbindPlayService()//解绑服务
     }
 

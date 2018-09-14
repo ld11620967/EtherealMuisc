@@ -10,7 +10,7 @@ import android.os.IBinder
 import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.greendao.MusicDao
-
+import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 
 
 /**
@@ -18,15 +18,13 @@ import com.nilin.etherealmuisc.greendao.MusicDao
  */
 class PlayService : Service() {
 
-
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
+    var headsetButtonReceiver : HeadsetButtonReceiver?=null
     val context: Context = this
     var position: Int? = null
     var path: List<Music>? = null
     var num: Int? = null
-
-
 
     //创建一个单实例的线程,用于更新音乐信息
     private var es = Executors.newSingleThreadExecutor()
@@ -42,8 +40,8 @@ class PlayService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        es.execute(updateSteatusRunnable);//更新进度值
 
+        es.execute(updateSteatusRunnable);//更新进度值
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         position = pref.getInt("position", 0)
     }

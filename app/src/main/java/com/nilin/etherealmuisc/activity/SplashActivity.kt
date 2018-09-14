@@ -38,7 +38,7 @@ class SplashActivity : Activity() {
         }
 
         launch(CommonPool) {
-            delay(1200, TimeUnit.MILLISECONDS)
+            delay(800, TimeUnit.MILLISECONDS)
             goHome()
         }
 

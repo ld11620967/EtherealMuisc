@@ -26,6 +26,9 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
+import android.util.Log
+import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
+import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver1
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.delay
@@ -36,10 +39,25 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by liangd on 2017/9/19.
  */
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener,HeadsetButtonReceiver1.onHeadsetListener {
+    override fun playOrPause() {
+        playService!!.pause()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun playNext() {
+        playService!!.next()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun playPrevious() {
+        playService!!.previous()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
+    var headsetButtonReceiver1 :HeadsetButtonReceiver1?=null
     var job: Job? = null
     var path: String? = null
     var firstStart: Boolean? = null
@@ -66,7 +84,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val song = intent.getStringExtra("song")
         val singer = intent.getStringExtra("singer")
         path = intent.getStringExtra("path")
-        firstStart = intent.getBooleanExtra("firstStart",false)
+        firstStart = intent.getBooleanExtra("firstStart", false)
         if (song != null || singer != null || path != null) {
             changeF1(song, singer)
         }
@@ -74,10 +92,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         intentFilter.addAction("com.nilin.etherealmusic.play")
         intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
         registerReceiver(broadcastReceiver, intentFilter)
+        HeadsetButtonReceiver1(this)
+//        headsetButtonReceiver!!.setOnHeadsetListener()
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_DENIED) {
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_DENIED) {
                 //requestPermissions 请求权限的方法
                 //第一个参数 activity
                 //第二个参数 需要请求的权限的 权限String数组
@@ -126,7 +146,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     playService!!.prepare(path!!)
                     playService!!.start()
                     iv_play_bar_play.isSelected = true
-                    firstStart=false
+                    firstStart = false
                 }
             } else {
                 if (playService!!.isPlaying) {
@@ -179,8 +199,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.show()
             }
             R.id.nav_settings -> {
-                val intent=Intent(this, SettingActivity::class.java)
-                intent.putExtra("AudioSessionId",playService!!.getAudioSessionId())
+                val intent = Intent(this, SettingActivity::class.java)
+                intent.putExtra("AudioSessionId", playService!!.getAudioSessionId())
                 startActivity(intent)
             }
             R.id.nav_about -> {
@@ -282,6 +302,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(headsetButtonReceiver1)
         unbindPlayService()//解绑服务
     }
 
