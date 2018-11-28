@@ -37,17 +37,6 @@ import kotlinx.coroutines.launch
  * Created by liangd on 2017/9/19.
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener,HeadsetButtonReceiver1.onHeadsetListener {
-    override fun playOrPause() {
-        playService!!.pause()
-    }
-
-    override fun playNext() {
-        playService!!.next()
-    }
-
-    override fun playPrevious() {
-        playService!!.previous()
-    }
 
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
@@ -68,7 +57,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun initView() {
         val adapter = FragmentAdapter(supportFragmentManager)
         adapter.addFragment(localFragment)
-        adapter.addFragment(OnlineFragment())
+//在线音乐（布局文件：include_music_tab_bar.xml）
+//        adapter.addFragment(OnlineFragment())
         viewpager.setAdapter(adapter)
         tv_local_music.setSelected(true)
         nav_view.setNavigationItemSelectedListener(this)
@@ -87,7 +77,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         intentFilter.addAction("com.nilin.etherealmusic.isPlaying")
         registerReceiver(broadcastReceiver, intentFilter)
         HeadsetButtonReceiver1(this)
-//        headsetButtonReceiver!!.setOnHeadsetListener()
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(this,
@@ -114,17 +103,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onPageSelected(position: Int) {
         if (position == 0) {
             tv_local_music.setSelected(true)
-            tv_online_music.setSelected(false)
+//在线音乐
+//            tv_online_music.setSelected(false)
         } else {
             tv_local_music.setSelected(false)
-            tv_online_music.setSelected(true)
+//在线音乐
+//            tv_online_music.setSelected(true)
         }
     }
 
     fun clickListener() {
         iv_menu.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
         tv_local_music.setOnClickListener { viewpager.setCurrentItem(0) }
-        tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
+//在线音乐
+//        tv_online_music.setOnClickListener { viewpager.setCurrentItem(1) }
         music_play_bar.setOnClickListener { startActivity(Intent(this, PlayActivity::class.java)) }
         iv_play_bar_next.setOnClickListener { playService!!.next() }
         iv_search.setOnClickListener {
@@ -222,6 +214,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         iv_play_bar_play.isSelected = isPlaying
     }
 
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     var broadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
@@ -286,6 +279,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
             }
         }
+    }
+
+    override fun playOrPause() {
+        playService!!.pause()
+    }
+
+    override fun playNext() {
+        playService!!.next()
+    }
+
+    override fun playPrevious() {
+        playService!!.previous()
     }
 
     override fun onResume() {

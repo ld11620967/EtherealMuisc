@@ -8,7 +8,7 @@ import com.nilin.etherealmuisc.greendao.MusicDao
 /**
 * Created by nilin on 2017/9/16.
 */
-class MyApplication : Application(){
+open class MyApplication : Application(){
 
     var mMusicDao: MusicDao? = null
 

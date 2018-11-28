@@ -61,7 +61,6 @@ class MyFavoriteFragment : BaseFragment(), View.OnClickListener {
             val song = adapter.data[position] as Music
             val dialog = AlertDialog.Builder(getContext()!!)
             dialog.setTitle(song.song)
-            Log.i("111111111111111111","000000000000000")
             dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     0// 分享
