@@ -26,14 +26,11 @@ import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
-import android.util.Log
-import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver1
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -42,17 +39,14 @@ import java.util.concurrent.TimeUnit
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener,HeadsetButtonReceiver1.onHeadsetListener {
     override fun playOrPause() {
         playService!!.pause()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun playNext() {
         playService!!.next()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun playPrevious() {
         playService!!.previous()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     val context = MyApplication.instance
@@ -259,8 +253,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else if (time.toInt() != 0) {
             val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
-            job = launch(CommonPool) {
-                delay(time1, TimeUnit.MILLISECONDS)
+//            job = launch(CommonPool) {
+//                delay(time1, TimeUnit.MILLISECONDS)
+//                playService!!.pause()
+//            }
+
+            job = GlobalScope.launch  {
+                delay(1000L)
                 playService!!.pause()
             }
         } else {

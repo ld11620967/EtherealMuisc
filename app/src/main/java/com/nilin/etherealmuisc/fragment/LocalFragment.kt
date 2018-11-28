@@ -23,9 +23,8 @@ class LocalFragment : Fragment() {
     val localMusicFragment = LocalMusicFragment()
     val MyFavoriteFragment = MyFavoriteFragment()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_local, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_local, container, false)
     }
 
     //Fragment 点击事件
@@ -33,7 +32,7 @@ class LocalFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         bt_local_music.setOnClickListener {
-            activity.supportFragmentManager
+            activity!!.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, localMusicFragment, null)
                     .addToBackStack(null)
@@ -41,7 +40,7 @@ class LocalFragment : Fragment() {
         }
 
         bt_my_favorite.setOnClickListener {
-            activity.supportFragmentManager
+            activity!!.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, MyFavoriteFragment, null)
                     .addToBackStack(null)

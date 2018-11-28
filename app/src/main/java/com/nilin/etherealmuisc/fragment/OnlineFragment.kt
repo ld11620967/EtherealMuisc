@@ -22,9 +22,8 @@ class OnlineFragment : BaseFragment() {
 
     var adapter: MusicChartsAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_online, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_online, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,7 +37,7 @@ class OnlineFragment : BaseFragment() {
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
 
-            activity.supportFragmentManager
+            activity!!.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment, localMusicFragment, null)
                     .addToBackStack(null)

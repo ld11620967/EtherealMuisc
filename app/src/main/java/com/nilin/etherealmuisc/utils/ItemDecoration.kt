@@ -68,7 +68,7 @@ class ItemDecoration(context: Context, private val mOrientation: Int//列表的�
 
 
     //获取分割线尺寸
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.set(0, 0, 0, mDividerHeight)
     }

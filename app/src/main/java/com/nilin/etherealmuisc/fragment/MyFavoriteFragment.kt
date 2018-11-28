@@ -24,9 +24,8 @@ class MyFavoriteFragment : BaseFragment(), View.OnClickListener {
 
     var adapter: MusicAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_local_music, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_local_music, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,7 +59,7 @@ class MyFavoriteFragment : BaseFragment(), View.OnClickListener {
 
         adapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
-            val dialog = AlertDialog.Builder(getContext())
+            val dialog = AlertDialog.Builder(getContext()!!)
             dialog.setTitle(song.song)
             Log.i("111111111111111111","000000000000000")
             dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
@@ -84,7 +83,7 @@ class MyFavoriteFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
-        getFragmentManager().popBackStack();
+        getFragmentManager()!!.popBackStack();
     }
 
     override fun onResume() {

@@ -23,10 +23,9 @@ class SearchMusicFragment : BaseFragment(){
     var adapter: MusicAdapter? = null
     val inputManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater!!.inflate(R.layout.fragment_search_music, container, false)
+        return inflater.inflate(R.layout.fragment_search_music, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -37,7 +36,7 @@ class SearchMusicFragment : BaseFragment(){
 
         iv_back.setOnClickListener {
             hideInputMethod()
-            getFragmentManager().popBackStack() }
+            getFragmentManager()!!.popBackStack() }
 
         rv_local_music.layoutManager = LinearLayoutManager(context)
         adapter = MusicAdapter(context!!, R.layout.rv_music)

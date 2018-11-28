@@ -11,10 +11,9 @@ import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.greendao.MusicDao
 import kotlinx.android.synthetic.main.activity_welcome.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -37,8 +36,13 @@ class SplashActivity : Activity() {
             music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()
         }
 
-        launch(CommonPool) {
-            delay(800, TimeUnit.MILLISECONDS)
+//        launch(CommonPool) {
+//            delay(800, TimeUnit.MILLISECONDS)
+//            goHome()
+//        }
+
+        GlobalScope.launch  {
+            delay(800L)
             goHome()
         }
 
