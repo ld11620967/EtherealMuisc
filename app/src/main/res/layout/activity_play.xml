@@ -19,7 +19,8 @@
             android:background="@android:color/transparent"
             android:paddingStart="30dp"
             android:paddingTop="50dp"
-            android:src="@drawable/button_back" />
+            android:src="@drawable/button_back"
+            tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
             android:id="@+id/tv_music_song"
@@ -29,7 +30,7 @@
             android:background="@android:color/transparent"
             android:paddingTop="42dp"
             android:textColor="@android:color/white"
-            android:textSize="26sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

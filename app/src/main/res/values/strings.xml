@@ -11,11 +11,9 @@
     <string name="setting_key_filter_size">filter_size</string>
     <string name="setting_key_filter_time">filter_time</string>
 
-    <string name="network">网络</string>
-
     <string name="mobile_network_play">使用移动网络播放</string>
     <string name="mobile_network_download">使用移动网络下载</string>
-
+    <string name="network">网络</string>
     <string name="play">播放</string>
     <string name="sound_effect">音效调节</string>
 
