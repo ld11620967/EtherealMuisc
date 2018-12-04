@@ -12,7 +12,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
-import com.nilin.etherealmuisc.model.Music
+import com.nilin.etherealmuisc.db.Music
+//import com.nilin.etherealmuisc.model.Music
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_music_search_bar.*

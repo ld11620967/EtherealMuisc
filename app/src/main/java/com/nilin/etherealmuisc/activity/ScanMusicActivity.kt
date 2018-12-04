@@ -3,7 +3,7 @@ package com.nilin.etherealmuisc.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.nilin.etherealmuisc.Music
+//import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.utils.MusicUtils.getMusicData
@@ -13,7 +13,10 @@ import android.animation.ValueAnimator
 import android.view.animation.LinearInterpolator
 import android.animation.ObjectAnimator
 import android.widget.Toast
+import com.nilin.etherealmuisc.db.Music
 import org.jetbrains.anko.custom.async
+import org.litepal.LitePal
+import org.litepal.extension.findAll
 
 
 /**
@@ -42,9 +45,21 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
         async({
             MyApplication.instance!!.getMusicDao().deleteAll()
             for (i in 0..getMusicData(MyApplication.instance!!).size - 1) {
-                val list = Music(i.toLong(), getMusicData(MyApplication.instance!!).get(i).song, getMusicData(MyApplication.instance!!).get(i).singer, getMusicData(MyApplication.instance!!).get(i).path)
-                MyApplication.instance!!.getMusicDao().insertInTx(list)
+
+                val music = Music()
+                music.song=getMusicData(MyApplication.instance!!).get(i).song
+                music.singer=getMusicData(MyApplication.instance!!).get(i).singer
+                music.path=getMusicData(MyApplication.instance!!).get(i).path
+                music.save()
+
+//                val allSongs = LitePal.findAll<Music>()
+//                MyApplication.instance!!.getMusicDao().insertInTx(allSongs)
+
+//                val list = Music(i.toLong(), getMusicData(MyApplication.instance!!).get(i).song, getMusicData(MyApplication.instance!!).get(i).singer, getMusicData(MyApplication.instance!!).get(i).path)
+//                MyApplication.instance!!.getMusicDao().insertInTx(list)
             }
+//                val allSongs = LitePal.findAll<Music>()
+//                MyApplication.instance!!.getMusicDao().insertInTx(allSongs)
             runOnUiThread {
                 degrees.cancel()
                 Toast.makeText(MyApplication.instance!!,"已扫描完毕",Toast.LENGTH_SHORT).show()

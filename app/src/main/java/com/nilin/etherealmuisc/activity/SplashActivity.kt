@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.litepal.LitePal
+import org.litepal.extension.find
 
 
 /**
@@ -32,9 +34,10 @@ class SplashActivity : Activity() {
         val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         val position = music_pref.getInt("position", -1)
 
-        if (position != -1) {
-            music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()
-        }
+//        if (position != -1) {
+//            music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()
+//            music_info =LitePal.find<com.nilin.etherealmuisc.db.Music>(position!!.toLong())
+//        }
 
 //        launch(CommonPool) {
 //            delay(800, TimeUnit.MILLISECONDS)

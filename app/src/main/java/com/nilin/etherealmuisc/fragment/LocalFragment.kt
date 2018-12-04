@@ -48,6 +48,4 @@ class LocalFragment : Fragment() {
         }
     }
 
-
-
 }

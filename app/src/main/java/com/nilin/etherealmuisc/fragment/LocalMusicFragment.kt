@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.MusicAdapter
-import com.nilin.etherealmuisc.Music
+//import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
@@ -18,6 +18,7 @@ import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
+import com.nilin.etherealmuisc.db.Music
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {

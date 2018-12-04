@@ -7,10 +7,14 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
-import com.nilin.etherealmuisc.Music
+//import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
+import com.nilin.etherealmuisc.db.Music
 import com.nilin.etherealmuisc.greendao.MusicDao
 import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
+import org.litepal.LitePal
+import org.litepal.extension.find
+import org.litepal.extension.findAll
 
 
 /**
@@ -23,7 +27,8 @@ class PlayService : Service() {
     var headsetButtonReceiver : HeadsetButtonReceiver?=null
     val context: Context = this
     var position: Int? = null
-    var path: List<Music>? = null
+//    var path: List<Music>? = null
+    var path:Music?= null
     var num: Int? = null
 
     //创建一个单实例的线程,用于更新音乐信息
@@ -86,13 +91,21 @@ class PlayService : Service() {
 
     fun previous() {
         if (position == 0) {
-            num = MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
-            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+            num = LitePal.findAll<Music>().size.plus(-1)
+            path = LitePal.find<Music>(num!!.toLong())
+
+
+
+//            num = MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
+//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         } else {
             num = position!!.plus(-1)
-            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+            path = LitePal.find<Music>(num!!.toLong())
+//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
-        prepare((path as MutableList<Music>?)!!.get(0).path)
+
+//        prepare((path as MutableList<Music>?)!!.get(0).path)
+        prepare((path as MutableList<Music>?)!!.get(0).path!! )
         start()
         position = num
 
@@ -108,15 +121,18 @@ class PlayService : Service() {
     }
 
     fun next() {
-        if (position!!.plus(1) == MyApplication.instance!!.getMusicDao().queryBuilder().list().size) {
-            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(0)).list()
+//        if (position!!.plus(1) == MyApplication.instance!!.getMusicDao().queryBuilder().list().size) {
+        if (position!!.plus(1) == LitePal.findAll<Music>().size) {
+//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(0)).list()
+            path = LitePal.find<Music>(num!!.toLong())
             num = 0
         } else {
             num = position!!.plus(1)
-            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
+            path = LitePal.find<Music>(num!!.toLong())
         }
-
-        prepare((path as MutableList<Music>?)!!.get(0).path)
+//        prepare((path as MutableList<Music>?)!!.get(0).path)
+        prepare((path as MutableList<Music>?)!!.get(0).path!! )
         start()
         position = num
 

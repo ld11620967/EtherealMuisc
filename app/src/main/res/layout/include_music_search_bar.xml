@@ -24,7 +24,7 @@
 
         <EditText
             android:id="@+id/tv_local_music"
-            android:layout_width="220dp"
+            android:layout_width="230dp"
             android:layout_height="?attr/actionBarSize"
             android:background="@null"
             android:hint="歌曲名、歌手名"

@@ -8,7 +8,5 @@ import android.content.Intent
 class MusicBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-
     }
-
 }
