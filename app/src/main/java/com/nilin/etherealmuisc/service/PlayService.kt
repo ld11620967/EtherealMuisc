@@ -7,10 +7,8 @@ import android.media.MediaPlayer
 import android.os.Binder
 import java.util.concurrent.Executors
 import android.os.IBinder
-//import com.nilin.etherealmuisc.Music
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
-import com.nilin.etherealmuisc.greendao.MusicDao
 import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 import org.litepal.LitePal
 import org.litepal.extension.find
@@ -27,7 +25,6 @@ class PlayService : Service() {
     var headsetButtonReceiver : HeadsetButtonReceiver?=null
     val context: Context = this
     var position: Int? = null
-//    var path: List<Music>? = null
     var path:Music?= null
     var num: Int? = null
 
@@ -93,56 +90,44 @@ class PlayService : Service() {
         if (position == 0) {
             num = LitePal.findAll<Music>().size.plus(-1)
             path = LitePal.find<Music>(num!!.toLong())
-
-
-
-//            num = MyApplication.instance!!.getMusicDao().queryBuilder().list().size.plus(-1)
-//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         } else {
             num = position!!.plus(-1)
             path = LitePal.find<Music>(num!!.toLong())
-//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
         }
-
-//        prepare((path as MutableList<Music>?)!!.get(0).path)
-        prepare((path as MutableList<Music>?)!!.get(0).path!! )
+        prepare(path!!.path!! )
         start()
         position = num
 
         val intent = Intent("com.nilin.etherealmusic.play")
-        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
-        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+        intent.putExtra("song", (path!!.song))
+        intent.putExtra("singer", (path!!.singer))
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
-        editor.putString("song", (path as MutableList<Music>?)!!.get(0).song)
+        editor.putString("song", (path!!.song))
         editor.putInt("position", position!!)
         editor.apply()
     }
 
     fun next() {
-//        if (position!!.plus(1) == MyApplication.instance!!.getMusicDao().queryBuilder().list().size) {
         if (position!!.plus(1) == LitePal.findAll<Music>().size) {
-//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(0)).list()
             path = LitePal.find<Music>(num!!.toLong())
             num = 0
         } else {
             num = position!!.plus(1)
-//            path = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(num)).list()
             path = LitePal.find<Music>(num!!.toLong())
         }
-//        prepare((path as MutableList<Music>?)!!.get(0).path)
-        prepare((path as MutableList<Music>?)!!.get(0).path!! )
+        prepare(path!!.path!!)
         start()
         position = num
 
         val intent = Intent("com.nilin.etherealmusic.play")
-        intent.putExtra("song", (path as MutableList<Music>?)!!.get(0).song)
-        intent.putExtra("singer", (path as MutableList<Music>?)!!.get(0).singer)
+        intent.putExtra("song", (path!!.song))
+        intent.putExtra("singer", (path!!.singer))
         sendBroadcast(intent)
 
         val editor = MyApplication.instance!!.getSharedPreferences("music_pref", Context.MODE_PRIVATE).edit()
-        editor.putString("song", (path as MutableList<Music>?)!!.get(0).song)
+        editor.putString("song", (path!!.song))
         editor.putInt("position", position!!)
         editor.apply()
     }

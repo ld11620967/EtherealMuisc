@@ -1,8 +1,6 @@
 package com.nilin.etherealmuisc
 
 import android.app.Application
-import com.nilin.etherealmuisc.greendao.DaoMaster
-import com.nilin.etherealmuisc.greendao.MusicDao
 import org.litepal.LitePal
 
 
@@ -11,26 +9,10 @@ import org.litepal.LitePal
 */
 open class MyApplication : Application(){
 
-    var mMusicDao: MusicDao? = null
-
     override fun onCreate() {
         super.onCreate()
         LitePal.initialize(this)
-
         instance = this
-        initDao()
-    }
-
-    fun initDao() {
-        val helper = DaoMaster.DevOpenHelper(this, "note.db", null)
-        val db = helper.writableDatabase
-        val daoMaster = DaoMaster(db)
-        val daoSession = daoMaster.newSession()
-        mMusicDao = daoSession.musicDao
-    }
-
-    open fun getMusicDao(): MusicDao {
-        return mMusicDao!!
     }
 
     companion object {

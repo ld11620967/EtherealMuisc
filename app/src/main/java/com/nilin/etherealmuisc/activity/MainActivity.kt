@@ -246,10 +246,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else if (time.toInt() != 0) {
             val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
-//            job = launch(CommonPool) {
-//                delay(time1, TimeUnit.MILLISECONDS)
-//                playService!!.pause()
-//            }
 
             job = GlobalScope.launch  {
                 delay(1000L)

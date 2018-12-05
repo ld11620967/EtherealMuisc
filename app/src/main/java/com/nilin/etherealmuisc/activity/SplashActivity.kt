@@ -6,10 +6,8 @@ import android.view.animation.Animation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.nilin.etherealmuisc.Music
-import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
-import com.nilin.etherealmuisc.greendao.MusicDao
+import com.nilin.etherealmuisc.db.Music
 import kotlinx.android.synthetic.main.activity_welcome.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -23,7 +21,7 @@ import org.litepal.extension.find
  */
 class SplashActivity : Activity() {
 
-    var music_info: MutableList<Music>? = null
+    var music_info: Music? = null
     private var imgAnimation: Animation? = null
     private var textAnimation: Animation? = null
 
@@ -34,15 +32,9 @@ class SplashActivity : Activity() {
         val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         val position = music_pref.getInt("position", -1)
 
-//        if (position != -1) {
-//            music_info = MyApplication.instance!!.getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(position)).list()
-//            music_info =LitePal.find<com.nilin.etherealmuisc.db.Music>(position!!.toLong())
-//        }
-
-//        launch(CommonPool) {
-//            delay(800, TimeUnit.MILLISECONDS)
-//            goHome()
-//        }
+        if (position != -1) {
+            music_info = LitePal.find<Music>((position+1).toLong())
+        }
 
         GlobalScope.launch  {
             delay(800L)
@@ -59,9 +51,9 @@ class SplashActivity : Activity() {
     private fun goHome() {
         val intent = Intent(this, MainActivity::class.java)
         if (music_info !== null) {
-            intent.putExtra("song", music_info!!.get(0).song)
-            intent.putExtra("singer", music_info!!.get(0).singer)
-            intent.putExtra("path", music_info!!.get(0).path)
+            intent.putExtra("song", music_info!!.song)
+            intent.putExtra("singer", music_info!!.singer)
+            intent.putExtra("path", music_info!!.path)
             intent.putExtra("firstStart", true)
         }
         startActivity(intent)

@@ -126,7 +126,7 @@ class SettingActivity : BaseActivity() {
         }
 
         private fun getFilterSize(): String {
-            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_size", "0")
+            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_size", "0")!!
         }
 
         private fun saveFilterSize(value: String) {
@@ -134,7 +134,7 @@ class SettingActivity : BaseActivity() {
         }
 
         private fun getFilterTime(): String {
-            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_time", "0")
+            return PreferenceManager.getDefaultSharedPreferences(context).getString("filter_time", "0")!!
         }
 
         private fun saveFilterTime(value: String) {
@@ -143,7 +143,7 @@ class SettingActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId === android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             finish()
             return true
         }
@@ -151,11 +151,9 @@ class SettingActivity : BaseActivity() {
     }
 
     override fun publish(progress: Int) {
-
     }
 
     override fun change() {
-
     }
 
 }
