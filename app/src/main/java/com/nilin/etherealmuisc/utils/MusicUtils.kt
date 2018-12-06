@@ -17,8 +17,8 @@ object MusicUtils {
      * 扫描系统里面的音频文件，返回一个list集合
      */
     fun getMusicData(context: Context): ArrayList<Music> {
-        val filter_size = PreferenceManager.getDefaultSharedPreferences(context).getString("filter_size", "0")
-        val filter_time = PreferenceManager.getDefaultSharedPreferences(context).getString("filter_time", "0")
+//        val filter_size = PreferenceManager.getDefaultSharedPreferences(context).getString("filter_size", "0")
+//        val filter_time = PreferenceManager.getDefaultSharedPreferences(context).getString("filter_time", "0")
         val list = ArrayList<Music>()
         // 媒体库查询语句（写一个工具类MusicUtils）
         val cursor = context.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.AudioColumns.IS_MUSIC)
@@ -31,15 +31,15 @@ object MusicUtils {
                 music.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 music.size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE))
                 music.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
-                if (music.size.toInt()/1000 > filter_size.toInt() || music.duration!!.toInt()/1000 > filter_time.toInt()) {
+//                if (music.size.toInt()/1000 > filter_size.toInt() || music.duration!!.toInt()/1000 > filter_time.toInt()) {
                     // 注释部分是切割标题，分离出歌曲名和歌手 （本地媒体库读取的歌曲信息不规范）
-                    if (music.song!!.contains("-")) {
-                        val str = music.song!!.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                        music.singer = str[0]
-                        music.song = str[1]
-                    }
+//                    if (music.song!!.contains("-")) {
+//                        val str = music.song!!.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+//                        music.singer = str[0]
+//                        music.song = str[1]
+//                    }
                     list.add(music)
-                }
+//                }
             }
             // 释放资源
             cursor.close()

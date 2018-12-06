@@ -11,19 +11,17 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 import android.animation.ValueAnimator
 import android.view.animation.LinearInterpolator
 import android.animation.ObjectAnimator
-import android.widget.Toast
 import com.nilin.etherealmuisc.db.Music
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import org.litepal.LitePal
 
 
 /**
 * Created by liangd on 2017/9/19.
 */
 class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,35 +34,25 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     fun scanMusic() {
 
+        LitePal.deleteDatabase("music")
         val degrees = ObjectAnimator.ofInt(sv, "degrees", 0, 360)
         degrees.interpolator = LinearInterpolator()
         degrees.duration = 1000
         degrees.repeatCount = ValueAnimator.INFINITE
         degrees.start()
 
-        var music = Music()
-
-//        LitePal.deleteDatabase("music")
         doAsync{
-
-            for (i in 0..getMusicData(MyApplication.instance!!).size - 1) {
+            for (i in 0..getMusicData(MyApplication.instance!!).size-1) {
+                val music = Music()
                 music.song=getMusicData(MyApplication.instance!!).get(i).song
                 music.singer=getMusicData(MyApplication.instance!!).get(i).singer
                 music.path=getMusicData(MyApplication.instance!!).get(i).path
                 music.save()
             }
-
             uiThread{
                 degrees.cancel()
-                toast("finish")
-
+                toast("已扫描完毕")
             }
-
-//            runOnUiThread {
-//                degrees.cancel()
-//                Toast.makeText(MyApplication.instance!!,"已扫描完毕",Toast.LENGTH_SHORT).show()
-//            }
-
         }
 
 //        Thread(Runnable {

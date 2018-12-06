@@ -42,8 +42,6 @@ class OnlineFragment : BaseFragment() {
                     .replace(R.id.fragment, localMusicFragment, null)
                     .addToBackStack(null)
                     .commit()
-
         }
     }
-
 }
