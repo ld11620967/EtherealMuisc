@@ -19,7 +19,6 @@ import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
-import com.nilin.etherealmuisc.fragment.OnlineFragment
 import com.nilin.etherealmuisc.fragment.SearchMusicFragment
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
@@ -154,7 +153,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.nav_time_stop -> {
                 val builder = AlertDialog.Builder(this@MainActivity)
-                builder.setIcon(R.drawable.time_stop)
+                builder.setIcon(R.drawable.ic_time_stop1)
                 builder.setTitle("定时停止播放")
                 val color = arrayOf("不开启", "10分钟", "20分钟", "30分钟", "45分钟", "60分钟", "90分钟")
                 builder.setItems(color, DialogInterface.OnClickListener { _, which ->

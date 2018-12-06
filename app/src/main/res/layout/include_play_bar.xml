@@ -59,7 +59,7 @@
             android:id="@+id/iv_play_bar_next"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@drawable/ic_play_bar_btn_next"
+            android:background="@drawable/btn_play_bar_btn_next"
             android:contentDescription="@null" />
     </LinearLayout>
 

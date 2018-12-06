@@ -19,7 +19,7 @@
             android:background="@android:color/transparent"
             android:paddingStart="30dp"
             android:paddingTop="50dp"
-            android:src="@drawable/button_back"
+            android:src="@drawable/btn_back"
             tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
@@ -105,7 +105,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="30dp"
-                android:background="@drawable/button_loop"
+                android:background="@drawable/btn_loop"
                 android:scaleType="centerInside" />
 
             <ImageButton
@@ -117,7 +117,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/previous_song" />
+                android:src="@drawable/btn_previous_song" />
 
             <ImageButton
                 android:id="@+id/ib_play_contorl"
@@ -137,7 +137,7 @@
                 android:layout_marginLeft="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/next_song" />
+                android:src="@drawable/btn_next_song" />
 
             <ImageButton
                 android:id="@+id/ib_my_favorite"

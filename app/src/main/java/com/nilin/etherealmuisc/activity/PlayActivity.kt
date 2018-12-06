@@ -82,15 +82,15 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
             R.id.ib_music_contorl -> {
                 if (aa==1) {
                     aa=2
-                    ib_music_contorl.setBackgroundResource(R.drawable.button_loop)
+                    ib_music_contorl.setBackgroundResource(R.drawable.btn_loop)
 
                 } else if (aa==2) {
                     aa=3
-                    ib_music_contorl.setBackgroundResource(R.drawable.button_loop_one)
+                    ib_music_contorl.setBackgroundResource(R.drawable.btn_loop_one)
 
                 } else if (aa==3) {
                     aa=1
-                    ib_music_contorl.setBackgroundResource(R.drawable.button_random)
+                    ib_music_contorl.setBackgroundResource(R.drawable.btn_random)
 
                 }
             }
