@@ -20,7 +20,7 @@
 
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/btn_back" />
 
         <EditText
             android:id="@+id/tv_local_music"

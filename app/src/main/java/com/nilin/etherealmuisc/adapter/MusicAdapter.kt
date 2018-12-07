@@ -16,10 +16,9 @@ class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music
 
     override fun convert(viewHolder: BaseViewHolder?, music: Music?) {
 
-        viewHolder!!.setText(R.id.item_song, music!!.song)
-        viewHolder.setText(R.id.item_singer, music.singer)
-        viewHolder.setImageResource(R.id.iv_more, R.drawable.ic_more)
-                .addOnClickListener(R.id.iv_more)
+        viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_not_favorite_gray).addOnClickListener(R.id.iv_favorite)
+                    .setText(R.id.tv_song, music!!.song)
+                    .setText(R.id.tv_singer, music.singer)
+                    .setImageResource(R.id.iv_more, R.drawable.btn_more).addOnClickListener(R.id.iv_more)
     }
-
 }

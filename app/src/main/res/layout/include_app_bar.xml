@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:navigationIcon="@drawable/ic_back"
+            app:navigationIcon="@drawable/btn_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 </android.support.design.widget.AppBarLayout>

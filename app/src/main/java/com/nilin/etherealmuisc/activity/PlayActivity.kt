@@ -10,6 +10,7 @@ import android.view.WindowManager
 import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
+import com.nilin.etherealmuisc.db.Music
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 import java.io.*
@@ -50,14 +51,12 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
         registerReceiver(broadcastReceiver, intentFilter)
 
         myHandler = MyHandler(this)
-
         iv_play_back.setOnClickListener(this)
         ib_music_contorl.setOnClickListener(this)
         ib_play_previous.setOnClickListener(this)
         ib_play_contorl.setOnClickListener(this)
         ib_play_next.setOnClickListener(this)
         ib_my_favorite.setOnClickListener(this)
-
         MusicSeekBar.setOnSeekBarChangeListener(this)
     }
 
@@ -68,11 +67,9 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
-
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
-
     }
 
     override fun onClick(v: View?) {
@@ -91,7 +88,6 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
                 } else if (aa==3) {
                     aa=1
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_random)
-
                 }
             }
 
@@ -114,12 +110,20 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
             }
 
             R.id.ib_my_favorite -> {
+                val music = Music()
+                var position: Int? = null
+                val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+                position = pref.getInt("position", 0)
                 if (aa==1) {
                     aa=2
+                    music.isFavorite= true
+                    music.update(position+1.toLong())
                     ib_my_favorite.isSelected = true
 
                 } else {
                     aa=1
+                    music.isFavorite= false
+                    music.update(position+1.toLong())
                     ib_my_favorite.isSelected = false
                 }
             }
@@ -229,5 +233,4 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
         unregisterReceiver(broadcastReceiver)
         unbindPlayService()//解绑服务
     }
-
 }

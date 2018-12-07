@@ -15,12 +15,9 @@ class MusicChartsAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter
 
     override fun convert(viewHolder: BaseViewHolder?, music: Music) {
 
-        viewHolder!!.setImageResource(R.id.rank, R.drawable.rank_1)
-                .addOnClickListener(R.id.rank)
-        viewHolder.setText(R.id.song1, music.song)
-        viewHolder.setText(R.id.song2, music.singer)
-        viewHolder.setText(R.id.song3, music.singer)
-
+        viewHolder!!.setImageResource(R.id.rank, R.drawable.rank_1).addOnClickListener(R.id.rank)
+                    .setText(R.id.song1, music.song)
+                    .setText(R.id.song2, music.singer)
+                    .setText(R.id.song3, music.singer)
     }
-
 }

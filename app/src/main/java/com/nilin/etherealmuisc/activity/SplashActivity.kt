@@ -33,11 +33,11 @@ class SplashActivity : Activity() {
         val position = music_pref.getInt("position", -1)
 
         if (position != -1) {
-            music_info = LitePal.find<Music>((position).toLong())
+            music_info = LitePal.find<Music>((position+1).toLong())
         }
 
         GlobalScope.launch  {
-            delay(800L)
+            delay(700L)
             goHome()
         }
 

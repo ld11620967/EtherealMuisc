@@ -191,6 +191,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_about -> {
                 Toast.makeText(this, "空灵音乐", Toast.LENGTH_LONG).show()
             }
+            R.id.nav_exit -> {
+//                System.exit(0)
+                android.os.Process.killProcess(android.os.Process.myPid())
+            }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
@@ -265,7 +269,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             } else {
                 val time = System.currentTimeMillis()
                 if (time - lastBackPress < 2000) {
-                    System.exit(0)
+//                    System.exit(0)
                     android.os.Process.killProcess(android.os.Process.myPid())
                     super.onBackPressed()
                 } else {

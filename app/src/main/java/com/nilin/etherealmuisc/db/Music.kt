@@ -4,7 +4,6 @@ import org.litepal.crud.LitePalSupport
 
 
 class Music : LitePalSupport() {
-
     //歌曲名
     var song: String? = null
     //歌曲
@@ -15,5 +14,6 @@ class Music : LitePalSupport() {
     var duration: String? = null
     //歌曲大小
     var size: Long = 0
-
+    //是否收藏
+    var isFavorite: Boolean = false
 }

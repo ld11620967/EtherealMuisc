@@ -18,6 +18,7 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
+import kotlinx.android.synthetic.main.rv_music.*
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
@@ -57,27 +58,44 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             playService!!.start()
         }
 
-        adapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, _, position ->
+        adapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val song = adapter.data[position] as Music
-            val dialog = AlertDialog.Builder(getContext()!!)
-            dialog.setTitle(song.song)
-            dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
-                when (which) {
-                    0// 分享
-                    -> Log.i("111111111111111111","000000000000000")
-//                    -> shareMusic(music)
-                    1// 设为铃声
-                    -> Log.i("1111111111111111111","11111111111111")
-//                    -> requestSetRingtone(music)
-                    2// 查看歌曲信息
-                    -> Log.i("111111111111111111","222222222222222")
-//                    -> musicInfo(music)
-                    3// 删除
-                    -> Log.i("111111111111111111","3333333333333")
-//                    -> deleteMusic(music)
+            var aa = 1
+
+            if (view.getId() == R.id.iv_favorite) {
+                val music = Music()
+                if (aa==1) {
+                    aa=2
+                    music.isFavorite= true
+                    music.update(position+1.toLong())
+                    iv_favorite.isSelected = true
+                } else {
+                    aa=1
+                    music.isFavorite= false
+                    music.update(position+1.toLong())
+                    iv_favorite.isSelected = false
                 }
-            })
-            dialog.show()
+            } else if (view.getId() == R.id.iv_more) {
+                val dialog = AlertDialog.Builder(getContext()!!)
+                dialog.setTitle(song.song)
+                dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0// 分享
+                        -> Log.i("111111111111111111","000000000000000")
+//                    -> shareMusic(music)
+                        1// 设为铃声
+                        -> Log.i("1111111111111111111","11111111111111")
+//                    -> requestSetRingtone(music)
+                        2// 查看歌曲信息
+                        -> Log.i("111111111111111111","222222222222222")
+//                    -> musicInfo(music)
+                        3// 删除
+                        -> Log.i("111111111111111111","3333333333333")
+//                    -> deleteMusic(music)
+                    }
+                })
+                dialog.show()
+            }
         }
     }
 
