@@ -13,6 +13,8 @@ import android.widget.SeekBar
 import com.nilin.etherealmuisc.db.Music
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
+import org.litepal.LitePal
+import org.litepal.extension.find
 import java.io.*
 
 
@@ -33,6 +35,10 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
         //显示歌词
         val file = File("storage/emulated/0/倩影随行.lrc")
+        val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+        val position = pref.getInt("position", 0)
+        val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
+
         if (file.exists()) {
             val fis = FileInputStream(file)
             val size = fis.available()
@@ -58,6 +64,10 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
         ib_play_next.setOnClickListener(this)
         ib_my_favorite.setOnClickListener(this)
         MusicSeekBar.setOnSeekBarChangeListener(this)
+
+        if (isFavorite) {
+            ib_my_favorite.isSelected = true
+        }
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -80,11 +90,9 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
                 if (aa==1) {
                     aa=2
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_loop)
-
                 } else if (aa==2) {
                     aa=3
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_loop_one)
-
                 } else if (aa==3) {
                     aa=1
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_random)
@@ -111,20 +119,18 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
             R.id.ib_my_favorite -> {
                 val music = Music()
-                var position: Int? = null
                 val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
-                position = pref.getInt("position", 0)
-                if (aa==1) {
-                    aa=2
-                    music.isFavorite= true
-                    music.update(position+1.toLong())
-                    ib_my_favorite.isSelected = true
+                val position = pref.getInt("position", 0)
+                val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
 
-                } else {
-                    aa=1
-                    music.isFavorite= false
-                    music.update(position+1.toLong())
+                if (isFavorite) {
+                    music.setToDefault("isFavorite")
+                    music.update(position + 1.toLong())
                     ib_my_favorite.isSelected = false
+                } else {
+                    music.isFavorite = true
+                    music.update(position + 1.toLong())
+                    ib_my_favorite.isSelected = true
                 }
             }
         }
@@ -158,7 +164,7 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
         val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
         val song = pref.getString("song", "空灵音乐")
-        changeF1(song)
+        changeF1(song!!)
 
         ib_play_contorl.isSelected = playService!!.isPlaying
 
@@ -202,7 +208,7 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (action.equals("com.nilin.etherealmusic.play")) {
+            if (action!!.equals("com.nilin.etherealmusic.play")) {
                 val song = intent.getStringExtra("song")
                 (context as PlayActivity).changeF1(song)
             }

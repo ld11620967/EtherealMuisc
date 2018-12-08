@@ -19,6 +19,8 @@ import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
 import kotlinx.android.synthetic.main.rv_music.*
+import org.litepal.LitePal
+import org.litepal.extension.find
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
@@ -60,20 +62,20 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
         adapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val song = adapter.data[position] as Music
-            var aa = 1
+            val music = Music()
+            val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
 
             if (view.getId() == R.id.iv_favorite) {
-                val music = Music()
-                if (aa==1) {
-                    aa=2
-                    music.isFavorite= true
-                    music.update(position+1.toLong())
-                    iv_favorite.isSelected = true
-                } else {
-                    aa=1
-                    music.isFavorite= false
-                    music.update(position+1.toLong())
+                if (isFavorite) {
+                    music.setToDefault("isFavorite")
+                    music.update(position + 1.toLong())
+//                    adapter.clickIsFavorite(position)
+//                    adapter.notifyDataSetChanged()
                     iv_favorite.isSelected = false
+                } else {
+                    music.isFavorite = true
+                    music.update(position + 1.toLong())
+                    iv_favorite.isSelected = true
                 }
             } else if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)
@@ -81,16 +83,16 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
                 dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
                     when (which) {
                         0// 分享
-                        -> Log.i("111111111111111111","000000000000000")
+                        -> Log.i("111111111111111111", "000000000000000")
 //                    -> shareMusic(music)
                         1// 设为铃声
-                        -> Log.i("1111111111111111111","11111111111111")
+                        -> Log.i("1111111111111111111", "11111111111111")
 //                    -> requestSetRingtone(music)
                         2// 查看歌曲信息
-                        -> Log.i("111111111111111111","222222222222222")
+                        -> Log.i("111111111111111111", "222222222222222")
 //                    -> musicInfo(music)
                         3// 删除
-                        -> Log.i("111111111111111111","3333333333333")
+                        -> Log.i("111111111111111111", "3333333333333")
 //                    -> deleteMusic(music)
                     }
                 })
@@ -117,5 +119,4 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         super.onDestroy()
         unbindPlayService()//解绑服务
     }
-
 }

@@ -4,8 +4,10 @@ import android.content.Context
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.nilin.etherealmuisc.R
+import com.nilin.etherealmuisc.R.id.iv_favorite
 import com.nilin.etherealmuisc.db.Music
 import org.litepal.LitePal
+import org.litepal.extension.find
 import org.litepal.extension.findAll
 
 
@@ -16,9 +18,22 @@ class MusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music
 
     override fun convert(viewHolder: BaseViewHolder?, music: Music?) {
 
-        viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_not_favorite_gray).addOnClickListener(R.id.iv_favorite)
-                    .setText(R.id.tv_song, music!!.song)
+        if (music!!.isFavorite) {
+            viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_favorite).addOnClickListener(R.id.iv_favorite)
+        } else {
+            viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_not_favorite_gray).addOnClickListener(R.id.iv_favorite)
+        }
+
+        viewHolder.setText(R.id.tv_song, music.song)
                     .setText(R.id.tv_singer, music.singer)
                     .setImageResource(R.id.iv_more, R.drawable.btn_more).addOnClickListener(R.id.iv_more)
     }
+
+//    fun clickIsFavorite() {
+//        if (music!!.isFavorite) {
+//            viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_favorite).addOnClickListener(R.id.iv_favorite)
+//        } else {
+//            viewHolder!!.setImageResource(R.id.iv_favorite, R.drawable.btn_not_favorite_gray).addOnClickListener(R.id.iv_favorite)
+//        }
+//    }
 }
