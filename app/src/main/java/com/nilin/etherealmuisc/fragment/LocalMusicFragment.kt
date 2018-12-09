@@ -18,14 +18,14 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
-import kotlinx.android.synthetic.main.rv_music.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.litepal.LitePal
 import org.litepal.extension.find
 
 
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
-    var adapter: MusicAdapter? = null
+    var musicAdapter: MusicAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_local_music, container, false)
@@ -38,12 +38,12 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         toolbar.setNavigationOnClickListener(this)
 
         rv_local_music.layoutManager = LinearLayoutManager(context)
-        adapter = MusicAdapter(context!!, R.layout.rv_music)
+        musicAdapter = MusicAdapter(context!!, R.layout.rv_music)
         rv_local_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = adapter
+        rv_local_music.adapter = musicAdapter
 
-        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+        musicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
             playService!!.prepare(song.path!!)
 
@@ -60,7 +60,7 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             playService!!.start()
         }
 
-        adapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+        musicAdapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val song = adapter.data[position] as Music
             val music = Music()
             val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
@@ -69,13 +69,24 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
                 if (isFavorite) {
                     music.setToDefault("isFavorite")
                     music.update(position + 1.toLong())
-//                    adapter.clickIsFavorite(position)
-//                    adapter.notifyDataSetChanged()
-                    iv_favorite.isSelected = false
+//                    view.setBackgroundResource(R.drawable.btn_not_favorite_gray)
+
+//                    adapter.notifyItemChanged(position)
+//                    musicAdapter!!.notifyItemChanged(position)
+
+                    adapter.notifyDataSetChanged()
+                    musicAdapter!!.notifyDataSetChanged()
                 } else {
                     music.isFavorite = true
                     music.update(position + 1.toLong())
-                    iv_favorite.isSelected = true
+//                    view.setBackgroundResource(R.drawable.btn_favorite)
+//                    musicAdapter!!.clickIsFavorite(position,true)
+
+//                    adapter.notifyItemChanged(position)
+//                    musicAdapter!!.notifyItemChanged(position)
+
+                    adapter.notifyDataSetChanged()
+                    musicAdapter!!.notifyDataSetChanged()
                 }
             } else if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)
@@ -120,3 +131,4 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         unbindPlayService()//解绑服务
     }
 }
+
