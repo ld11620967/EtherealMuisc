@@ -18,11 +18,15 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
-import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.android.synthetic.main.rv_music.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.litepal.LitePal
 import org.litepal.extension.find
 
 
+@Suppress("DEPRECATION")
 class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
     var musicAdapter: MusicAdapter? = null
@@ -69,24 +73,19 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
                 if (isFavorite) {
                     music.setToDefault("isFavorite")
                     music.update(position + 1.toLong())
-//                    view.setBackgroundResource(R.drawable.btn_not_favorite_gray)
-
-//                    adapter.notifyItemChanged(position)
-//                    musicAdapter!!.notifyItemChanged(position)
-
-                    adapter.notifyDataSetChanged()
-                    musicAdapter!!.notifyDataSetChanged()
+                    GlobalScope.launch(Dispatchers.Main) {
+                            val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
+                            view.iv_favorite.setImageDrawable(drawable)
+                        Log.i("1111111111","111111111111")
+                    }
                 } else {
                     music.isFavorite = true
                     music.update(position + 1.toLong())
-//                    view.setBackgroundResource(R.drawable.btn_favorite)
-//                    musicAdapter!!.clickIsFavorite(position,true)
-
-//                    adapter.notifyItemChanged(position)
-//                    musicAdapter!!.notifyItemChanged(position)
-
-                    adapter.notifyDataSetChanged()
-                    musicAdapter!!.notifyDataSetChanged()
+                    GlobalScope.launch(Dispatchers.Main) {
+                            val drawable = getResources().getDrawable(R.drawable.btn_favorite)
+                            view.iv_favorite.setImageDrawable(drawable)
+                        Log.i("22222222222222","2222222222222")
+                    }
                 }
             } else if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)

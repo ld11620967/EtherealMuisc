@@ -7,10 +7,6 @@ import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.db.Music
 import org.litepal.LitePal
 import org.litepal.extension.findAll
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-
-
 
 
 /**

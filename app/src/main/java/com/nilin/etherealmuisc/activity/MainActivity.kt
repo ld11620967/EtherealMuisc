@@ -35,11 +35,11 @@ import kotlinx.coroutines.launch
 /**
  * Created by liangd on 2017/9/19.
  */
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener,HeadsetButtonReceiver1.onHeadsetListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, HeadsetButtonReceiver1.onHeadsetListener {
 
     val context = MyApplication.instance
     private var lastBackPress: Long = 0
-    var headsetButtonReceiver1 :HeadsetButtonReceiver1?=null
+    var headsetButtonReceiver1: HeadsetButtonReceiver1? = null
     var job: Job? = null
     var path: String? = null
     var firstStart: Boolean? = null
@@ -92,11 +92,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onPageScrollStateChanged(state: Int) {
-
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
     }
 
     override fun onPageSelected(position: Int) {
@@ -201,11 +199,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun publish(progress: Int) {
-
     }
 
     override fun change() {
-
     }
 
     fun changeF1(song: String, singer: String) {
@@ -247,10 +243,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (time.toInt() == 0 && job == null) {
             Toast.makeText(this, "停止播放功能未开启", Toast.LENGTH_SHORT).show()
         } else if (time.toInt() != 0) {
-            val time1 = time * 60000
             Toast.makeText(this, "$time 分钟后停止播放", Toast.LENGTH_SHORT).show()
-
-            job = GlobalScope.launch  {
+            job = GlobalScope.launch {
                 delay(1000L)
                 playService!!.pause()
             }
