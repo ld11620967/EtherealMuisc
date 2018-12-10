@@ -6,21 +6,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.IBinder
 import android.content.ServiceConnection
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 
 /**
-* Created by liangd on 2017/9/13.
-*/
+ * Created by liangd on 2017/9/13.
+ */
 abstract class BaseActivity : AppCompatActivity() {
 
     protected var playService: PlayService? = null
     private var isBound = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     private val conn = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -70,5 +65,4 @@ abstract class BaseActivity : AppCompatActivity() {
             isBound = false
         }
     }
-
 }

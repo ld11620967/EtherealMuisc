@@ -20,10 +20,10 @@ import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.fragment.LocalFragment
 import com.nilin.etherealmuisc.fragment.SearchMusicFragment
+import com.nilin.etherealmuisc.fragment.FavoriteFragment
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
-import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver1
 import kotlinx.coroutines.GlobalScope
@@ -44,6 +44,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     var path: String? = null
     var firstStart: Boolean? = null
     val searchMusicFragment = SearchMusicFragment()
+    val favoriteFragment = FavoriteFragment()
     val localFragment = LocalFragment()
     val localMusicFragment = localFragment.localMusicFragment
 
@@ -154,7 +155,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 builder.setIcon(R.drawable.ic_time_stop1)
                 builder.setTitle("定时停止播放")
                 val color = arrayOf("不开启", "10分钟", "20分钟", "30分钟", "45分钟", "60分钟", "90分钟")
-                builder.setItems(color, DialogInterface.OnClickListener { _, which ->
+                builder.setItems(color) { _, which ->
                     when (which) {
                         0 -> {
                             TimeStop(0)
@@ -178,7 +179,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                             TimeStop(90)
                         }
                     }
-                })
+                }
                 builder.show()
             }
             R.id.nav_settings -> {
@@ -257,19 +258,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
+        } else if (localMusicFragment.isVisible || searchMusicFragment.isVisible || favoriteFragment.isVisible) {
+            super.onBackPressed()
         } else {
-            if (localMusicFragment.isVisible || searchMusicFragment.isVisible) {
-                super.onBackPressed()
-            } else {
-                val time = System.currentTimeMillis()
-                if (time - lastBackPress < 2000) {
+            val time = System.currentTimeMillis()
+            if (time - lastBackPress < 2000) {
 //                    System.exit(0)
-                    android.os.Process.killProcess(android.os.Process.myPid())
-                    super.onBackPressed()
-                } else {
-                    lastBackPress = time
-                    Toast.makeText(context, "再按一次退出", Toast.LENGTH_SHORT).show()
-                }
+                android.os.Process.killProcess(android.os.Process.myPid())
+            } else {
+                lastBackPress = time
+                Toast.makeText(context, "再按一次退出", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -302,6 +300,5 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         unregisterReceiver(headsetButtonReceiver1)
         unbindPlayService()//解绑服务
     }
-
 }
 

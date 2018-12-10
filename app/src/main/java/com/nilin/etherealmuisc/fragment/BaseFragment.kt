@@ -11,8 +11,8 @@ import com.nilin.etherealmuisc.service.PlayService
 
 
 /**
-* Created by nilin on 2017/9/23.
-*/
+ * Created by nilin on 2017/9/23.
+ */
 abstract class BaseFragment : Fragment() {
 
     protected var playService: PlayService? = null
@@ -47,5 +47,4 @@ abstract class BaseFragment : Fragment() {
             isBound = false
         }
     }
-
 }

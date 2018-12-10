@@ -9,7 +9,7 @@ import org.litepal.LitePal
 import org.litepal.extension.find
 
 
-class FavoriteMusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music, BaseViewHolder>(layoutId, LitePal.where("isFavorite>?","0").find<Music>()) {
+class FavoriteMusicAdapter(var context: Context, layoutId: Int) : BaseQuickAdapter<Music, BaseViewHolder>(layoutId, LitePal.where("isFavorite>?", "0").find<Music>()) {
 
     override fun convert(viewHolder: BaseViewHolder, music: Music) {
 

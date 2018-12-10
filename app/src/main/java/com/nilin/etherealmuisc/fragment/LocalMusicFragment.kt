@@ -12,7 +12,6 @@ import com.nilin.etherealmuisc.adapter.MusicAdapter
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
-import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
@@ -74,43 +73,43 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
                     music.setToDefault("isFavorite")
                     music.update(position + 1.toLong())
                     GlobalScope.launch(Dispatchers.Main) {
-                            val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
-                            view.iv_favorite.setImageDrawable(drawable)
+                        val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
+                        view.iv_favorite.setImageDrawable(drawable)
                     }
                 } else {
                     music.isFavorite = true
                     music.update(position + 1.toLong())
                     GlobalScope.launch(Dispatchers.Main) {
-                            val drawable = getResources().getDrawable(R.drawable.btn_favorite)
-                            view.iv_favorite.setImageDrawable(drawable)
+                        val drawable = getResources().getDrawable(R.drawable.btn_favorite)
+                        view.iv_favorite.setImageDrawable(drawable)
                     }
                 }
             } else if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)
                 dialog.setTitle(musicList.song)
-                dialog.setItems(R.array.local_music_dialog, DialogInterface.OnClickListener { _, which ->
+                dialog.setItems(R.array.local_music_dialog) { _, which ->
                     when (which) {
                         0// 分享
                         -> Log.i("111111111111111111", "000000000000000")
-//                    -> shareMusic(music)
+                        //                    -> shareMusic(music)
                         1// 设为铃声
                         -> Log.i("1111111111111111111", "11111111111111")
-//                    -> requestSetRingtone(music)
+                        //                    -> requestSetRingtone(music)
                         2// 查看歌曲信息
                         -> Log.i("111111111111111111", "222222222222222")
-//                    -> musicInfo(music)
+                        //                    -> musicInfo(music)
                         3// 删除
                         -> Log.i("111111111111111111", "3333333333333")
-//                    -> deleteMusic(music)
+                        //                    -> deleteMusic(music)
                     }
-                })
+                }
                 dialog.show()
             }
         }
     }
 
     override fun onClick(p0: View?) {
-        getFragmentManager()!!.popBackStack();
+        getFragmentManager()!!.popBackStack()
     }
 
     override fun onResume() {
@@ -127,5 +126,6 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         super.onDestroy()
         unbindPlayService()//解绑服务
     }
+
 }
 

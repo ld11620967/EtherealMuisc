@@ -19,10 +19,11 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 /**
  * Created by liangd on 2017/11/27.
  */
+@Suppress("DEPRECATION")
 class SettingActivity : BaseActivity() {
 
     val context = MyApplication.instance
-    var AudioSessionId:Int?=null
+    var AudioSessionId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +35,8 @@ class SettingActivity : BaseActivity() {
             getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
         }
 
-        val intent=intent
-        AudioSessionId=intent.getIntExtra("AudioSessionId",-1)
+        val intent = intent
+        AudioSessionId = intent.getIntExtra("AudioSessionId", -1)
 
         val settingFragment = SettingFragment()
         settingFragment.setAudioSessionId(AudioSessionId)
@@ -52,7 +53,7 @@ class SettingActivity : BaseActivity() {
         private var mSoundEffect: Preference? = null
         private var mFilterSize: Preference? = null
         private var mFilterTime: Preference? = null
-        private var AudioSessionId:Int?=null
+        private var AudioSessionId: Int? = null
 
         fun setAudioSessionId(audioSessionId: Int?) {
             this.AudioSessionId = audioSessionId
@@ -155,5 +156,4 @@ class SettingActivity : BaseActivity() {
 
     override fun change() {
     }
-
 }

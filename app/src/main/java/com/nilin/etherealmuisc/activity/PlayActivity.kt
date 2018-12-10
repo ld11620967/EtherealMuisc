@@ -21,7 +21,7 @@ import java.io.*
 /**
  * Created by liangd on 2017/9/19.
  */
-class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener{
+class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
@@ -82,19 +82,19 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
     override fun onStopTrackingTouch(seekBar: SeekBar) {
     }
 
-    override fun onClick(v: View?) {
-        when (v!!.id) {
+    override fun onClick(v: View) {
+        when (v.id) {
             R.id.iv_play_back -> finish()
 
             R.id.ib_music_contorl -> {
-                if (aa==1) {
-                    aa=2
+                if (aa == 1) {
+                    aa = 2
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_loop)
-                } else if (aa==2) {
-                    aa=3
+                } else if (aa == 2) {
+                    aa = 3
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_loop_one)
-                } else if (aa==3) {
-                    aa=1
+                } else if (aa == 3) {
+                    aa = 1
                     ib_music_contorl.setBackgroundResource(R.drawable.btn_random)
                 }
             }
@@ -119,8 +119,8 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
             R.id.ib_my_favorite -> {
                 val music = Music()
-                val pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
-                val position = pref.getInt("position", 0)
+                val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+                val position = music_pref.getInt("position", 0)
                 val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
 
                 if (isFavorite) {
@@ -238,5 +238,19 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
         super.onDestroy()
         unregisterReceiver(broadcastReceiver)
         unbindPlayService()//解绑服务
+    }
+
+    override fun onBackPressed() {
+        val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+        val position = music_pref.getInt("position", 0)
+        val music_info = LitePal.find<Music>(position + 1.toLong())
+        val intent = Intent(this, MainActivity::class.java)
+        if (music_info != null) {
+            intent.putExtra("song", music_info.song)
+            intent.putExtra("singer", music_info.singer)
+            intent.putExtra("path", music_info.path)
+        }
+        startActivity(intent)
+        finish()
     }
 }

@@ -33,10 +33,10 @@ class SplashActivity : Activity() {
         val position = music_pref.getInt("position", -1)
 
         if (position != -1) {
-            music_info = LitePal.find<Music>((position+1).toLong())
+            music_info = LitePal.find<Music>(position + 1.toLong())
         }
 
-        GlobalScope.launch  {
+        GlobalScope.launch {
             delay(650L)
             goHome()
         }
@@ -50,7 +50,7 @@ class SplashActivity : Activity() {
 
     private fun goHome() {
         val intent = Intent(this, MainActivity::class.java)
-        if (music_info !== null) {
+        if (music_info != null) {
             intent.putExtra("song", music_info!!.song)
             intent.putExtra("singer", music_info!!.singer)
             intent.putExtra("path", music_info!!.path)

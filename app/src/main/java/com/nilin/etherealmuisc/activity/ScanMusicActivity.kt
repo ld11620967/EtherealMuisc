@@ -19,8 +19,8 @@ import org.litepal.LitePal
 
 
 /**
-* Created by liangd on 2017/9/19.
-*/
+ * Created by liangd on 2017/9/19.
+ */
 class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +41,15 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
         degrees.repeatCount = ValueAnimator.INFINITE
         degrees.start()
 
-        doAsync{
-            for (i in 0..getMusicData(MyApplication.instance!!).size-1) {
+        doAsync {
+            for (i in 0..getMusicData(MyApplication.instance!!).size - 1) {
                 val music = Music()
-                music.song=getMusicData(MyApplication.instance!!).get(i).song
-                music.singer=getMusicData(MyApplication.instance!!).get(i).singer
-                music.path=getMusicData(MyApplication.instance!!).get(i).path
+                music.song = getMusicData(MyApplication.instance!!).get(i).song
+                music.singer = getMusicData(MyApplication.instance!!).get(i).singer
+                music.path = getMusicData(MyApplication.instance!!).get(i).path
                 music.save()
             }
-            uiThread{
+            uiThread {
                 degrees.cancel()
                 toast("已扫描完毕")
             }
@@ -70,6 +70,10 @@ class ScanMusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
+        finish()
+    }
+
+    override fun onBackPressed() {
         finish()
     }
 }
