@@ -9,10 +9,11 @@ import java.util.concurrent.Executors
 import android.os.IBinder
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
-import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver
 import org.litepal.LitePal
 import org.litepal.extension.find
 import org.litepal.extension.findAll
+import org.litepal.extension.findFirst
+import org.litepal.extension.findLast
 
 
 /**
@@ -22,7 +23,6 @@ class PlayService : Service() {
 
     val mp: MediaPlayer? = MediaPlayer()
     private var musicUpdatrListener: MusicUpdatrListener? = null
-    var headsetButtonReceiver : HeadsetButtonReceiver?=null
     val context: Context = this
     var position: Int? = null
     var path:Music?= null
@@ -89,7 +89,8 @@ class PlayService : Service() {
     fun previous() {
         if (position == 0) {
             num = LitePal.findAll<Music>().size.plus(-1)
-            path = LitePal.find<Music>(num!!.toLong())
+//            path = LitePal.find<Music>(num!!.toLong())
+            path = LitePal.findFirst<Music>()
         } else {
             num = position!!.plus(-1)
             path = LitePal.find<Music>(num!!.toLong())
@@ -111,7 +112,8 @@ class PlayService : Service() {
 
     fun next() {
         if (position!!.plus(1) == LitePal.findAll<Music>().size) {
-            path = LitePal.find<Music>(num!!.toLong())
+//            path = LitePal.find<Music>(num!!.toLong())
+            path = LitePal.findLast<Music>()
             num = 0
         } else {
             num = position!!.plus(1)
@@ -200,5 +202,4 @@ class PlayService : Service() {
     fun setMusicUpdatrListener(musicUpdatrListener: MusicUpdatrListener) {
         this.musicUpdatrListener = musicUpdatrListener
     }
-
 }

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.nilin.etherealmuisc.R
-import com.nilin.etherealmuisc.adapter.MusicAdapter
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
@@ -17,19 +16,21 @@ import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
+import com.nilin.etherealmuisc.adapter.FavoriteMusicAdapter
 import com.nilin.etherealmuisc.db.Music
 import kotlinx.android.synthetic.main.rv_music.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.litepal.LitePal
 import org.litepal.extension.find
 
 
 @Suppress("DEPRECATION")
-class LocalMusicFragment : BaseFragment(), View.OnClickListener {
+class FavoriteFragment : BaseFragment(), View.OnClickListener {
 
-    var musicAdapter: MusicAdapter? = null
+    var favoriteMusicAdapter: FavoriteMusicAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_local_music, container, false)
@@ -38,16 +39,16 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        toolbar.setTitle("本地音乐")
+        toolbar.setTitle("我的最爱")
         toolbar.setNavigationOnClickListener(this)
 
         rv_local_music.layoutManager = LinearLayoutManager(context)
-        musicAdapter = MusicAdapter(context!!, R.layout.rv_music)
+        favoriteMusicAdapter = FavoriteMusicAdapter(context!!, R.layout.rv_music)
         rv_local_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = musicAdapter
+        rv_local_music.adapter = favoriteMusicAdapter
 
-        musicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+        favoriteMusicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
             playService!!.prepare(song.path!!)
 
@@ -64,25 +65,25 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             playService!!.start()
         }
 
-        musicAdapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+        favoriteMusicAdapter!!.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val musicList = adapter.data[position] as Music
             val music = Music()
-            val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
+            val isFavoriteMusicList = LitePal.where("isFavorite>?", "0").find<Music>()
+            val isFavorite = isFavoriteMusicList[position].isFavorite
+            val path = isFavoriteMusicList[position].path
 
             if (view.getId() == R.id.iv_favorite) {
                 if (isFavorite) {
                     music.setToDefault("isFavorite")
-                    music.update(position + 1.toLong())
+                    music.updateAll("path=?", path)
                     GlobalScope.launch(Dispatchers.Main) {
-                            val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
-                            view.iv_favorite.setImageDrawable(drawable)
-                    }
-                } else {
-                    music.isFavorite = true
-                    music.update(position + 1.toLong())
-                    GlobalScope.launch(Dispatchers.Main) {
-                            val drawable = getResources().getDrawable(R.drawable.btn_favorite)
-                            view.iv_favorite.setImageDrawable(drawable)
+                        val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
+                        view.iv_favorite.setImageDrawable(drawable)
+                        launch {
+                            delay(120)
+                            adapter.remove(position)
+                            adapter.notifyDataSetChanged()
+                        }
                     }
                 }
             } else if (view.getId() == R.id.iv_more) {
@@ -128,4 +129,3 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         unbindPlayService()//解绑服务
     }
 }
-

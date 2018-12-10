@@ -37,7 +37,7 @@ class SplashActivity : Activity() {
         }
 
         GlobalScope.launch  {
-            delay(700L)
+            delay(650L)
             goHome()
         }
 
