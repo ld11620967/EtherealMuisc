@@ -11,11 +11,13 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
 import com.nilin.etherealmuisc.db.Music
-import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 import org.litepal.LitePal
 import org.litepal.extension.find
+import org.litepal.extension.findAll
+import org.litepal.extension.findFirst
+import org.litepal.extension.findLast
 import java.io.*
 
 
@@ -27,6 +29,10 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
     //Handler用于更新已经播放时间
     private var myHandler: MyHandler? = null
     var aa = 1
+    var num: Int? = null
+    var isFavorite: Music? = null
+    val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+    val position = music_pref.getInt("position", 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +108,18 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
             R.id.ib_play_previous -> {
                 playService!!.previous()
+                if (position == 0) {
+                    num = LitePal.findAll<Music>().size.plus(-1)
+                    isFavorite = LitePal.findFirst<Music>()
+                } else {
+                    num = position.plus(-1)
+                    isFavorite = LitePal.find<Music>(num!!.toLong())!!
+                }
+                if (isFavorite!!.isFavorite) {
+                    ib_my_favorite.isSelected = true
+                } else {
+                    ib_my_favorite.isSelected = false
+                }
             }
 
             R.id.ib_play_contorl -> {
@@ -116,6 +134,18 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
 
             R.id.ib_play_next -> {
                 playService!!.next()
+                if (position.plus(1) == LitePal.findAll<Music>().size) {
+                    isFavorite = LitePal.findLast<Music>()
+                    num = 0
+                } else {
+                    num = position.plus(1)
+                    isFavorite = LitePal.find<Music>(num!!.toLong())
+                }
+                if (isFavorite!!.isFavorite) {
+                    ib_my_favorite.isSelected = true
+                } else {
+                    ib_my_favorite.isSelected = false
+                }
             }
 
             R.id.ib_my_favorite -> {

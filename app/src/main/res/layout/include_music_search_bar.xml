@@ -11,19 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/iv_back"
+            android:layout_weight="1"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:src="@drawable/btn_back" />
 
         <EditText
-            android:id="@+id/tv_local_music"
+            android:id="@+id/tv_search_music"
             android:layout_width="230dp"
             android:layout_height="?attr/actionBarSize"
             android:background="@null"
@@ -32,16 +34,18 @@
             android:textSize="17sp" />
 
         <ImageView
-            android:id="@+id/tv_online_music"
+            android:id="@+id/iv_delete"
             android:layout_weight="1"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:contentDescription="@null"
             android:scaleType="centerInside"
+            android:visibility="invisible"
             android:src="@drawable/ic_cancel" />
 
         <ImageView
             android:id="@+id/iv_search"
+            android:layout_weight="1"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="end"
