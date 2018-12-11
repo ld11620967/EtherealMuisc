@@ -7,7 +7,7 @@
     <include layout="@layout/include_app_bar" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_local_music"
+        android:id="@+id/rv_list_music"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="1dp"

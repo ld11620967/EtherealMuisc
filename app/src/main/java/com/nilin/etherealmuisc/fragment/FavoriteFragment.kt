@@ -11,14 +11,13 @@ import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
-import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.adapter.FavoriteMusicAdapter
 import com.nilin.etherealmuisc.db.Music
-import kotlinx.android.synthetic.main.rv_music.view.*
+import kotlinx.android.synthetic.main.rv_favorite_music.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -42,11 +41,11 @@ class FavoriteFragment : BaseFragment(), View.OnClickListener {
         toolbar.setTitle("我的最爱")
         toolbar.setNavigationOnClickListener(this)
 
-        rv_local_music.layoutManager = LinearLayoutManager(context)
-        favoriteMusicAdapter = FavoriteMusicAdapter(context!!, R.layout.rv_music)
-        rv_local_music.addItemDecoration(ItemDecoration(
+        rv_list_music.layoutManager = LinearLayoutManager(context)
+        favoriteMusicAdapter = FavoriteMusicAdapter(context!!, R.layout.rv_favorite_music)
+        rv_list_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = favoriteMusicAdapter
+        rv_list_music.adapter = favoriteMusicAdapter
 
         favoriteMusicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
@@ -89,7 +88,7 @@ class FavoriteFragment : BaseFragment(), View.OnClickListener {
             } else if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)
                 dialog.setTitle(musicList.song)
-                dialog.setItems(R.array.local_music_dialog) { _, which ->
+                dialog.setItems(R.array.favorite_music_dialog) { _, which ->
                     when (which) {
                         0// 分享
                         -> Log.i("111111111111111111", "000000000000000")

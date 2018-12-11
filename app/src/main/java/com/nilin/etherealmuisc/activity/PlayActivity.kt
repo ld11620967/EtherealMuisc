@@ -11,6 +11,7 @@ import com.nilin.etherealmuisc.R
 import kotlinx.android.synthetic.main.activity_play.*
 import android.widget.SeekBar
 import com.nilin.etherealmuisc.db.Music
+import com.nilin.etherealmuisc.fragment.LocalMusicFragment
 import com.nilin.etherealmuisc.utils.MediaUtils
 import com.nilin.etherealmuisc.view.DefaultLrcBuilder
 import org.litepal.LitePal
@@ -241,16 +242,6 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
     }
 
     override fun onBackPressed() {
-        val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
-        val position = music_pref.getInt("position", 0)
-        val music_info = LitePal.find<Music>(position + 1.toLong())
-        val intent = Intent(this, MainActivity::class.java)
-        if (music_info != null) {
-            intent.putExtra("song", music_info.song)
-            intent.putExtra("singer", music_info.singer)
-            intent.putExtra("path", music_info.path)
-        }
-        startActivity(intent)
         finish()
     }
 }

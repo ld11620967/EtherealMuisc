@@ -14,11 +14,11 @@ import com.nilin.etherealmuisc.MyApplication
 /**
 * Created by liangd on 2017/9/19.
 */
-class LocalFragment : Fragment() {
+class MainFragment : Fragment() {
 
     val context = MyApplication.instance
     val localMusicFragment = LocalMusicFragment()
-    val MyFavoriteFragment = FavoriteFragment()
+    val FavoriteFragment = FavoriteFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_local, container, false)
@@ -39,10 +39,9 @@ class LocalFragment : Fragment() {
         bt_my_favorite.setOnClickListener {
             activity!!.supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment, MyFavoriteFragment, null)
+                    .replace(R.id.fragment, FavoriteFragment, null)
                     .addToBackStack(null)
                     .commit()
         }
     }
-
 }

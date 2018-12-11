@@ -15,18 +15,15 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.db.Music
-import kotlinx.android.synthetic.main.rv_music.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.litepal.LitePal
 import org.litepal.extension.find
 
 
 @Suppress("DEPRECATION")
-class LocalMusicFragment : BaseFragment(), View.OnClickListener {
+open class LocalMusicFragment : BaseFragment(), View.OnClickListener {
 
     var musicAdapter: MusicAdapter? = null
 
@@ -40,11 +37,11 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         toolbar.setTitle("本地音乐")
         toolbar.setNavigationOnClickListener(this)
 
-        rv_local_music.layoutManager = LinearLayoutManager(context)
-        musicAdapter = MusicAdapter(context!!, R.layout.rv_music)
-        rv_local_music.addItemDecoration(ItemDecoration(
+        rv_list_music.layoutManager = LinearLayoutManager(context)
+        musicAdapter = MusicAdapter(context!!, R.layout.rv_local_music)
+        rv_list_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = musicAdapter
+        rv_list_music.adapter = musicAdapter
 
         musicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
@@ -68,29 +65,19 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
             val music = Music()
             val isFavorite = LitePal.find<Music>(position + 1.toLong())!!.isFavorite
 
-            if (view.getId() == R.id.iv_favorite) {
-                if (isFavorite) {
-                    music.setToDefault("isFavorite")
-                    music.update(position + 1.toLong())
-                    GlobalScope.launch(Dispatchers.Main) {
-                        val drawable = getResources().getDrawable(R.drawable.btn_not_favorite_gray)
-                        view.iv_favorite.setImageDrawable(drawable)
-                    }
-                } else {
-                    music.isFavorite = true
-                    music.update(position + 1.toLong())
-                    GlobalScope.launch(Dispatchers.Main) {
-                        val drawable = getResources().getDrawable(R.drawable.btn_favorite)
-                        view.iv_favorite.setImageDrawable(drawable)
-                    }
-                }
-            } else if (view.getId() == R.id.iv_more) {
+            if (view.getId() == R.id.iv_more) {
                 val dialog = AlertDialog.Builder(getContext()!!)
                 dialog.setTitle(musicList.song)
                 dialog.setItems(R.array.local_music_dialog) { _, which ->
                     when (which) {
-                        0// 分享
-                        -> Log.i("111111111111111111", "000000000000000")
+                        0// 喜欢
+                        -> if (isFavorite) {
+                            Toast.makeText(context,"我的最爱中已存在",Toast.LENGTH_LONG).show()
+                        } else {
+                            music.isFavorite = true
+                            music.update(position + 1.toLong())
+                            Toast.makeText(context,"已添加到我的最爱",Toast.LENGTH_LONG).show()
+                        }
                         //                    -> shareMusic(music)
                         1// 设为铃声
                         -> Log.i("1111111111111111111", "11111111111111")
@@ -126,6 +113,5 @@ class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         super.onDestroy()
         unbindPlayService()//解绑服务
     }
-
 }
 

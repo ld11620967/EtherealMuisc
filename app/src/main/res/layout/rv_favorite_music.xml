@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_favorite"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_favorite"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/tv_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_favorite"
+        android:paddingStart="10dp"
+        android:layout_below="@+id/tv_song"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/iv_more"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/btn_more"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

@@ -18,7 +18,7 @@ import android.support.v4.view.ViewPager
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
-import com.nilin.etherealmuisc.fragment.LocalFragment
+import com.nilin.etherealmuisc.fragment.MainFragment
 import com.nilin.etherealmuisc.fragment.SearchMusicFragment
 import com.nilin.etherealmuisc.fragment.FavoriteFragment
 import com.nilin.etherealmuisc.service.PlayService
@@ -30,6 +30,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 
 /**
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     var firstStart: Boolean? = null
     val searchMusicFragment = SearchMusicFragment()
     val favoriteFragment = FavoriteFragment()
-    val localFragment = LocalFragment()
+    val localFragment = MainFragment()
     val localMusicFragment = localFragment.localMusicFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {

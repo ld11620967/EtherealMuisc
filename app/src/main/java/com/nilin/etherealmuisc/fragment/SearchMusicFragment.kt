@@ -39,11 +39,11 @@ class SearchMusicFragment : BaseFragment() {
             getFragmentManager()!!.popBackStack()
         }
 
-        rv_local_music.layoutManager = LinearLayoutManager(context)
-        adapter = MusicAdapter(context!!, R.layout.rv_music)
-        rv_local_music.addItemDecoration(ItemDecoration(
+        rv_list_music.layoutManager = LinearLayoutManager(context)
+        adapter = MusicAdapter(context!!, R.layout.rv_local_music)
+        rv_list_music.addItemDecoration(ItemDecoration(
                 context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-        rv_local_music.adapter = adapter
+//        rv_list_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
             val song = adapter.data[position] as Music
