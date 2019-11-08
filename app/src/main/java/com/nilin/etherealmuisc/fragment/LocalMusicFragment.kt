@@ -2,7 +2,7 @@ package com.nilin.etherealmuisc.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import com.nilin.etherealmuisc.utils.ItemDecoration
 import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_app_bar.*
 import android.content.Intent
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
@@ -37,10 +37,10 @@ open class LocalMusicFragment : BaseFragment(), View.OnClickListener {
         toolbar.setTitle("本地音乐")
         toolbar.setNavigationOnClickListener(this)
 
-        rv_list_music.layoutManager = LinearLayoutManager(context)
+        rv_list_music.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         musicAdapter = MusicAdapter(context!!, R.layout.rv_local_music)
         rv_list_music.addItemDecoration(ItemDecoration(
-                context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
+                context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_list_music.adapter = musicAdapter
 
         musicAdapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->

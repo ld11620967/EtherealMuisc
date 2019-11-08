@@ -1,22 +1,22 @@
 package com.nilin.etherealmuisc.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
 
 /**
  * Created by nilin on 2017/9/9.
  */
-class FragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class FragmentAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
 
-    private val mFragments = ArrayList<Fragment>()
+    private val mFragments = ArrayList<androidx.fragment.app.Fragment>()
 
-    fun addFragment(fragment: Fragment) {
+    fun addFragment(fragment: androidx.fragment.app.Fragment) {
         mFragments.add(fragment)
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return mFragments.get(position)
     }
 

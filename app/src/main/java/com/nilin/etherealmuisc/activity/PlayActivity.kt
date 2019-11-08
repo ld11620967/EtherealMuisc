@@ -31,8 +31,6 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
     var aa = 1
     var num: Int? = null
     var isFavorite: Music? = null
-    val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
-    val position = music_pref.getInt("position", 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +105,8 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
             }
 
             R.id.ib_play_previous -> {
+                val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+                val position = music_pref.getInt("position", 0)
                 playService!!.previous()
                 if (position == 0) {
                     num = LitePal.findAll<Music>().size.plus(-1)
@@ -133,6 +133,8 @@ class PlayActivity() : BaseActivity(), View.OnClickListener, SeekBar.OnSeekBarCh
             }
 
             R.id.ib_play_next -> {
+                val music_pref = getSharedPreferences("music_pref", Context.MODE_PRIVATE)
+                val position = music_pref.getInt("position", 0)
                 playService!!.next()
                 if (position.plus(1) == LitePal.findAll<Music>().size) {
                     isFavorite = LitePal.findLast<Music>()

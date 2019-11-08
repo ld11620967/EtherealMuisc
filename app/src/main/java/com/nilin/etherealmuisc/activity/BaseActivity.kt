@@ -6,7 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.IBinder
 import android.content.ServiceConnection
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 
 /**

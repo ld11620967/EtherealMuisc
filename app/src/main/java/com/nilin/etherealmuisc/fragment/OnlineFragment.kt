@@ -1,7 +1,7 @@
 package com.nilin.etherealmuisc.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,10 +29,10 @@ class OnlineFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        rv_online_music.layoutManager = LinearLayoutManager(context)
+        rv_online_music.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = MusicChartsAdapter(context!!, R.layout.rv_music_charts)
         rv_online_music.addItemDecoration(ItemDecoration(
-                context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
+                context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
         rv_online_music.adapter = adapter
 
         adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->

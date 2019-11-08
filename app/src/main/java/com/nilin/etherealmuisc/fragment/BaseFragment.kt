@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.service.PlayService
 
@@ -13,7 +13,7 @@ import com.nilin.etherealmuisc.service.PlayService
 /**
  * Created by nilin on 2017/9/23.
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : androidx.fragment.app.Fragment() {
 
     protected var playService: PlayService? = null
     private var isBound = false

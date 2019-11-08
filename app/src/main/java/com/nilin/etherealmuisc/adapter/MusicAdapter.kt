@@ -1,6 +1,7 @@
 package com.nilin.etherealmuisc.adapter
 
 import android.content.Context
+import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.nilin.etherealmuisc.R

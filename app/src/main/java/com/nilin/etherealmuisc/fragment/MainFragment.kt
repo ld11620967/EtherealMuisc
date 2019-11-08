@@ -1,7 +1,7 @@
 package com.nilin.etherealmuisc.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import com.nilin.etherealmuisc.MyApplication
 /**
 * Created by liangd on 2017/9/19.
 */
-class MainFragment : Fragment() {
+class MainFragment : androidx.fragment.app.Fragment() {
 
     val context = MyApplication.instance
     val localMusicFragment = LocalMusicFragment()

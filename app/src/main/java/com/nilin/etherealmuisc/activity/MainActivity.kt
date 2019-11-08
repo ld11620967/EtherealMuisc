@@ -4,17 +4,17 @@ import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
 import android.view.MenuItem
 import com.nilin.etherealmuisc.adapter.FragmentAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.PermissionChecker
-import android.support.v4.view.ViewPager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker
+import androidx.viewpager.widget.ViewPager
 import android.widget.Toast
 import com.nilin.etherealmuisc.MyApplication
 import com.nilin.etherealmuisc.R
@@ -24,7 +24,7 @@ import com.nilin.etherealmuisc.fragment.FavoriteFragment
 import com.nilin.etherealmuisc.service.PlayService
 import kotlinx.android.synthetic.main.include_music_tab_bar.*
 import kotlinx.android.synthetic.main.include_play_bar.*
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import com.nilin.etherealmuisc.receiver.HeadsetButtonReceiver1
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -36,7 +36,7 @@ import org.jetbrains.anko.toast
 /**
  * Created by liangd on 2017/9/19.
  */
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, HeadsetButtonReceiver1.onHeadsetListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, androidx.viewpager.widget.ViewPager.OnPageChangeListener, HeadsetButtonReceiver1.onHeadsetListener {
 
     val context = MyApplication.instance
     private var lastBackPress: Long = 0

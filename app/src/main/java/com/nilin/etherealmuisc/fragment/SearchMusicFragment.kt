@@ -3,6 +3,7 @@ package com.nilin.etherealmuisc.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,10 +17,9 @@ import com.nilin.etherealmuisc.R
 import com.nilin.etherealmuisc.adapter.SearchMusicAdapter
 import com.nilin.etherealmuisc.db.Music
 import com.nilin.etherealmuisc.utils.ItemDecoration
-import kotlinx.android.synthetic.main.fragment_local_music.*
 import kotlinx.android.synthetic.main.include_music_search_bar.*
-import com.nilin.etherealmuisc.R.id.tv_search_music
-
+import kotlinx.android.synthetic.main.fragment_search_music.*
+import org.litepal.LitePal
 
 
 
@@ -49,8 +49,10 @@ class SearchMusicFragment : BaseFragment() {
         }
 
         iv_search.setOnClickListener {
-            val searchEditText=tv_search_music.text.toString()
-            Log.i("11111111111111",searchEditText)
+            val searchEditText = tv_search_music.text.toString()
+            Log.i("11111111111111", searchEditText)
+
+
         }
 
         tv_search_music.addTextChangedListener(object : TextWatcher {
@@ -69,22 +71,38 @@ class SearchMusicFragment : BaseFragment() {
             }
         })
 
-//        rv_list_music.layoutManager = LinearLayoutManager(context)
+//        rv_search_music.layoutManager = LinearLayoutManager(context)
 //        adapter = SearchMusicAdapter(context!!, R.layout.rv_local_music)
-//        rv_list_music.addItemDecoration(ItemDecoration(
+//        rv_search_music.addItemDecoration(ItemDecoration(
 //                context, LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
-////        rv_list_music.adapter = adapter
-//
-//        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
-//            val song = adapter.data[position] as Music
-//            playService!!.prepare(song.path!!)
-//            val intent = Intent("com.nilin.etherealmusic.play")
-//            intent.putExtra("song", song.song)
-//            intent.putExtra("songer", song.singer)
-//            playService!!.start()
-//            intent.putExtra("play", true)
-//            context.sendBroadcast(intent)
-//        }
+//        rv_search_music.adapter = adapter
+
+
+//        val list = LitePal.where("song=?", "偷功").find(Music::class.java)
+//        Log.i("111111111111111111111",list[0].song!!)
+//        Log.i("111111111111111111111",list[0].singer!!)
+
+//            adapter = SearchMusicAdapter(context!!, R.layout.rv_local_music,list)
+//            var list1= LitePal.find<Music>().select("song",searchEditText)
+
+
+        rv_search_music.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+//        adapter = SearchMusicAdapter(context!!, R.layout.rv_local_music, list)
+        adapter = SearchMusicAdapter(context!!, R.layout.rv_local_music)
+        rv_search_music.addItemDecoration(ItemDecoration(
+                context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, 2, resources.getColor(R.color.grey_100p)))
+        rv_search_music.adapter = adapter
+
+        adapter!!.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+            val song = adapter.data[position] as Music
+            playService!!.prepare(song.path!!)
+            val intent = Intent("com.nilin.etherealmusic.play")
+            intent.putExtra("song", song.song)
+            intent.putExtra("songer", song.singer)
+            playService!!.start()
+            intent.putExtra("play", true)
+            context.sendBroadcast(intent)
+        }
     }
 
     override fun onResume() {
@@ -112,3 +130,4 @@ class SearchMusicFragment : BaseFragment() {
         inputManager.hideSoftInputFromWindow(tv_search_music.getWindowToken(), 0)
     }
 }
+
